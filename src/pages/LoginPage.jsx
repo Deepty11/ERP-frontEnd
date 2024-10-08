@@ -1,0 +1,102 @@
+import React, { useState } from 'react'
+import { Card } from 'react-bootstrap'
+import { FaLock } from 'react-icons/fa'
+import LoginService from '../services/LoginService'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../components/AuthProvider'
+
+
+const LoginPage = () => {
+    const navigate = useNavigate()
+
+    const initialLoginState = {
+        username: '',
+        password: ''
+    }
+
+    const [loginData, setLoginData] = useState(initialLoginState)
+
+    const handleChange = (e) => {
+        let { name, value } = e.target
+        setLoginData({ ...loginData, [name]: value })
+    }
+
+    const { login } = useAuth()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        LoginService.login(loginData, (token) => {
+            login(token)
+            navigate("/dashboard")
+        }, (error) => {
+            console.log("Login has failed with the error: " + error)
+        })
+    }
+
+    return (
+        <section className="section login-section">
+            <Card className="card">
+                <header className="card-header">
+                    <p className="card-header-title">
+                        <span className="icon">
+                            <FaLock />
+                        </span>
+                        Login
+                    </p>
+                </header>
+                <div className="card-content">
+                    <form method="post" onSubmit={handleSubmit}>
+                        <div className="field spaced">
+                            <label className="label">Username</label>
+                            <div className="control">
+                                <input
+                                    className="input"
+                                    type="text"
+                                    name="username"
+                                    value={login.username}
+                                    onChange={handleChange}
+                                    placeholder="username"
+                                    autocomplete="username" />
+                            </div>
+                            <p className="help">
+                                Please enter your username
+                            </p>
+                        </div>
+
+                        <div className="field spaced">
+                            <label className="label">Password</label>
+                            <p className="control">
+                                <input
+                                    className="input"
+                                    type="password"
+                                    name="password"
+                                    value={login.password}
+                                    onChange={handleChange}
+                                    placeholder="Password"
+                                    autocomplete="current-password" />
+                            </p>
+                            <p className="help">
+                                Please enter your password
+                            </p>
+                        </div>
+
+                        <hr />
+
+                        <div className="field spaced">
+                            <div className="control">
+                                <button
+                                    type="submit"
+                                    className="button blue">
+                                    Login
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </Card>
+        </section>
+    )
+}
+
+export default LoginPage

@@ -886,30 +886,38 @@ body {
     color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
-.aside-mobile-expanded .aside {
+ /* .aside .aside-mobile-expanded{
     left: 0
 }
 
-.aside-mobile-expanded .navbar {
+ .navbar .aside-mobile-expanded {
+    margin-left: 15rem
+} */
+
+.navbar.expand-sidebar {
     margin-left: 15rem
 }
 
-.aside-mobile-expanded #app {
-    margin-left: 15rem
+.aside.expand-sidebar {
+    left: 0
 }
 
-.aside-mobile-expanded,
+/* .aside-mobile-expanded #root {
+    margin-left: 15rem
+} */
+
+/* .aside-mobile-expanded,
 .aside-mobile-expanded body {
     overflow: hidden
-}
+} */
 
-@media (min-width:1024px) {
+/* @media (min-width:1024px) {
 
     .aside-mobile-expanded,
     .aside-mobile-expanded body {
         overflow: visible
     }
-}
+} */
 
 .menu-label {
     padding: .75rem;
@@ -1149,7 +1157,8 @@ body {
     --tw-border-opacity: 1;
     border-color: rgb(243 244 246 / var(--tw-border-opacity));
     --tw-bg-opacity: 1;
-    background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card.has-table .card-content {
@@ -1717,4 +1726,56 @@ footer {
     .lg\:grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr))
     }
+}
+
+.p-dropdown {
+    border: 0.75px solid #000000;
+    border-radius: 4px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.spinner-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+@media (min-width: 1024px) {
+    .login-section {
+        margin-left: 5%;
+        margin-right: 20%;
+    }
+}
+
+.empty-view {
+    color: #9ca3af;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-container {
+    background-color: rgba(81, 249, 8, 0.396);
+}
+
+.success-message {
+    color: green;
 }

@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import './main.css'
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AddTask from './pages/AddTask'
 import MainLayout from './layout/MainLayout'
 import Dashboard from './pages/Dashboard'
+import AddUser from './pages/AddUser'
+import AddBook from './pages/AddBook'
+import LoginPage from './pages/LoginPage'
+import AuthProvider from './components/AuthProvider'
+import PrivateRoutes from './components/PrivateRoutes'
+import UserList from './pages/UserList'
+import AddDesignation from './pages/AddDesignation'
+import DesignationList from './pages/DesignationList'
 
 function App() {
   const [pageTitle, setPageTitle] = useState('Dashboard')
@@ -12,17 +20,28 @@ function App() {
   const onRequestingPage = (title) => {
     setPageTitle(title)
   }
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      < Route path='/' element={<MainLayout pageTitle={pageTitle}/>}>
-        <Route path='/dashboard' element={<Dashboard onPageLoad={onRequestingPage}/>} />
-        <Route path='/add-task' element={<AddTask onPageLoad={onRequestingPage}/>} />
-      </Route>
 
-    ))
   return (
-    <RouterProvider router={router}/>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route element={<PrivateRoutes />}>
+            < Route path='/' element={<MainLayout pageTitle={pageTitle} />}>
+              <Route path='/dashboard' element={<Dashboard onPageLoad={onRequestingPage} />} />
+              <Route path='/add-task' element={<AddTask callback={onRequestingPage} />} />
+              <Route path='/add-user' element={<AddUser callback={onRequestingPage} />} />
+              <Route path='/addBook' element={<AddBook callback={onRequestingPage} />} />
+              <Route path='/users' element={<UserList callback={onRequestingPage} />} />
+              <Route path='/add-designation' element={<AddDesignation callback={onRequestingPage} />} />
+              <Route path='/designations' element={<DesignationList callback={onRequestingPage} />} />
+            </Route>
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   )
+
 }
 
 export default App
