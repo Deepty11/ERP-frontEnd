@@ -45,3 +45,12 @@ export const initialUserData = {
     emergencyContactInfoDto: null, //later
     //leaveInfo: null //later
 }
+
+export const initialFormErrors = {
+    firstName: '',
+    lastName: '',
+    username: '',
+    password: '',
+    gender: '',
+    role: '',
+}

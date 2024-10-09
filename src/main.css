@@ -1770,6 +1770,7 @@ footer {
 
 .error-message {
     color: red;
+    font-weight:normal;
 }
 
 .success-container {
@@ -1778,4 +1779,10 @@ footer {
 
 .success-message {
     color: green;
+}
+
+.required::after {
+    content: ' *';
+    color: red;
+    margin-right: 0.2rem;
 }

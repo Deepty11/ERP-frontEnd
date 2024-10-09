@@ -1,20 +1,19 @@
-import React from 'react'
-import { FaCalendarAlt, FaPen } from 'react-icons/fa'
-
-const DateComponent = ({ title = '', value = '', name='', onChange}) => {
+const DateComponent = (
+    { title = '',
+        value = '',
+        name = '',
+        onChange }) => {
     return (
         <div className="field">
             <label className="label">{title}</label>
-            <div className="control icons-left">
+            
+            <div className="field w-44 md:w-14rem">
                 <input className="input"
                     type="date"
                     placeholder={title}
                     name={name}
                     value={value}
                     onChange={onChange} />
-                <span className='icon left'>
-                    <FaCalendarAlt />
-                </span>
             </div>
         </div>
     )

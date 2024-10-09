@@ -1,16 +1,27 @@
 import React from 'react'
 
-const TextField = ({ title = '', value = '', name = '', type='text', onChange }) => {
+const TextField = (
+    { title = '',
+        value = '',
+        name = '',
+        type = 'text',
+        onChange,
+        isRequired }) => {
     return (
         <div className="field">
-            <label className="label">{title}</label>
+            <div>
+                <label className={`label ${isRequired ? 'required' : ''}`}>
+                    {title}
+                </label>
+            </div>
+
             <div className="field">
                 <input className="input"
                     type={type}
                     placeholder={title}
                     name={name}
                     value={value}
-                    onChange={onChange}/>
+                    onChange={onChange} />
             </div>
         </div>
     )

@@ -8,10 +8,13 @@ const DropdownComponent = ({
     onChange,
     options = [],
     placeholder = "Please Select",
-    optionLabel }) => {
+    optionLabel,
+    isRequired }) => {
     return (
         <div className='field'>
-            <label className="label">{title}</label>
+            <label className={`label ${isRequired ? 'required' : ''}`}>
+                {title}
+            </label>
             <div className='control select'>
                 <Dropdown
                     name={name}

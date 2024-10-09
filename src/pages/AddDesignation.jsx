@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { DesignationDto, SalaryRange } from '../dtos/DesignationDto'
 import TextArea from '../components/form_components/TextArea'
 import TextFieldWithAddons from '../components/form_components/TextFieldWithAddons'
 import { designationLevels, employmentTypes } from '../enums/DesignationConstants'
@@ -9,7 +8,6 @@ import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { FaPen } from 'react-icons/fa'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
 import designationService from '../services/DesignationService'
-import FormErrorIndicator from '../components/FormErrorIndicator'
 import {initialDesignation, initialFormErrors, initialSalaryRange} from '../data/DesignationData.js'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -112,9 +110,10 @@ const AddDesignation = (props) => {
                                 title='Title'
                                 value={designation.title}
                                 name='title'
-                                onChange={handleChange} />
+                                onChange={handleChange}
+                                isRequired={true} />
                             {formErrors.title
-                                && (<FormErrorIndicator title={formErrors.title} />)}
+                                && <p className='error-message'>{formErrors.title}</p>}
                             <TextArea
                                 title='Description'
                                 value={designation.description}
@@ -129,10 +128,11 @@ const AddDesignation = (props) => {
                                 value={designation.employmentType}
                                 onChange={handleChange}
                                 optionLabel="name"
+                                isRequired={true}
                             />
 
                             {formErrors.employmentType
-                                && (<FormErrorIndicator title={formErrors.employmentType} />)}
+                                && <p className='error-message'>{formErrors.employmentType}</p>}
                             <DropdownComponent
                                 title="Level"
                                 options={designationLevels}
@@ -140,10 +140,10 @@ const AddDesignation = (props) => {
                                 value={designation.level}
                                 onChange={handleChange}
                                 optionLabel="name"
+                                isRequired={true}
                             />
-
                             {formErrors.level
-                                && (<FormErrorIndicator title={formErrors.level} />)}
+                                && <p className='error-message'>{formErrors.level}</p>}
 
                             <hr />
                             <CardHeaderComponent

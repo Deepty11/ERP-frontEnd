@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { FaPen } from 'react-icons/fa'
 import TextField from '../components/form_components/TextField'
 import DateComponent from '../components/form_components/DateComponent'
-import { MultiSelect } from 'primereact/multiselect'
 import DropdownComponent from '../components/form_components/DropdownComponent'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
-import { genders, religions, roles, initialAddress, initialUserData } from '../data/UserData'
+import { genders, religions, roles, initialAddress, initialUserData, initialFormErrors } from '../data/UserData'
 import ContactTextField from '../components/form_components/ContactTextField'
 import userService from '../services/UserService'
 import AddressComponent from '../components/AddressComponent'
@@ -23,6 +22,7 @@ const AddUser = (props) => {
     const [presentAddress, setPresentAddress] = useState(initialAddress)
     const [permanentAddress, setPermanentAddress] = useState(initialAddress)
     const [sameAsPresentAddress, setSameAsPresentAddress] = useState(false)
+    const [formErrors, setFormErrors] = useState(initialFormErrors)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -52,7 +52,7 @@ const AddUser = (props) => {
         setContactInfoDto(contactInfo)
     }
 
-    const setUserData = () => {
+    const setContactInfoToUserData = () => {
         const userData = user
         userData.contactInfoDto = contactInfoDto
         setUser(userData)
@@ -72,23 +72,57 @@ const AddUser = (props) => {
 
     }
 
+    const validateForm = (data) => {
+        const errors = {}
+
+        if (!data.firstName.trim()) {
+            errors.firstName = "First name is required"
+        }
+
+        if (!data.lastName.trim()) {
+            errors.lastName = "Last name is required"
+        }
+
+        if (!data.username.trim()) {
+            errors.username = "Username is required"
+        }
+
+        if (!data.password.trim()) {
+            errors.password = "Password is required"
+        }
+
+        if (!data.gender.trim()) {
+            errors.gender = "Gender is required"
+        }
+
+        if (!data.role.trim()) {
+            errors.role = "Role is required"
+        }
+
+        return errors
+    }
+
     const submitForm = (e) => {
         e.preventDefault()
-
         setContactInfo()
-        setUserData()
+        setContactInfoToUserData()
+        const errors = validateForm(user)
+        console.log(errors)
+        setFormErrors(errors)
 
-        userService.createUser(user, () => {
-            toast.success("Added user successfully!")
-        }, (error) => {
-            console.log(error)
-        })
-        console.log("submitted data: ", user)
+        if (Object.keys(errors).length === 0) {
+            userService.createUser(user, () => {
+                toast.success("Added user successfully!")
+            }, (error) => {
+                console.log(error)
+            })
+            console.log("submitted data: ", user)
+        }
     }
 
     return (
         <div>
-            <ToastContainer hideProgressBar={true}/>
+            <ToastContainer hideProgressBar={true} />
             <section className="section main-section">
                 <form
                     method='post'
@@ -103,24 +137,38 @@ const AddUser = (props) => {
                                 title='First Name'
                                 value={user.firstName}
                                 name='firstName'
-                                onChange={handleChange} />
+                                onChange={handleChange}
+                                isRequired={true} />
+                            {formErrors.firstName
+                                && <p className='error-message'>{formErrors.firstName}</p>}
+                            
                             <TextField
                                 title='Last Name'
                                 value={user.lastName}
                                 name='lastName'
-                                onChange={handleChange} />
+                                onChange={handleChange}
+                                isRequired={true} />
+                            {formErrors.lastName
+                                && <p className='error-message'>{formErrors.lastName}</p>}
+                            
                             <TextField
-                                title='username'
+                                title='Username'
                                 value={user.username}
                                 name='username'
-                                onChange={handleChange} />
+                                onChange={handleChange}
+                                isRequired={true} />
+                            {formErrors.username
+                                && <p className='error-message'>{formErrors.username}</p>}
 
                             <TextField
                                 type='password'
                                 title='Password'
                                 value={user.password}
                                 name='password'
-                                onChange={handleChange} />
+                                onChange={handleChange}
+                                isRequired={true} />
+                            {formErrors.password
+                                && <p className='error-message'>{formErrors.password}</p>}
 
                             <DropdownComponent
                                 title="Role"
@@ -129,7 +177,10 @@ const AddUser = (props) => {
                                 value={user.role}
                                 onChange={handleChange}
                                 optionLabel="label"
+                                isRequired={true}
                             />
+                            {formErrors.role
+                                && <p className='error-message'>{formErrors.role}</p>}
 
                             <DateComponent
                                 title='Date of Birth'
@@ -144,7 +195,10 @@ const AddUser = (props) => {
                                 value={user.gender}
                                 onChange={handleChange}
                                 optionLabel="label"
+                                isRequired = {true}
                             />
+                            {formErrors.gender
+                                && <p className='error-message'>{formErrors.gender}</p>}
 
                             <DropdownComponent
                                 title="Religion"
