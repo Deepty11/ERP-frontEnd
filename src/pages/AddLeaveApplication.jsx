@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import DropdownComponent from '../components/form_components/DropdownComponent'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
 import { initialLeaveApplication, initialLeaveApplicationFormErrors, leaveTypes } from '../data/LeaveApplicationData'
-import { FaPen } from 'react-icons/fa'
 import { useAuth } from '../components/AuthProvider'
 import userService from '../services/UserService'
 import TextArea from '../components/form_components/TextArea'
 import DateComponent from '../components/form_components/DateComponent'
 import leaveApplicationService from '../services/LeaveApplicationService'
-
 
 const AddLeaveApplication = (props) => {
     const { loggedInUsername } = useAuth()
@@ -137,7 +134,6 @@ const AddLeaveApplication = (props) => {
                     </div>
 
                     <FormButtonComponent handleReset={(e) => {
-                        console.log("reset")
                         setLeaveApplication(initialLeaveApplication)
                         setFormErrors(initialLeaveApplicationFormErrors)
                     }} />
