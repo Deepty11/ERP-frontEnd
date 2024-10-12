@@ -1,17 +1,35 @@
 import React, { useEffect } from 'react'
+import { useAuth } from '../AuthProvider';
+import { useNavigate } from 'react-router';
 
 const NavbarMenu = ({ items }) => {
+    const { logout } = useAuth()
+    const navigate = useNavigate()
+
+    const handleAction = (e) => {
+        switch (e.target.name) {
+            case 'Logout':
+                logout()
+                navigate('/login')
+                break;
+
+            default:
+                break;
+        }
+    }
     return (
         <div className="navbar-menu active" id="navbar-menu">
             <div className="navbar-end">
                 <div className="navbar-item dropdown has-divider">
                     {items.map((item, index) => (
                         <React.Fragment key={index}>
-                            <a href={item.href}
-                                className="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center">
+                            <button
+                                className="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center"
+                                name={item.label}
+                                onClick={handleAction}>
                                 {React.cloneElement(item.icon, { className: "mr-2" })}
                                 {item.label}
-                            </a>
+                            </button>
                         </React.Fragment>
                     ))}
                 </div>

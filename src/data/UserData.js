@@ -1,3 +1,5 @@
+import { initialJobProfileData } from "./JobprofileData"
+
 export const religions = [
     { label: "Islam", value: "ISLAM" },
     { label: "Hinduism", value: "HINDUISM" },
@@ -16,13 +18,10 @@ export const roles = [
     {label: "User", value: "USER"},
 ]
 
-export const initialAddress = {
-    houseNo: '',
-    road: '',
-    city: '',
-    thana: '',
-    postalCode: '',
-    district: ''
+export const initialContactInfoData = {
+    mobileNumber: '',
+    email: '',
+    address:''
 }
 
 export const initialUserData = {
@@ -35,22 +34,19 @@ export const initialUserData = {
     role: '',
     //document: null, // later
     religion: '',
-    contactInfoDto: {
-        mobileNumber: '',
-        email: '',
-        presentAddress: initialAddress, //later
-        permanentAddress: initialAddress //later
-
-    },
+    contactInfoDto: initialContactInfoData,
+    jobProfileDto: initialJobProfileData,
     emergencyContactInfoDto: null, //later
     //leaveInfo: null //later
 }
 
 export const initialFormErrors = {
+    employeeId: '',
     firstName: '',
     lastName: '',
     username: '',
     password: '',
     gender: '',
     role: '',
+    designationTitle: '',
 }

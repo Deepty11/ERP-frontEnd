@@ -23,7 +23,7 @@ const DropdownComponent = ({
                     onChange={onChange}
                     optionLabel={optionLabel}
                     placeholder={placeholder}
-                    className="w-44 md:w-14rem p-dropdown"
+                    //className="w-44 md:w-14rem p-dropdown"
                 />
             </div>
         </div>

@@ -14,7 +14,8 @@ const NavbarDropdown = (
 
   return (
     <>
-      <NavbarDropdownBtn btnName={btnName}
+      <NavbarDropdownBtn
+        btnName={btnName}
         onClickFunction={() => setOpen(open => !open)}
         hasUserAvatar={hasUserAvatar}
         isUserName={isUserName} />

@@ -58,6 +58,13 @@ const Asidebar = ({ expandSidebar }) => {
                         </Link>
                     </li>
 
+                    <li className="--set-active-tables-html">
+                        <Link to="/add-leaveApplication">
+                            <span className="icon"><FaEdit /></span>
+                            <span className="menu-item-label">Create Leave Application</span>
+                        </Link>
+                    </li>
+
                     <li className="--set-active-forms-html">
                         <Link to="forms.html">
                             <span className="icon"><i className="mdi mdi-square-edit-outline"></i></span>

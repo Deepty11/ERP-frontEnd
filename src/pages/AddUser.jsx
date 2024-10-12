@@ -4,25 +4,40 @@ import TextField from '../components/form_components/TextField'
 import DateComponent from '../components/form_components/DateComponent'
 import DropdownComponent from '../components/form_components/DropdownComponent'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
-import { genders, religions, roles, initialAddress, initialUserData, initialFormErrors } from '../data/UserData'
-import ContactTextField from '../components/form_components/ContactTextField'
+import { genders, religions, roles, initialUserData, initialFormErrors, initialContactInfoData } from '../data/UserData'
 import userService from '../services/UserService'
-import AddressComponent from '../components/AddressComponent'
-import { FaHouse } from 'react-icons/fa6'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { ToastContainer, toast } from 'react-toastify'
+import UserContactComponent from '../components/UserContactComponent'
+import JobProfileComponent from '../components/JobProfileComponent'
+import designationService from '../services/DesignationService'
+import SpinnerComponent from '../components/SpinnerComponent'
+import { initialJobProfileData } from '../data/JobprofileData'
+import { initialDesignation } from '../data/DesignationData'
 
 const AddUser = (props) => {
     useEffect(() => {
         props.callback('Add User')
+        retreiveDesignations()
     }, [])
 
     const [user, setUser] = useState(initialUserData)
     const [contactInfoDto, setContactInfoDto] = useState(initialUserData.contactInfoDto)
-    const [presentAddress, setPresentAddress] = useState(initialAddress)
-    const [permanentAddress, setPermanentAddress] = useState(initialAddress)
-    const [sameAsPresentAddress, setSameAsPresentAddress] = useState(false)
+    const [jobProfileDto, setJobProfileDto] = useState(initialUserData.jobProfileDto)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
+    const [designations, setDesignations] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const retreiveDesignations = () => {
+        designationService.getAllDesignations(
+            (designations) => {
+                setDesignations(designations)
+                setLoading(false)
+            }, (error) => {
+                console.log("Error: " + error)
+                setLoading(false)
+            })
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -34,22 +49,26 @@ const AddUser = (props) => {
         setContactInfoDto({ ...contactInfoDto, [name]: value })
     }
 
-    const handlePresentAddressChange = (e) => {
+    const handleJobProfile = (e) => {
         const { name, value } = e.target
-        setPresentAddress({ ...presentAddress, [name]: value })
+
+        if (name == 'basicSalary' || name == 'compensation') {
+            const doubleValue = parseFloat(value)
+            if (!isNaN(doubleValue)) {
+                setJobProfileDto({ ...jobProfileDto, [name]: doubleValue })
+            } else {
+                setJobProfileDto({ ...jobProfileDto, [name]: "" })
+            }
+        } else {
+            setJobProfileDto({ ...jobProfileDto, [name]: value })
+        }
+        
     }
 
-    const handlePermanentAddressChange = (e) => {
-        const { name, value } = e.target
-        setPermanentAddress({ ...permanentAddress, [name]: value })
-    }
-
-    const setContactInfo = () => {
-        const contactInfo = contactInfoDto
-        contactInfo.presentAddress = presentAddress
-        contactInfo.permanentAddress = permanentAddress
-
-        setContactInfoDto(contactInfo)
+    const setJobProfileDtoToUserData = () => {
+        const userData = user
+        userData.jobProfileDto = jobProfileDto
+        setUser(userData)
     }
 
     const setContactInfoToUserData = () => {
@@ -58,22 +77,9 @@ const AddUser = (props) => {
         setUser(userData)
     }
 
-    const handleSameAsAbove = (e) => {
-        const checked = e.target.checked
-
-        setSameAsPresentAddress(checked)
-
-        permanentAddress.city = checked ? presentAddress.city : ''
-        permanentAddress.district = checked ? presentAddress.district : ''
-        permanentAddress.houseNo = checked ? presentAddress.houseNo : ''
-        permanentAddress.road = checked ? presentAddress.road : ''
-        permanentAddress.thana = checked ? presentAddress.thana : ''
-        permanentAddress.postalCode = checked ? presentAddress.postalCode : ''
-
-    }
-
     const validateForm = (data) => {
         const errors = {}
+        console.log(data)
 
         if (!data.firstName.trim()) {
             errors.firstName = "First name is required"
@@ -99,13 +105,29 @@ const AddUser = (props) => {
             errors.role = "Role is required"
         }
 
+        if (!data.jobProfileDto.employeeId.trim()) {
+            errors.employeeId = "Employee Id is required"
+        }
+
+        if (data.jobProfileDto.designationDto == null) {
+            errors.designationTitle = "Designation is required"
+        }
+
+        if(!data.jobProfileDto.employmentType.trim()) {
+            errors.employmentType = "Required"
+        }
+
+        if(!data.jobProfileDto.level.trim()) {
+            errors.level = "Required"
+        }
+
         return errors
     }
 
     const submitForm = (e) => {
         e.preventDefault()
-        setContactInfo()
         setContactInfoToUserData()
+        setJobProfileDtoToUserData()
         const errors = validateForm(user)
         console.log(errors)
         setFormErrors(errors)
@@ -118,6 +140,10 @@ const AddUser = (props) => {
             })
             console.log("submitted data: ", user)
         }
+    }
+
+    if (loading) {
+        return <SpinnerComponent />
     }
 
     return (
@@ -133,6 +159,7 @@ const AddUser = (props) => {
                             icon={<FaPen />} />
 
                         <div className="card-content">
+
                             <TextField
                                 title='First Name'
                                 value={user.firstName}
@@ -141,7 +168,7 @@ const AddUser = (props) => {
                                 isRequired={true} />
                             {formErrors.firstName
                                 && <p className='error-message'>{formErrors.firstName}</p>}
-                            
+
                             <TextField
                                 title='Last Name'
                                 value={user.lastName}
@@ -150,7 +177,7 @@ const AddUser = (props) => {
                                 isRequired={true} />
                             {formErrors.lastName
                                 && <p className='error-message'>{formErrors.lastName}</p>}
-                            
+
                             <TextField
                                 title='Username'
                                 value={user.username}
@@ -195,7 +222,7 @@ const AddUser = (props) => {
                                 value={user.gender}
                                 onChange={handleChange}
                                 optionLabel="label"
-                                isRequired = {true}
+                                isRequired={true}
                             />
                             {formErrors.gender
                                 && <p className='error-message'>{formErrors.gender}</p>}
@@ -211,60 +238,23 @@ const AddUser = (props) => {
                         </div>
                     </div>
 
-                    <div className="card mb-6">
-                        <CardHeaderComponent
-                            title='Contact Information'
-                            icon={<FaPen />} />
+                    <JobProfileComponent
+                        jobProfileDto={jobProfileDto}
+                        designationList={designations}
+                        handleChange={handleJobProfile}
+                        formErrors={formErrors} />
 
-                        <div className="card-content">
-                            <ContactTextField
-                                title='Mobile'
-                                value={contactInfoDto.mobileNumber}
-                                name='mobileNumber'
-                                onChange={handleContactInfo} />
+                    <UserContactComponent
+                        contactInfoDto={contactInfoDto}
+                        handleContactInfo={handleContactInfo} />
 
-                            <ContactTextField
-                                type='email'
-                                title='Email'
-                                value={contactInfoDto.email}
-                                name='email'
-                                onChange={handleContactInfo} />
-                            <hr />
-                        </div>
-                    </div>
-
-                    <div className="card mb-6">
-                        <CardHeaderComponent
-                            title='Present Address'
-                            icon={<FaHouse />} />
-
-                        <div className="card-content">
-                            <AddressComponent
-                                address={presentAddress}
-                                handler={handlePresentAddressChange} />
-                        </div>
-                    </div>
-
-                    <div className="card mb-6">
-                        <CardHeaderComponent
-                            title='Permanent Address'
-                            icon={<FaHouse />} />
-
-                        <div className="card-content">
-                            <div className='checkbox-label'>
-                                <input
-                                    className='checkbox'
-                                    type='checkbox'
-                                    checked={sameAsPresentAddress}
-                                    onChange={handleSameAsAbove} />
-                                <label>Same as Present Address</label>
-                            </div>
-                            <AddressComponent
-                                address={permanentAddress}
-                                handler={handlePermanentAddressChange} />
-                        </div>
-                    </div>
-                    <FormButtonComponent />
+                    <FormButtonComponent handleReset={(e) => {
+                        setUser(initialUserData)
+                        setContactInfoDto(initialContactInfoData)
+                        setJobProfileDto(initialJobProfileData)
+                        setDesignations(initialDesignation)
+                        setFormErrors(initialFormErrors)
+                    }} />
                 </form >
             </section >
         </div>

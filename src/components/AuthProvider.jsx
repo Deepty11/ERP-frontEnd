@@ -31,8 +31,17 @@ const AuthProvider = ({ children }) => {
         return false
     }
 
+    const loggedInUsername = () => {
+        const token = localStorage.getItem('token')
+        if (token == null) {
+            return null;
+        }
+
+        return jwtDecode(token).sub
+    }
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, loggedInUsername }}>
             {children}
         </AuthContext.Provider>
     )

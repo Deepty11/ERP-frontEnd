@@ -271,7 +271,7 @@ video {
 }
 
 .navbar {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -445,7 +445,7 @@ video {
 }
 
 .navbar-menu.active {
-    display: block
+    display: block;
 }
 
 @media (min-width:1024px) {
@@ -1771,6 +1771,7 @@ footer {
 .error-message {
     color: red;
     font-weight:normal;
+    font-size: small;
 }
 
 .success-container {
@@ -1785,4 +1786,13 @@ footer {
     content: ' *';
     color: red;
     margin-right: 0.2rem;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.action-col {
+    width: 20%;
 }

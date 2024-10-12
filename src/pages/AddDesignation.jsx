@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import TextArea from '../components/form_components/TextArea'
 import TextFieldWithAddons from '../components/form_components/TextFieldWithAddons'
-import { designationLevels, employmentTypes } from '../enums/DesignationConstants'
-import DropdownComponent from '../components/form_components/DropdownComponent'
 import TextField from '../components/form_components/TextField'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { FaPen } from 'react-icons/fa'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
 import designationService from '../services/DesignationService'
-import {initialDesignation, initialFormErrors, initialSalaryRange} from '../data/DesignationData.js'
+import { initialDesignation, initialFormErrors, initialSalaryRange } from '../data/DesignationData.js'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -34,16 +32,7 @@ const AddDesignation = (props) => {
             errors.title = "Title is required"
         }
 
-        if (!data.employmentType.trim()) {
-            errors.employmentType = "Employment Type is required"
-        }
-
-        if (!data.level.trim()) {
-            errors.level = "Level is required"
-        }
-
         return errors
-
     }
 
     const updateSalaryRange = () => {
@@ -82,6 +71,7 @@ const AddDesignation = (props) => {
     const handleSalaryRangeChange = (e) => {
         const { name, value } = e.target
         const doubleValue = parseFloat(value)
+
         if (!isNaN(doubleValue)) {
             setSalaryRange({ ...salaryRange, [name]: doubleValue })
         } else {
@@ -96,9 +86,9 @@ const AddDesignation = (props) => {
 
     return (
         <div>
-            <ToastContainer 
-            hideProgressBar={true}
-            autoClose={3000}
+            <ToastContainer
+                hideProgressBar={true}
+                autoClose={3000}
             />
             <section className="section main-section">
                 <form
@@ -120,32 +110,8 @@ const AddDesignation = (props) => {
                                 name='description'
                                 onChange={handleChange}
                             />
-
-                            <DropdownComponent
-                                title="Employee Type"
-                                options={employmentTypes}
-                                name="employmentType"
-                                value={designation.employmentType}
-                                onChange={handleChange}
-                                optionLabel="name"
-                                isRequired={true}
-                            />
-
-                            {formErrors.employmentType
-                                && <p className='error-message'>{formErrors.employmentType}</p>}
-                            <DropdownComponent
-                                title="Level"
-                                options={designationLevels}
-                                name="level"
-                                value={designation.level}
-                                onChange={handleChange}
-                                optionLabel="name"
-                                isRequired={true}
-                            />
-                            {formErrors.level
-                                && <p className='error-message'>{formErrors.level}</p>}
-
                             <hr />
+
                             <CardHeaderComponent
                                 title='Salary Range'
                                 icon={<FaPen />} />

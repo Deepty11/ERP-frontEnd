@@ -39,15 +39,11 @@ const DesignationList = (props) => {
                     <TableRow>
                         <TableCell align="left">Id</TableCell>
                         <TableCell align="left">Title</TableCell>
-                        <TableCell align="left">Level</TableCell>
-                        <TableCell align="left">Employment Type</TableCell>
                         <TableCell align="left">Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {designations.map((row) => {
-                        <h1>hello {row.title}</h1>
-                    })}
+                    
                     {designations.map((row) => (
                         <TableRow
                             key={row.id}
@@ -55,8 +51,6 @@ const DesignationList = (props) => {
                         >
                             <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{row.id}</TableCell>
                             <TableCell align="left">{row.title}</TableCell>
-                            <TableCell align="left">{row.level}</TableCell>
-                            <TableCell align="left">{row.employmentType}</TableCell>
                             <TableCell align="left">
                                 <button
                                     type='button'

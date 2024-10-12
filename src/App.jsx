@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import './main.css'
+import '/node_modules/primeflex/primeflex.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AddTask from './pages/AddTask'
 import MainLayout from './layout/MainLayout'
@@ -13,6 +14,7 @@ import PrivateRoutes from './components/PrivateRoutes'
 import UserList from './pages/UserList'
 import AddDesignation from './pages/AddDesignation'
 import DesignationList from './pages/DesignationList'
+import AddLeaveApplication from './pages/AddLeaveApplication'
 
 function App() {
   const [pageTitle, setPageTitle] = useState('Dashboard')
@@ -34,6 +36,7 @@ function App() {
               <Route path='/users' element={<UserList callback={onRequestingPage} />} />
               <Route path='/add-designation' element={<AddDesignation callback={onRequestingPage} />} />
               <Route path='/designations' element={<DesignationList callback={onRequestingPage} />} />
+              <Route path='/add-leaveApplication' element={<AddLeaveApplication callback={onRequestingPage} />} />
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />

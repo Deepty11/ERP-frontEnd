@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FormButtonComponent = () => {
+const FormButtonComponent = ({ handleReset }) => {
     return (
         <div className="field grouped">
             <div className="control">
@@ -13,7 +13,8 @@ const FormButtonComponent = () => {
             <div className="control">
                 <button
                     type="reset"
-                    className="button red">
+                    className="button red"
+                    onClick={handleReset}>
                     Reset
                 </button>
             </div>

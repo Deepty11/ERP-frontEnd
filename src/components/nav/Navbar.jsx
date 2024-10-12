@@ -13,19 +13,15 @@ import { useNavigate } from 'react-router';
 function Navbar({ toggleSidebar, isSidebarExpanded }) {
 
     const userMenuItems = [
-        { icon: <FaUser />, label: 'Profile', href: '#profile' },
-        { icon: <FaCog />, label: 'Settings', href: '#settings' },
-        { icon: <FaEnvelope />, label: 'Messages', href: '#messages' },
-        { icon: <FaSignOutAlt />, label: 'Logout', href: '#logout' },
+        { icon: <FaUser />, label: 'Profile'},
+        { icon: <FaCog />, label: 'Settings'},
+        { icon: <FaEnvelope />, label: 'Messages'},
     ];
 
     const navbarMenuItems = [
-        { icon: <FaUser />, label: 'Profile', href: '#profile' },
-        { icon: <FaCog />, label: 'Settings', href: '#settings' },
-        { icon: <FaEnvelope />, label: 'Messages', href: '#messages' },
-        { icon: <FaQuestionCircle />, label: 'About', href: '#about' },
-        { icon: <FaSignOutAlt />, label: 'Logout', href: '#logout' },
-
+        ...userMenuItems,
+        { icon: <FaQuestionCircle />, label: 'About'},
+        { icon: <FaSignOutAlt />, label: 'Logout'},
     ];
 
     const [displayNavbarMenu, setDisplayNavbarMenu] = useState(false)
@@ -79,7 +75,8 @@ function Navbar({ toggleSidebar, isSidebarExpanded }) {
             <div className="navbar-menu" id="navbar-menu">
                 <div className="navbar-end">
                     <div className="navbar-item dropdown has-divider has-user-avatar">
-                        <NavbarDropdown items={userMenuItems}
+                        <NavbarDropdown
+                            items={userMenuItems}
                             btnName="John Doe"
                             hasUserAvatar={true}
                             isUserName={true}

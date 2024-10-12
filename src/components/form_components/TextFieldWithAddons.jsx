@@ -6,7 +6,7 @@ const TextFieldWithAddons = ({ title, placeholder, name, value, onChange}) => {
         <div className="field">
             <label className="label">{title}</label>
             <div className='field'>
-                <div className="field addons w-96">
+                <div className="field addons">
                     <AddOnField value="BDT"/>
                     <div className="control expanded">
                         <input className="input"
