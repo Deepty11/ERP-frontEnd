@@ -44,7 +44,7 @@ const AddLeaveApplication = (props) => {
         const errors = validate(leaveApplication)
         setFormErrors(errors)
 
-        if(Object.keys(errors).length === 0) {
+        if (Object.keys(errors).length === 0) {
             console.log(leaveApplication)
             leaveApplicationService.createLeaveApplication(
                 leaveApplication, (data) => {
@@ -66,7 +66,7 @@ const AddLeaveApplication = (props) => {
         const errors = {}
 
         if (!data.leaveType.trim()) {
-            errors.leaveType = "Leave Type is required"
+            errors.leaveType = "Required"
         }
 
         if (!data.fromDate.trim()) {
@@ -123,17 +123,23 @@ const AddLeaveApplication = (props) => {
                                 name='fromDate'
                                 value={leaveApplication.fromDate}
                                 onChange={handleChange} />
+                            {formErrors.fromDate
+                                && <p className='error-message'>{formErrors.fromDate}</p>}
 
                             <DateComponent
                                 title='To'
                                 name='toDate'
                                 value={leaveApplication.toDate}
                                 onChange={handleChange} />
+                            {formErrors.toDate
+                                && <p className='error-message'>{formErrors.toDate}</p>}
                         </div>
                     </div>
 
                     <FormButtonComponent handleReset={(e) => {
+                        console.log("reset")
                         setLeaveApplication(initialLeaveApplication)
+                        setFormErrors(initialLeaveApplicationFormErrors)
                     }} />
                 </form >
             </section >
