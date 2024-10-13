@@ -156,7 +156,7 @@ const AddUser = (props) => {
                     <div className="card mb-6">
                         <CardHeaderComponent
                             title='Basic Information'
-                            icon={<FaPen />} />
+                            leftIcon={<FaPen />} />
 
                         <div className="card-content">
 

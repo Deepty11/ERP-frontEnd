@@ -13,15 +13,15 @@ import { useNavigate } from 'react-router';
 function Navbar({ toggleSidebar, isSidebarExpanded }) {
 
     const userMenuItems = [
-        { icon: <FaUser />, label: 'Profile'},
-        { icon: <FaCog />, label: 'Settings'},
-        { icon: <FaEnvelope />, label: 'Messages'},
+        { icon: <FaUser />, label: 'Profile' },
+        { icon: <FaCog />, label: 'Settings' },
+        { icon: <FaEnvelope />, label: 'Messages' },
     ];
 
     const navbarMenuItems = [
         ...userMenuItems,
-        { icon: <FaQuestionCircle />, label: 'About'},
-        { icon: <FaSignOutAlt />, label: 'Logout'},
+        { icon: <FaQuestionCircle />, label: 'About' },
+        { icon: <FaSignOutAlt />, label: 'Logout' },
     ];
 
     const [displayNavbarMenu, setDisplayNavbarMenu] = useState(false)
@@ -70,7 +70,9 @@ function Navbar({ toggleSidebar, isSidebarExpanded }) {
                 </a>
             </div>
 
-            {displayNavbarMenu && <NavbarMenu items={navbarMenuItems} />}
+            {displayNavbarMenu && <NavbarMenu
+                displayNavbarMenu={displayNavbarMenu}
+                items={navbarMenuItems} />}
 
             <div className="navbar-menu" id="navbar-menu">
                 <div className="navbar-end">

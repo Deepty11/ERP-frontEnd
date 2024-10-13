@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { useAuth } from '../AuthProvider';
 import { useNavigate } from 'react-router';
+import { motion } from 'framer-motion';
 
-const NavbarMenu = ({ items }) => {
+const NavbarMenu = ({ items, displayNavbarMenu }) => {
     const { logout } = useAuth()
     const navigate = useNavigate()
 
@@ -18,7 +19,14 @@ const NavbarMenu = ({ items }) => {
         }
     }
     return (
-        <div className="navbar-menu active" id="navbar-menu">
+        <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={displayNavbarMenu
+                ? { opacity: 1, height: 'auto' }
+                : { opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="navbar-menu active"
+            id="navbar-menu">
             <div className="navbar-end">
                 <div className="navbar-item dropdown has-divider">
                     {items.map((item, index) => (
@@ -34,7 +42,7 @@ const NavbarMenu = ({ items }) => {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

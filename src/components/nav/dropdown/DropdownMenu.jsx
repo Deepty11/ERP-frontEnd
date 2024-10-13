@@ -1,9 +1,16 @@
 import React from "react"
+import { motion } from "framer-motion"
 
-const DropdownMenu = ({ menuItems, hasLastDivider = false }) => {
+const DropdownMenu = ({ menuItems, isOpen, hasLastDivider = false }) => {
     return (
-        <div
+        <motion.div
+            initial={{ 'opacity': 0, height: 0}}
+            animate={isOpen
+                ? { opacity: 1, height: 'auto' }
+                : { opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
             className="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10 top-full left-0">
+
             {menuItems.map((item, index) => (
                 <React.Fragment key={index}>
                     <button onClick={(e) => {
@@ -20,7 +27,9 @@ const DropdownMenu = ({ menuItems, hasLastDivider = false }) => {
                     {hasLastDivider === true && index === menuItems.length - 2 && <hr className="navbar-divider" />}
                 </React.Fragment>
             ))}
-        </div>
+
+        </motion.div>
+
     )
 }
 

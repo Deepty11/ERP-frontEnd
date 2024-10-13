@@ -114,7 +114,7 @@ const AddDesignation = (props) => {
 
                             <CardHeaderComponent
                                 title='Salary Range'
-                                icon={<FaPen />} />
+                                leftIcon={<FaPen />} />
 
                             <TextFieldWithAddons
                                 title="Min"

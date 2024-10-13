@@ -11,6 +11,9 @@ const UserList = (props) => {
     useEffect(() => {
         props.callback('Users')
 
+        if (users.length != 0) {
+            return
+        }
         UserService.getUserList((users) => {
             setUsers(users)
             setLoading(false)
@@ -19,7 +22,7 @@ const UserList = (props) => {
             setLoading(false)
         })
 
-    }, [])
+    }, [users])
 
     const tableContent = () => {
         return <TableContainer component={Paper}>
@@ -43,10 +46,10 @@ const UserList = (props) => {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{row.id}</TableCell>
-                            <TableCell align="center">{row.username}</TableCell>
-                            <TableCell align="center">{row.fullName}</TableCell>
-                            <TableCell align="center">{row.role}</TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" style={{ 'width': '4rem' }}>{row.username}</TableCell>
+                            <TableCell align="center" style={{ 'width': '2rem' }}>{row.firstName + row.lastName}</TableCell>
+                            <TableCell align="center" style={{ 'width': '2rem' }}>{row.role}</TableCell>
+                            <TableCell align="center" style={{ 'width': '8rem' }}>
                                 <div className='button-container'>
                                     <button
                                         type='button'

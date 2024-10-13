@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import NavbarDropdownBtn from "./NavbarDropdownBtn"
 import DropdownMenu from "./DropdownMenu"
+import { motion } from "framer-motion"
 
 const NavbarDropdown = (
   {
@@ -21,6 +22,7 @@ const NavbarDropdown = (
         isUserName={isUserName} />
 
       {open && <DropdownMenu
+        isOpen={open}
         menuItems={items}
         hasLastDivider={hasLastDivider} />}
     </>

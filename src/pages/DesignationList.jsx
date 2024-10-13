@@ -18,6 +18,9 @@ const DesignationList = (props) => {
 
     useEffect(() => {
         props.callback('Designations')
+        if(designations.length != 0) {
+            return
+        }
 
         designationService.getAllDesignations((designations) => {
             console.log(designations)
@@ -27,7 +30,7 @@ const DesignationList = (props) => {
             setError(error)
             setLoading(false)
         })
-    }, [])
+    }, [designations])
 
     const tableContent = () => {
         return <TableContainer component={Paper}>

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
-import { FaUsers } from 'react-icons/fa';
+import { FaChartLine, FaUsers } from 'react-icons/fa';
 import { FaCartShopping, FaArrowTrendUp } from 'react-icons/fa6';
+import { MdOutlineRefresh } from 'react-icons/md'
 import CardContent from '../components/CardContent';
 import CustomLineChart from '../components/CustomLineChart';
+import CardHeaderComponent from '../components/card/CardHeaderComponent';
 
-const Dashboard = ({onPageLoad}) => {
+const Dashboard = ({ onPageLoad }) => {
     const cardItems = [
         { icon: <FaUsers size={50} />, label: 'Clients', value: '512', iconColor: 'text-green-500' },
         { icon: <FaCartShopping size={50} />, label: 'Sales', value: '$770', iconColor: 'text-red-500' },
@@ -30,19 +32,10 @@ const Dashboard = ({onPageLoad}) => {
             </div>
 
             <div className="card mb-6">
-                <header className="card-header">
-                    <p className="card-header-title">
-                        <span className="icon">
-                            <i className="mdi mdi-finance"></i>
-                        </span>
-                        Performance
-                    </p>
-                    <a href="#" className="card-header-icon">
-                        <span className="icon">
-                            <i className="mdi mdi-reload"></i>
-                        </span>
-                    </a>
-                </header>
+                <CardHeaderComponent
+                    title='Performance'
+                    leftIcon={<FaChartLine />}
+                    rightIcon={<MdOutlineRefresh />} />
                 <div className="card-content">
                     <div className="chart-area">
                         <div className="h-full">

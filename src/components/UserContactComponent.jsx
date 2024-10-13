@@ -10,7 +10,7 @@ const UserContactComponent = ({contactInfoDto, handleContactInfo}) => {
         <div className="card mb-6">
             <CardHeaderComponent
                 title='Contact Information'
-                icon={<FaPen />} />
+                leftIcon={<FaPen />} />
 
             <div className="card-content">
                 <ContactTextField

@@ -11,11 +11,16 @@ import leaveApplicationService from '../services/LeaveApplicationService'
 
 const AddLeaveApplication = (props) => {
     const { loggedInUsername } = useAuth()
+    const [leaveApplication, setLeaveApplication] = useState(initialLeaveApplication)
+    const [formErrors, setFormErrors] = useState(initialLeaveApplicationFormErrors)
+    const [userDto, setUserDto] = useState(null)
 
     useEffect(() => {
         props.callback('Create Leave Application')
 
         console.log(loggedInUsername)
+        if(userDto != null) return 
+
         userService.getUserByUsername(
             loggedInUsername(),
             (user) => {
@@ -24,11 +29,7 @@ const AddLeaveApplication = (props) => {
             }, (error) => {
                 console.log(error)
             })
-    }, [])
-
-    const [leaveApplication, setLeaveApplication] = useState(initialLeaveApplication)
-    const [formErrors, setFormErrors] = useState(initialLeaveApplicationFormErrors)
-    const [userDto, setUserDto] = useState(null)
+    }, [userDto])
 
     const showSuccessMessage = () => {
         toast.success("Designation added successfully")
@@ -91,10 +92,6 @@ const AddLeaveApplication = (props) => {
                     method='post'
                     onSubmit={submitForm}>
                     <div className="card mb-6">
-                        {/* <CardHeaderComponent
-                            title='Create Leave Application'
-                            icon={<FaPen />} /> */}
-
                         <div className="card-content">
                             <DropdownComponent
                                 title="Leave Type"

@@ -1,11 +1,10 @@
 import React from 'react'
 import '../../css/aside/asidebar.css'
 import { Link } from 'react-router-dom'
-import { FaEdit, FaGithub, FaList, FaQuestionCircle } from 'react-icons/fa'
+import { FaEdit, FaGithub, FaList, FaQuestionCircle, FaTv } from 'react-icons/fa'
 
 const Asidebar = ({ expandSidebar }) => {
     return (
-        // <aside className="aside is-placed-left is-expanded">
         <aside className={`aside ${expandSidebar ? 'expand-sidebar' : ''}`}>
             <div className="aside-tools">
                 <div>
@@ -17,7 +16,7 @@ const Asidebar = ({ expandSidebar }) => {
                 <ul className="menu-list">
                     <li className="--set-active-index-html">
                         <Link to="/dashboard">
-                            <span className="icon"><i className="mdi mdi-desktop-mac"></i></span>
+                            <span className="icon"><FaTv/></span>
                             <span className="menu-item-label">Dashboard</span>
                         </Link>
                     </li>
