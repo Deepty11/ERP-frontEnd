@@ -13,20 +13,22 @@ import JobProfileComponent from '../components/JobProfileComponent'
 import designationService from '../services/DesignationService'
 import SpinnerComponent from '../components/SpinnerComponent'
 import { initialJobProfileData } from '../data/JobprofileData'
-import { initialDesignation } from '../data/DesignationData'
 
 const AddUser = (props) => {
-    useEffect(() => {
-        props.callback('Add User')
-        retreiveDesignations()
-    }, [])
-
     const [user, setUser] = useState(initialUserData)
     const [contactInfoDto, setContactInfoDto] = useState(initialUserData.contactInfoDto)
     const [jobProfileDto, setJobProfileDto] = useState(initialUserData.jobProfileDto)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
     const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        props.callback('Add User')
+        if (designations.length === 0) {
+            retreiveDesignations()
+        }
+
+    }, [designations])
 
     const retreiveDesignations = () => {
         designationService.getAllDesignations(
@@ -62,7 +64,7 @@ const AddUser = (props) => {
         } else {
             setJobProfileDto({ ...jobProfileDto, [name]: value })
         }
-        
+
     }
 
     const setJobProfileDtoToUserData = () => {
@@ -113,27 +115,38 @@ const AddUser = (props) => {
             errors.designationTitle = "Designation is required"
         }
 
-        if(!data.jobProfileDto.employmentType.trim()) {
+        if (!data.jobProfileDto.employmentType.trim()) {
             errors.employmentType = "Required"
         }
 
-        if(!data.jobProfileDto.level.trim()) {
+        if (!data.jobProfileDto.level.trim()) {
             errors.level = "Required"
         }
 
         return errors
     }
 
+    const reset = () => {
+        setUser(initialUserData)
+        setContactInfoDto(initialContactInfoData)
+        setJobProfileDto(initialJobProfileData)
+        setFormErrors(initialFormErrors)
+    }
+
     const submitForm = (e) => {
         e.preventDefault()
+
         setContactInfoToUserData()
         setJobProfileDtoToUserData()
+
         const errors = validateForm(user)
         console.log(errors)
         setFormErrors(errors)
 
         if (Object.keys(errors).length === 0) {
             userService.createUser(user, () => {
+                reset()
+
                 toast.success("Added user successfully!")
             }, (error) => {
                 console.log(error)
@@ -249,11 +262,7 @@ const AddUser = (props) => {
                         handleContactInfo={handleContactInfo} />
 
                     <FormButtonComponent handleReset={(e) => {
-                        setUser(initialUserData)
-                        setContactInfoDto(initialContactInfoData)
-                        setJobProfileDto(initialJobProfileData)
-                        setDesignations(initialDesignation)
-                        setFormErrors(initialFormErrors)
+                        reset()
                     }} />
                 </form >
             </section >

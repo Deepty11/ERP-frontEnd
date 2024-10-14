@@ -41,6 +41,12 @@ const AddDesignation = (props) => {
         setDesignation(tempDesignation)
     }
 
+    const reset = () => {
+        setDesignation(initialDesignation)
+        setSalaryRange(initialSalaryRange)
+        setFormErrors(initialFormErrors)
+    }
+
     const submitForm = (e) => {
         e.preventDefault()
         resetFormErrors()
@@ -52,14 +58,11 @@ const AddDesignation = (props) => {
         console.log(designation)
 
         if (Object.keys(errors).length === 0) {
-            console.log("I am here")
             designationService.saveDesignation(
                 designation,
                 (res) => {
-                    console.log("Added designation successfully")
+                    reset()
                     showSuccessMessage()
-                    console.log(res)
-                    setDesignation(initialDesignation)
 
                 }, (error) => {
                     console.log(error)
@@ -133,7 +136,10 @@ const AddDesignation = (props) => {
                             />
                         </div>
                     </div>
-                    <FormButtonComponent />
+                    <FormButtonComponent
+                        handleReset={(e) => {
+                            reset()
+                        }} />
 
                 </form >
             </section >

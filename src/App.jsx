@@ -15,6 +15,8 @@ import UserList from './pages/UserList'
 import AddDesignation from './pages/AddDesignation'
 import DesignationList from './pages/DesignationList'
 import AddLeaveApplication from './pages/AddLeaveApplication'
+import LeaveApplications from './pages/LeaveApplications'
+import MyLeaveInformation from './pages/MyLeaveInformation'
 
 function App() {
   const [pageTitle, setPageTitle] = useState('Dashboard')
@@ -37,6 +39,8 @@ function App() {
               <Route path='/add-designation' element={<AddDesignation callback={onRequestingPage} />} />
               <Route path='/designations' element={<DesignationList callback={onRequestingPage} />} />
               <Route path='/add-leaveApplication' element={<AddLeaveApplication callback={onRequestingPage} />} />
+              <Route path='/leaveApplications' element={<LeaveApplications callback={onRequestingPage} />} />
+              <Route path='/MyLeaveInformation' element={<MyLeaveInformation callback={onRequestingPage} />} />
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />

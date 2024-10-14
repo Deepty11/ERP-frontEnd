@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Table, TableContainer, TableHead, TableCell, TableRow, TableBody, Paper } from '@mui/material'
 import UserService from '../services/UserService'
 import SpinnerComponent from '../components/SpinnerComponent'
+import EmptyViewComponent from '../components/EmptyViewComponent'
 
 const UserList = (props) => {
     const [users, setUsers] = useState([])
@@ -74,9 +75,7 @@ const UserList = (props) => {
 
     const emptyView = () => {
         return (
-            <div className='empty-view'>
-                <h1>No user found</h1>
-            </div>
+           <EmptyViewComponent message='No User found' />
         )
     }
 

@@ -35,6 +35,11 @@ const AddLeaveApplication = (props) => {
         toast.success("Designation added successfully")
     }
 
+    const reset = () => {
+        setLeaveApplication(initialLeaveApplication)
+        setFormErrors(initialLeaveApplicationFormErrors)
+    }
+
     const submitForm = (e) => {
         setUserToLeaveApplication()
 
@@ -46,7 +51,7 @@ const AddLeaveApplication = (props) => {
             console.log(leaveApplication)
             leaveApplicationService.createLeaveApplication(
                 leaveApplication, (data) => {
-                    console.log(data)
+                    reset()
                     showSuccessMessage("Added leave application successfully")
                 }, (error) => {
                     console.log(error)
@@ -131,8 +136,7 @@ const AddLeaveApplication = (props) => {
                     </div>
 
                     <FormButtonComponent handleReset={(e) => {
-                        setLeaveApplication(initialLeaveApplication)
-                        setFormErrors(initialLeaveApplicationFormErrors)
+                        reset()
                     }} />
                 </form >
             </section >

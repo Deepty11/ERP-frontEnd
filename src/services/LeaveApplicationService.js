@@ -17,6 +17,22 @@ class LeaveApplicationService {
                 failure(error)
             })
     }
+
+    getAllApplications = (success, failure) => {
+        axiosInstance
+            .get("/api/leaveApplications")
+            .then((res) => {
+                return res.data
+            })
+            .then(data => {
+                success(data)
+            })
+            .catch(error => {
+                failure(error)
+            })
+
+    }
+
 }
 
 const leaveApplicationService = new LeaveApplicationService()
