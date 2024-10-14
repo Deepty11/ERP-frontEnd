@@ -18,7 +18,7 @@ const DesignationList = (props) => {
 
     useEffect(() => {
         props.callback('Designations')
-        if(designations.length != 0) {
+        if (designations.length != 0) {
             return
         }
 
@@ -33,39 +33,42 @@ const DesignationList = (props) => {
     }, [designations])
 
     const tableContent = () => {
-        return <TableContainer component={Paper}>
-            <Table
-                sx={{ minWidth: 650 }}
-                size="small"
-                aria-label="a dense table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="left">Id</TableCell>
-                        <TableCell align="left">Title</TableCell>
-                        <TableCell align="left">Action</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    
-                    {designations.map((row) => (
-                        <TableRow
-                            key={row.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{row.id}</TableCell>
-                            <TableCell align="left">{row.title}</TableCell>
-                            <TableCell align="left">
-                                <button
-                                    type='button'
-                                    className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
-                                    Edit
-                                </button>
-                            </TableCell>
+        return <section className="section main-section">
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{ minWidth: 650 }}
+                    size="small"
+                    aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="left">Id</TableCell>
+                            <TableCell align="left">Title</TableCell>
+                            <TableCell align="left">Action</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+
+                        {designations.map((row) => (
+                            <TableRow
+                                key={row.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{row.id}</TableCell>
+                                <TableCell align="left">{row.title}</TableCell>
+                                <TableCell align="left">
+                                    <button
+                                        type='button'
+                                        className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
+                                        Edit
+                                    </button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </section>
+
     }
 
     const emptyView = () => {
