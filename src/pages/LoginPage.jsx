@@ -56,8 +56,7 @@ const LoginPage = () => {
                                     name="username"
                                     value={login.username}
                                     onChange={handleChange}
-                                    placeholder="username"
-                                    autocomplete="username" />
+                                    placeholder="username" />
                             </div>
                             <p className="help">
                                 Please enter your username
@@ -73,8 +72,7 @@ const LoginPage = () => {
                                     name="password"
                                     value={login.password}
                                     onChange={handleChange}
-                                    placeholder="Password"
-                                    autocomplete="current-password" />
+                                    placeholder="Password" />
                             </p>
                             <p className="help">
                                 Please enter your password
