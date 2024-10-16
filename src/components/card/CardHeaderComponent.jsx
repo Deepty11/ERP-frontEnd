@@ -8,6 +8,7 @@ const CardHeaderComponent = ({ title, leftIcon, rightIcon }) => {
             </span>
         </a>
     }
+
     return (
         <header className="card-header">
             <p className="card-header-title">

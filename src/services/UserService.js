@@ -1,5 +1,3 @@
-import axios, { Axios } from "axios";
-import { useAuth } from "../components/AuthProvider";
 import { axiosInstance } from "../utils/AxiosUtils";
 
 class UserService {
@@ -40,6 +38,9 @@ class UserService {
                 failure(error)
             })
     }
+
+
 }
+
 
 export default new UserService()

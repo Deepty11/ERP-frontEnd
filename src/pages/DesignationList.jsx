@@ -10,6 +10,7 @@ import {
     TableBody,
     Paper
 } from '@mui/material'
+import EmptyViewComponent from '../components/EmptyViewComponent'
 
 const DesignationList = (props) => {
     const [designations, setDesignations] = useState([])
@@ -71,17 +72,14 @@ const DesignationList = (props) => {
 
     }
 
-    const emptyView = () => {
-        return (
-            <div className='empty-view'>
-                <h1>No Data found</h1>
-            </div>
-        )
-    }
     return (
         <>
-            {loading && <SpinnerComponent />}
-            {designations.length === 0 ? emptyView() : tableContent()}
+            <section className="section main-section">
+                {loading && <SpinnerComponent />}
+                {designations.length === 0
+                    ? <EmptyViewComponent message='No Data found' />
+                    : tableContent()}
+            </section>
         </>
     )
 }

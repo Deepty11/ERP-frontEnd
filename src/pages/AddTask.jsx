@@ -9,6 +9,7 @@ import TextField from '../components/form_components/TextField'
 import DropdownComponent from '../components/form_components/DropdownComponent';
 import FormButtonComponent from '../components/form_components/FormButtonComponent';
 import taskService from '../services/TaskService';
+import CardHeaderComponent from '../components/card/CardHeaderComponent'
 
 const AddTask = (props) => {
     useEffect(() => {
@@ -87,14 +88,9 @@ const AddTask = (props) => {
     return (
         <section className="section main-section">
             <div className="card mb-6">
-                <header className="card-header">
-                    <p className="card-header-title">
-                        <span className="icon">
-                            <FaPen />
-                        </span>
-                        Create a New Task
-                    </p>
-                </header>
+                <CardHeaderComponent
+                    title="Create a New Task"
+                    leftIcon={<FaPen />} />
                 <div className="card-content">
                     <form
                         method='post'

@@ -4,7 +4,7 @@ class LeaveApplicationService {
     createLeaveApplication = (leaveApplication, success, failure) => {
         axiosInstance
             .post(
-                "/api/add-leaveApplication",
+                "/api/leave/create-application",
                 leaveApplication
             )
             .then((res) => {
@@ -20,7 +20,7 @@ class LeaveApplicationService {
 
     getAllApplications = (success, failure) => {
         axiosInstance
-            .get("/api/leaveApplications")
+            .get("/api/leave/applications")
             .then((res) => {
                 return res.data
             })

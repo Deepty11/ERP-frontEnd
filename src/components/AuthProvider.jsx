@@ -1,5 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext } from 'react'
+import userService from '../services/UserService'
 
 const AuthContext = createContext()
 

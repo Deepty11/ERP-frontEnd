@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../css/aside/asidebar.css'
 import { Link } from 'react-router-dom'
 import { FaEdit, FaGithub, FaList, FaQuestionCircle, FaTv } from 'react-icons/fa'
+import { useAuth } from '../AuthProvider'
+import userService from '../../services/UserService'
 
 const Asidebar = ({ expandSidebar }) => {
+    const { loggedInUsername } = useAuth()
+    const [loggedInUserId, setLoggedInUserId] = useState(null)
+
+    useEffect(() => {
+        if (loggedInUserId == null) {
+            userService.getUserByUsername(
+                loggedInUsername(),
+                (user) => {
+                    setLoggedInUserId(user.id)
+                },
+                (error) => {
+                    console.log(error)
+
+                })
+        }
+
+
+    }, [loggedInUserId])
+
     return (
         <aside className={`aside ${expandSidebar ? 'expand-sidebar' : ''}`}>
             <div className="aside-tools">
@@ -16,7 +37,7 @@ const Asidebar = ({ expandSidebar }) => {
                 <ul className="menu-list">
                     <li className="--set-active-index-html">
                         <Link to="/dashboard">
-                            <span className="icon"><FaTv/></span>
+                            <span className="icon"><FaTv /></span>
                             <span className="menu-item-label">Dashboard</span>
                         </Link>
                     </li>
@@ -58,21 +79,21 @@ const Asidebar = ({ expandSidebar }) => {
                     </li>
 
                     <li className="--set-active-tables-html">
-                        <Link to="/add-leaveApplication">
+                        <Link to="/leave/create-application">
                             <span className="icon"><FaEdit /></span>
                             <span className="menu-item-label">Create Leave Application</span>
                         </Link>
                     </li>
 
                     <li className="--set-active-tables-html">
-                        <Link to="/leaveApplications">
+                        <Link to="/leave/applications">
                             <span className="icon"><FaList /></span>
                             <span className="menu-item-label">Leave Applications</span>
                         </Link>
                     </li>
 
                     <li className="--set-active-tables-html">
-                        <Link to="/myLeaveInformation">
+                        <Link to={`/leave/applications?userId=${loggedInUserId}`}>
                             <span className="icon"><FaList /></span>
                             <span className="menu-item-label">My Leave Information</span>
                         </Link>
@@ -115,13 +136,13 @@ const Asidebar = ({ expandSidebar }) => {
                 <ul className="menu-list">
                     <li>
                         <Link to="https://justboil.me/tailwind-admin-templates/free-dashboard/" className="has-icon">
-                            <span className="icon"><FaQuestionCircle/></span>
+                            <span className="icon"><FaQuestionCircle /></span>
                             <span className="menu-item-label">About</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="https://github.com/justboil/admin-one-tailwind" className="has-icon">
-                            <span className="icon"><FaGithub/></span>
+                            <span className="icon"><FaGithub /></span>
                             <span className="menu-item-label">GitHub</span>
                         </Link>
                     </li>

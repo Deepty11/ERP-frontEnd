@@ -38,9 +38,9 @@ function App() {
               <Route path='/users' element={<UserList callback={onRequestingPage} />} />
               <Route path='/add-designation' element={<AddDesignation callback={onRequestingPage} />} />
               <Route path='/designations' element={<DesignationList callback={onRequestingPage} />} />
-              <Route path='/add-leaveApplication' element={<AddLeaveApplication callback={onRequestingPage} />} />
-              <Route path='/leaveApplications' element={<LeaveApplications callback={onRequestingPage} />} />
-              <Route path='/MyLeaveInformation' element={<MyLeaveInformation callback={onRequestingPage} />} />
+              <Route path='/leave/create-application' element={<AddLeaveApplication callback={onRequestingPage} />} />
+              <Route path='/leave/applications' element={<LeaveApplications callback={onRequestingPage} />} />
+              {/* <Route path='/leave/' element={<MyLeaveInformation callback={onRequestingPage} />} /> */}
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />

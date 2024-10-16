@@ -19,7 +19,7 @@ export const leaveTypes = [
     { label: "Casual", value: "CASUAL" },
 ]
 
-export const intialLeaveData = [
+export const initialLeaveData = [
     {type: 'Casual Leave', total: 14, taken: 8, remaining: 6 },
     {type: 'Sick', total: 3, taken: 1, remaining: 2 },
 ]

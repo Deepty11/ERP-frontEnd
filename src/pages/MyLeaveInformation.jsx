@@ -8,16 +8,14 @@ import {
     TableBody,
     Paper
 } from '@mui/material'
-import { intialLeaveData } from '../data/LeaveApplicationData'
-import CardHeaderComponent from '../components/card/CardHeaderComponent'
-import { FaPen } from 'react-icons/fa'
+import { initialLeaveData } from '../data/LeaveApplicationData'
 
 const MyLeaveInformation = (props) => {
     useEffect(() => {
         props.callback('My Leave Information')
     }, [])
 
-    const [leaveInformation, setLeaveInformation] = useState(intialLeaveData)
+    const [leaveInformation, setLeaveInformation] = useState(initialLeaveData)
 
     return (
         <section className="section main-section">
