@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/nav/Navbar'
-import { Outlet } from 'react-router'
+import { Outlet, useNavigate } from 'react-router'
 import Asidebar from '../components/aside/Asidebar'
 import Herobar from '../components/Herobar'
 import { useAuth } from '../components/AuthProvider'
@@ -10,6 +10,7 @@ const MainLayout = ({ pageTitle }) => {
     const [expandSidebar, setExpandSidebar] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState(null)
     const { loggedInUsername } = useAuth()
+    const navigate = useNavigate()
 
     const toggleSidebar = () => {
         setExpandSidebar(!expandSidebar)
@@ -38,6 +39,7 @@ const MainLayout = ({ pageTitle }) => {
             }
 
             fetchLoggedInUser()
+           // navigate("/dashboard")
 
         }
     }, [loggedInUser])

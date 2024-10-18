@@ -44,13 +44,13 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                         title="Designations"
                     />
 
-
                     {loggedInUser?.role == "ADMIN" &&
                         <ListOption
                             url="/add-designation"
                             icon={<FaEdit />}
                             title="Add Designation"
                         />}
+
                     <ListOption
                         url="/leave/create-application"
                         icon={<FaEdit />}

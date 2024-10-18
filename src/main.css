@@ -1796,3 +1796,15 @@ footer {
 .action-col {
     width: 20%;
 }
+
+.search-bar {
+    padding: 8px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+.search-bar:focus {
+    border-color: #007bff;    /* Change border color when focused */
+  }
