@@ -12,7 +12,7 @@ import UserContactComponent from '../components/UserContactComponent'
 import JobProfileComponent from '../components/JobProfileComponent'
 import designationService from '../services/DesignationService'
 import SpinnerComponent from '../components/SpinnerComponent'
-import { initialJobProfileData } from '../data/JobprofileData'
+import { initialJobProfileData } from '../data/JobProfileData'
 
 const AddUser = (props) => {
     const [user, setUser] = useState(initialUserData)

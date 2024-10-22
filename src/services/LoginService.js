@@ -11,6 +11,7 @@ class LoginService {
             .then((response) => {
                 if (response) {
                     console.log(response.data.token)
+                    localStorage.setItem('token', token)
                     success(response.data.token)
                 }
             })

@@ -1,8 +1,8 @@
-import { axiosInstance } from "../utils/AxiosUtils"
+import { ErpResourceApiClient } from "../utils/ErpResourceApiClient"
 
 class LeaveApplicationService {
     createLeaveApplication = (leaveApplication, success, failure) => {
-        axiosInstance
+        ErpResourceApiClient
             .post(
                 "/api/leave/create-application",
                 leaveApplication

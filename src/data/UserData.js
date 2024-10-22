@@ -1,4 +1,4 @@
-import { initialJobProfileData } from "./JobprofileData"
+
 
 export const religions = [
     { label: "Islam", value: "ISLAM" },
@@ -35,7 +35,7 @@ export const initialUserData = {
     //document: null, // later
     religion: '',
     contactInfoDto: initialContactInfoData,
-    jobProfileDto: initialJobProfileData,
+    // jobProfileDto: initialJobProfileData,
     emergencyContactInfoDto: null, //later
     //leaveInfo: null //later
 }

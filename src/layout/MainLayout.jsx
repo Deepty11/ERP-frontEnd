@@ -26,21 +26,7 @@ const MainLayout = ({ pageTitle }) => {
 
     useEffect(() => {
         if (!loggedInUser) {
-            const fetchLoggedInUser = () => {
-                 userService.getUserByUsername(
-                    loggedInUsername(),
-                    (user) => {
-                        console.log("success")
-                        setLoggedInUser(user)
-                    },
-                    (error) => {
-                        console.log(error)
-                    })
-            }
-
-            fetchLoggedInUser()
-           // navigate("/dashboard")
-
+            setLoggedInUser(localStorage.getItem('loggedInUser'))
         }
     }, [loggedInUser])
 

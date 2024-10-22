@@ -4,9 +4,11 @@ import { FaLock } from 'react-icons/fa'
 import LoginService from '../services/LoginService'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../components/AuthProvider'
+import UserService from '../services/UserService'
 
 
 const LoginPage = () => {
+    const base_url = "http://localhost:8080"
     const navigate = useNavigate()
 
     const initialLoginState = {
@@ -26,15 +28,34 @@ const LoginPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        LoginService.login(loginData, (token) => {
-            login(token)
+        login = (loginData) => {
+            axios.post(base_url + "/login", loginData)
+                .then((response) => {
+                    if (response) {
+                        console.log(response.data.token)
+                        localStorage.setItem('token', token)
+                    }
+                })
+                .then(() => {
+                    UserService.getUserByUsername(loginData.username)
+                })
+                .then(() => {
+                    navigate("/dashboard")
+                })
+                .catch((error) => {
+                    console.log("Login has failed with the error: " + error)
+                })
+        }
+
+        LoginService.login(loginData, () => {
+            
             navigate("/dashboard")
         }, (error) => {
             console.log("Login has failed with the error: " + error)
         })
     }
 
-    return (
+    return ( 
         <section className="section login-section">
             <Card className="card">
                 <header className="card-header">

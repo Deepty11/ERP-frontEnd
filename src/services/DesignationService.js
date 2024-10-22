@@ -1,8 +1,8 @@
-import { axiosInstance } from "../utils/AxiosUtils"
+import { ErpResourceApiClient } from "../utils/ErpResourceApiClient"
 
 class DesignationService {
     saveDesignation = (designationDto, success, failure) => {
-        axiosInstance.post(
+        ErpResourceApiClient.post(
             '/api/designation/add-designation',
             designationDto
         ).then((res) => {

@@ -1,8 +1,8 @@
-import { axiosInstance } from "../utils/AxiosUtils";
+import { ErpResourceApiClient } from "../utils/ErpResourceApiClient";
 
 class UserService {
     createUser = (user, success, failure) => {
-        axiosInstance
+        ErpResourceApiClient
             .post(
                 "/api/user/add-user",
                 user
@@ -17,7 +17,8 @@ class UserService {
     }
 
     getUserList = (success, failure) => {
-        axiosInstance.get('/api/user/users')
+        ErpResourceApiClient
+            .get('/api/user/users')
             .then((res) => {
                 console.log(res.data)
                 success(res.data)
@@ -28,18 +29,18 @@ class UserService {
 
     }
 
-    getUserByUsername = (username, success, failure) => {
-        axiosInstance.get('/api/user/loggedInUser?username=' + username)
+    getUserByUsername = (username) => {
+        ErpResourceApiClient
+            .get('/api/user/loggedInUser?username=' + username)
             .then((res) => {
                 console.log(res.data)
-                success(res.data)
+                localStorage.setItem('loggedInUser', res.data)
+                // success(res.data)
             }).catch(error => {
                 console.log("Error occured while fetching users " + error)
-                failure(error)
+                // failure(error)
             })
     }
-
-
 }
 
 
