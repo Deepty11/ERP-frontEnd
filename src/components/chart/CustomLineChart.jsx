@@ -48,7 +48,3 @@ const CustomLineChart = () => {
 }
 
 export default CustomLineChart
-
-
-
-

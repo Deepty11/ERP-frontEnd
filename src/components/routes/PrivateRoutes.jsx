@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from './AuthProvider'
+import { useAuth } from '../AuthProvider'
 import { Navigate, Outlet, useNavigate } from 'react-router'
 
 const PrivateRoutes = () => {

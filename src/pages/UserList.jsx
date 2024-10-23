@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Table, TableContainer, TableHead, TableCell, TableRow, TableBody, Paper } from '@mui/material'
 import UserService from '../services/UserService'
-import SpinnerComponent from '../components/SpinnerComponent'
-import EmptyViewComponent from '../components/EmptyViewComponent'
+import SpinnerComponent from '../components/common_components/SpinnerComponent'
+import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
-import Searchbar from '../components/Searchbar'
+import Searchbar from '../components/common_components/Searchbar'
 
 const UserList = (props) => {
     const [users, setUsers] = useState([])

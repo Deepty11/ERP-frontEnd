@@ -1,7 +1,7 @@
 import React from "react"
 import { FaEye, FaUsers } from "react-icons/fa"
 import { FaRotate, FaTrashCan } from "react-icons/fa6"
-import tableData from '../../tableData.json'
+import tableData from '../../../tableData.json'
 
 const TableCard = () => {
     return (

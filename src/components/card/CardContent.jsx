@@ -1,5 +1,4 @@
 import React from "react"
-import { FaUsers } from "react-icons/fa"
 
 const CardContent = ({label, value, icon, iconColor}) => {
     return (

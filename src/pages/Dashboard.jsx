@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { FaChartLine, FaUsers } from 'react-icons/fa';
 import { FaCartShopping, FaArrowTrendUp } from 'react-icons/fa6';
 import { MdOutlineRefresh } from 'react-icons/md'
-import CardContent from '../components/CardContent';
-import CustomLineChart from '../components/CustomLineChart';
+import CardContent from '../components/card/CardContent';
+import CustomLineChart from '../components/chart/CustomLineChart';
 import CardHeaderComponent from '../components/card/CardHeaderComponent';
 
 const Dashboard = ({ onPageLoad }) => {

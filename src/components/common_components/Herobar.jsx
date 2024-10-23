@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css/herobar.css'
+import '../../css/herobar.css'
 
 const Herobar = ({title = 'Dashboard'}) => {
     return (

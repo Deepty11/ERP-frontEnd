@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import CardHeaderComponent from './card/CardHeaderComponent'
-import ContactTextField from './form_components/ContactTextField'
-import TextArea from './form_components/TextArea'
-import {initialContactInfoData} from '../data/UserData'
+import CardHeaderComponent from '../card/CardHeaderComponent'
+import ContactTextField from '../form_components/ContactTextField'
+import TextArea from '../form_components/TextArea'
+import {initialContactInfoData} from '../../data/UserData'
 import { FaPen } from 'react-icons/fa'
 
 const UserContactComponent = ({contactInfoDto, handleContactInfo}) => {

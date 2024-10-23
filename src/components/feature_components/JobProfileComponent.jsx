@@ -1,11 +1,11 @@
 import React from 'react'
-import CardHeaderComponent from './card/CardHeaderComponent'
+import CardHeaderComponent from '../card/CardHeaderComponent'
 import { FaBriefcase } from 'react-icons/fa6'
 
-import DropdownComponent from './form_components/DropdownComponent'
-import DateComponent from './form_components/DateComponent'
-import TextFieldWithAddons from './form_components/TextFieldWithAddons'
-import TextField from './form_components/TextField'
+import DropdownComponent from '../form_components/DropdownComponent'
+import DateComponent from '../form_components/DateComponent'
+import TextFieldWithAddons from '../form_components/TextFieldWithAddons'
+import TextField from '../form_components/TextField'
 
 const JobProfileComponent = ({
     jobProfileDto,

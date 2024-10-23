@@ -16,7 +16,7 @@ class DesignationService {
     }
 
     getAllDesignations = (success, failure) => {
-        axiosInstance.get('/api/designation/designations')
+        ErpResourceApiClient.get('/api/designation/designations')
         .then((res) => {
             success(res.data)
         }, (error) => {

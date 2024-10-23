@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import designationService from '../services/DesignationService'
-import SpinnerComponent from '../components/SpinnerComponent'
+import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import {
     Table,
     TableContainer,
@@ -10,7 +10,7 @@ import {
     TableBody,
     Paper
 } from '@mui/material'
-import EmptyViewComponent from '../components/EmptyViewComponent'
+import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
 
 const DesignationList = (props) => {
     const [designations, setDesignations] = useState([])

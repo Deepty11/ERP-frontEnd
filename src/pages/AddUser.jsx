@@ -8,10 +8,10 @@ import { genders, religions, roles, initialUserData, initialFormErrors, initialC
 import userService from '../services/UserService'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { ToastContainer, toast } from 'react-toastify'
-import UserContactComponent from '../components/UserContactComponent'
-import JobProfileComponent from '../components/JobProfileComponent'
+import UserContactComponent from '../components/feature_components/UserContactComponent'
+import JobProfileComponent from '../components/feature_components/JobProfileComponent'
 import designationService from '../services/DesignationService'
-import SpinnerComponent from '../components/SpinnerComponent'
+import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import { initialJobProfileData } from '../data/JobProfileData'
 
 const AddUser = (props) => {

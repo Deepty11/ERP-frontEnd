@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import leaveApplicationService from '../services/LeaveApplicationService'
-import SpinnerComponent from '../components/SpinnerComponent'
+import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import dateUtils from '../utils/DateUtils'
 import {
     TableContainer,
@@ -11,7 +11,7 @@ import {
     TableBody,
     Paper
 } from '@mui/material'
-import EmptyViewComponent from '../components/EmptyViewComponent'
+import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
 import { ApproveButton, DeclineButton } from '../components/button_components/ButtonComponents'
 import { initialLeaveData } from '../data/LeaveApplicationData'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
