@@ -79,13 +79,15 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
                     <div className="navbar-item dropdown has-divider has-user-avatar">
                         <NavbarDropdown
                             items={userMenuItems}
-                            btnName="John Doe"
+                            btnName={loggedInUser?.username}
                             hasUserAvatar={true}
                             isUserName={true}
                             hasLastDivider={true} />
                     </div>
 
-                    <NavbarElement icon={circleQuestionIcon} elementName="About" />
+                    <NavbarElement
+                        icon={circleQuestionIcon}
+                        elementName="About" />
                     <NavbarElement
                         icon={signoutIcon}
                         elementName="Logout"
