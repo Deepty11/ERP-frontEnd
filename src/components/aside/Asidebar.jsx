@@ -2,8 +2,6 @@ import '../../css/aside/asidebar.css'
 import { Link } from 'react-router-dom'
 import { FaEdit, FaGithub, FaList, FaQuestionCircle, FaTv } from 'react-icons/fa'
 import ListOption from './ListOption'
-import { useEffect, useState } from 'react'
-import { initialUserData } from '../../data/UserData'
 
 const Asidebar = ({ expandSidebar, loggedInUser }) => {
 

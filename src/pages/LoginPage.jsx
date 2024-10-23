@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { Card } from 'react-bootstrap'
 import { FaLock } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-import UserService from '../services/UserService'
-import axios from 'axios'
+import loginService from '../services/LoginService'
 
 const LoginPage = () => {
     const base_url = "http://localhost:8080"
@@ -21,24 +20,11 @@ const LoginPage = () => {
         setLoginData({ ...loginData, [name]: value })
     }
 
-    const login = async (loginData) => {
-        try {
-            const response = await axios.post(base_url + "/login", loginData)
-            localStorage.setItem('token', response.data.token)
-            
-            const loggedInUser =  await UserService.getUserByUsername(loginData.username)
-            console.log(loggedInUser)
-            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-            navigate("/dashboard")
-        } catch(error) {
-            console.log("login failed with error: " + error)
-        }
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await login(loginData)
+        const res = await loginService.login(loginData)
+        navigate("/dashboard")
     }
 
     return ( 
