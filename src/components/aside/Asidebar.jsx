@@ -2,8 +2,11 @@ import '../../css/aside/asidebar.css'
 import { Link } from 'react-router-dom'
 import { FaEdit, FaGithub, FaList, FaQuestionCircle, FaTv } from 'react-icons/fa'
 import ListOption from './ListOption'
+import { useEffect, useState } from 'react'
+import { initialUserData } from '../../data/UserData'
 
 const Asidebar = ({ expandSidebar, loggedInUser }) => {
+
     return (
         <aside className={`aside ${expandSidebar ? 'expand-sidebar' : ''}`}>
             <div className="aside-tools">
@@ -24,6 +27,7 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                         icon={<FaEdit />}
                         title="Add Task"
                     />
+                    {/* {console.log(loggedInUser.role)} */}
                     {loggedInUser?.role == "ADMIN" &&
                         <ListOption
                             url="/users"

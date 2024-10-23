@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import { Card } from 'react-bootstrap'
 import { FaLock } from 'react-icons/fa'
-import LoginService from '../services/LoginService'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../components/AuthProvider'
 import UserService from '../services/UserService'
-
+import axios from 'axios'
 
 const LoginPage = () => {
     const base_url = "http://localhost:8080"
@@ -23,36 +21,24 @@ const LoginPage = () => {
         setLoginData({ ...loginData, [name]: value })
     }
 
-    const { login } = useAuth()
+    const login = async (loginData) => {
+        try {
+            const response = await axios.post(base_url + "/login", loginData)
+            localStorage.setItem('token', response.data.token)
+            
+            const loggedInUser =  await UserService.getUserByUsername(loginData.username)
+            console.log(loggedInUser)
+            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+            navigate("/dashboard")
+        } catch(error) {
+            console.log("login failed with error: " + error)
+        }
+    }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        login = (loginData) => {
-            axios.post(base_url + "/login", loginData)
-                .then((response) => {
-                    if (response) {
-                        console.log(response.data.token)
-                        localStorage.setItem('token', token)
-                    }
-                })
-                .then(() => {
-                    UserService.getUserByUsername(loginData.username)
-                })
-                .then(() => {
-                    navigate("/dashboard")
-                })
-                .catch((error) => {
-                    console.log("Login has failed with the error: " + error)
-                })
-        }
-
-        LoginService.login(loginData, () => {
-            
-            navigate("/dashboard")
-        }, (error) => {
-            console.log("Login has failed with the error: " + error)
-        })
+        await login(loginData)
     }
 
     return ( 
@@ -75,7 +61,7 @@ const LoginPage = () => {
                                     className="input"
                                     type="text"
                                     name="username"
-                                    value={login.username}
+                                    value={loginData.username}
                                     onChange={handleChange}
                                     placeholder="username" />
                             </div>
@@ -91,7 +77,7 @@ const LoginPage = () => {
                                     className="input"
                                     type="password"
                                     name="password"
-                                    value={login.password}
+                                    value={loginData.password}
                                     onChange={handleChange}
                                     placeholder="Password" />
                             </p>

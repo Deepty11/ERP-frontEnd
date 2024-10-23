@@ -10,7 +10,7 @@ import NavbarMenu from './NavbarMenu';
 import { useAuth } from '../AuthProvider';
 import { useNavigate } from 'react-router';
 
-function Navbar({ toggleSidebar, isSidebarExpanded }) {
+function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
 
     const userMenuItems = [
         { icon: <FaUser />, label: 'Profile' },

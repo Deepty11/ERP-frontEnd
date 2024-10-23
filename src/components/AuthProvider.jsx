@@ -1,6 +1,5 @@
 import { jwtDecode } from 'jwt-decode'
 import React, { createContext, useContext } from 'react'
-import userService from '../services/UserService'
 
 const AuthContext = createContext()
 
@@ -12,6 +11,7 @@ const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('loggedInUser')
     }
 
     const isAuthenticated = () => {

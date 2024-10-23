@@ -170,9 +170,7 @@ const AddUser = (props) => {
                         <CardHeaderComponent
                             title='Basic Information'
                             leftIcon={<FaPen />} />
-
                         <div className="card-content">
-
                             <TextField
                                 title='First Name'
                                 value={user.firstName}

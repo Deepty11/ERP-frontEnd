@@ -9,8 +9,23 @@ import userService from '../services/UserService'
 const MainLayout = ({ pageTitle }) => {
     const [expandSidebar, setExpandSidebar] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState(null)
-    const { loggedInUsername } = useAuth()
-    const navigate = useNavigate()
+
+    useEffect(() => {
+        const data = localStorage.getItem('loggedInUser')
+        const user = JSON.parse(data)
+        console.log("user" + user)
+
+        if (user) {
+            console.log("User ache")
+            setLoggedInUser(user)
+        } else {
+            console.log("User nai")
+        }
+        //setLoggedInUser(localStorage.getItem('loggedInUser'))
+    }, [])
+
+    // const { loggedInUsername } = useAuth()
+    // const navigate = useNavigate()
 
     const toggleSidebar = () => {
         setExpandSidebar(!expandSidebar)
@@ -24,19 +39,28 @@ const MainLayout = ({ pageTitle }) => {
         root.style.marginRight = !expandSidebar ? "-15rem" : "0px"
     }
 
-    useEffect(() => {
-        if (!loggedInUser) {
-            setLoggedInUser(localStorage.getItem('loggedInUser'))
-        }
-    }, [loggedInUser])
+    // useEffect(() => {
+    //     const user = localStorage.getItem('loggedInUser')
+    //     console.log("bleh")
+
+    //     if(user) {
+    //         console.log("User ache")
+    //         setLoggedInUser(user)
+    //     } else {
+    //         console.log("User nai")
+    //     }
+    //     //setLoggedInUser(localStorage.getItem('loggedInUser'))
+    // }, [])
 
     return (
         <>
             <Navbar
                 toggleSidebar={toggleSidebar}
                 isSidebarExpanded={expandSidebar}
-            />
-            <Asidebar expandSidebar={expandSidebar} loggedInUser={loggedInUser} />
+                loggedInUser={loggedInUser} />
+            <Asidebar
+                expandSidebar={expandSidebar}
+                loggedInUser={loggedInUser} />
             <Herobar title={pageTitle} />
             <Outlet />
         </>

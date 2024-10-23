@@ -29,19 +29,10 @@ class UserService {
 
     }
 
-    getUserByUsername = (username) => {
-        ErpResourceApiClient
-            .get('/api/user/loggedInUser?username=' + username)
-            .then((res) => {
-                console.log(res.data)
-                localStorage.setItem('loggedInUser', res.data)
-                // success(res.data)
-            }).catch(error => {
-                console.log("Error occured while fetching users " + error)
-                // failure(error)
-            })
+    getUserByUsername = async (username) => {
+        const response = await ErpResourceApiClient.get('/api/user/loggedInUser?username=' + username)
+        return response.data
     }
 }
-
 
 export default new UserService()
