@@ -6,6 +6,7 @@ import DropdownComponent from '../form_components/DropdownComponent'
 import DateComponent from '../form_components/DateComponent'
 import TextFieldWithAddons from '../form_components/TextFieldWithAddons'
 import TextField from '../form_components/TextField'
+import { employmentTypes, levels } from '../../data/JobProfileData'
 
 const JobProfileComponent = ({
     jobProfileDto,

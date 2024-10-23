@@ -1,3 +1,4 @@
+import { initialJobProfileData } from "./JobProfileData"
 
 
 export const religions = [
@@ -35,7 +36,7 @@ export const initialUserData = {
     //document: null, // later
     religion: '',
     contactInfoDto: initialContactInfoData,
-    // jobProfileDto: initialJobProfileData,
+     jobProfileDto: initialJobProfileData,
     emergencyContactInfoDto: null, //later
     //leaveInfo: null //later
 }

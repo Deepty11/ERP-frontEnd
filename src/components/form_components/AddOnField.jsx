@@ -6,7 +6,7 @@ const AddOnField = ({value}) => {
             <input className="input"
                 value={value}
                 size="3"
-                readOnly='true' />
+                readOnly={true} />
         </div>
     )
 }
