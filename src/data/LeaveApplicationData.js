@@ -23,3 +23,13 @@ export const initialLeaveData = [
     {type: 'Casual Leave', total: 14, taken: 8, remaining: 6 },
     {type: 'Sick', total: 3, taken: 1, remaining: 2 },
 ]
+
+export const initialLeaveOverview = {
+        userId: 0,
+        totalCasualLeave: 0,
+        totalSickLeave: 0,
+        numberOfCasualLeavesTaken: 0,
+        numberOfSickLeavesTaken: 0,
+        remainingCasualLeaves: 0,
+        remainingSickLeaves: 0
+}

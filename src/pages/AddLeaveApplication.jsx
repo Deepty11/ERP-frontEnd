@@ -4,7 +4,6 @@ import DropdownComponent from '../components/form_components/DropdownComponent'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
 import { initialLeaveApplication, initialLeaveApplicationFormErrors, leaveTypes } from '../data/LeaveApplicationData'
 import { useAuth } from '../components/AuthProvider'
-import userService from '../services/UserService'
 import TextArea from '../components/form_components/TextArea'
 import DateComponent from '../components/form_components/DateComponent'
 import leaveApplicationService from '../services/LeaveApplicationService'
@@ -19,20 +18,14 @@ const AddLeaveApplication = (props) => {
         props.callback('Create Leave Application')
 
         console.log(loggedInUsername)
-        if(userDto != null) return 
+        if (userDto != null) return
 
-        userService.getUserByUsername(
-            loggedInUsername(),
-            (user) => {
-                setUserDto(user)
-                console.log(user)
-            }, (error) => {
-                console.log(error)
-            })
-    }, [userDto])
+        const user = localStorage.getItem('loggedInUser')
+        setUserDto(JSON.parse(user))
+    }, [])
 
     const showSuccessMessage = () => {
-        toast.success("Designation added successfully")
+        toast.success("New Application is saved successfully")
     }
 
     const reset = () => {
@@ -40,7 +33,7 @@ const AddLeaveApplication = (props) => {
         setFormErrors(initialLeaveApplicationFormErrors)
     }
 
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         setUserToLeaveApplication()
 
         e.preventDefault()
@@ -49,15 +42,14 @@ const AddLeaveApplication = (props) => {
 
         if (Object.keys(errors).length === 0) {
             console.log(leaveApplication)
-            leaveApplicationService.createLeaveApplication(
-                leaveApplication, (data) => {
-                    reset()
-                    showSuccessMessage("Added leave application successfully")
-                }, (error) => {
-                    console.log(error)
-                })
+            try {
+                const res = await leaveApplicationService.createLeaveApplication(leaveApplication)
+                reset()
+                showSuccessMessage("Added leave application successfully")
+            } catch(error) {
+                throw new Error(error)
+            }
         }
-
     }
 
     const handleChange = (e) => {

@@ -1,38 +1,26 @@
 import { ErpResourceApiClient } from "../utils/ErpResourceApiClient"
 
 class LeaveApplicationService {
-    createLeaveApplication = (leaveApplication, success, failure) => {
-        ErpResourceApiClient
-            .post(
-                "/api/leave/create-application",
-                leaveApplication
-            )
-            .then((res) => {
-                return res.data
-            })
-            .then((data) => {
-                success(data)
-            })
-            .catch(error => {
-                failure(error)
-            })
+    createLeaveApplication = async (leaveApplication) => {
+        const res = await ErpResourceApiClient.post(
+            '/api/leave/create-application', leaveApplication)
+        return res
     }
 
-    getAllApplications = (success, failure) => {
-        ErpResourceApiClient
-            .get("/api/leave/applications")
-            .then((res) => {
-                return res.data
-            })
-            .then(data => {
-                success(data)
-            })
-            .catch(error => {
-                failure(error)
-            })
-
+    getAllApplications = async () => {
+        const res = await ErpResourceApiClient.get('/api/leave/applications')
+        return res.data
     }
 
+    getAllApplicationsByUserId = async (userId) => {
+        const response = await ErpResourceApiClient.get('/api/leave/applications?userId=' + userId)
+        return response.data
+    }
+
+    getLeaveOverview = async (userId) => {
+        const res = await ErpResourceApiClient.get('/api/leave/overview?userId=' + userId)
+        return res.data
+    }
 }
 
 const leaveApplicationService = new LeaveApplicationService()

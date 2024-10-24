@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
 import { ApproveButton, DeclineButton } from '../components/button_components/ButtonComponents'
-import { initialLeaveData } from '../data/LeaveApplicationData'
+import { initialLeaveData, initialLeaveOverview } from '../data/LeaveApplicationData'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { useSearchParams } from 'react-router-dom'
 
@@ -23,24 +23,38 @@ const LeaveApplications = (props) => {
 
     const [applications, setApplications] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [leaveInformation, setLeaveInformation] = useState(initialLeaveData)
+    const [leaveInformation, setLeaveInformation] = useState(initialLeaveOverview)
 
     useEffect(() => {
         props.callback('Leave Applications')
 
-        const fetchLeaveApplications = () => {
-            leaveApplicationService.
-                getAllApplications((data) => {
-                    setApplications(data)
-                    setIsLoading(false)
-                }, (error) => {
-                    console.log(error)
-                })
+        if (userId) {
+            fetchIndividualLeaveInfo(userId)
+        } else {
+            fetchLeaveApplications()
         }
-
-        fetchLeaveApplications()
     }, [])
 
+    const fetchLeaveApplications = async () => {
+        const leaves = await leaveApplicationService.getAllApplications()
+        setApplications(leaves)
+        setIsLoading(false)
+    }
+
+    const fetchIndividualLeaveInfo = async (userId) => {
+        try {
+            const overView = await leaveApplicationService.getLeaveOverview(userId)
+            setLeaveInformation(overView)
+            console.log(overView)
+
+            const leaves = await leaveApplicationService.getAllApplicationsByUserId(userId)
+            setApplications(leaves)
+            setIsLoading(false)
+
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
 
     if (isLoading) {
         return <SpinnerComponent />
@@ -65,17 +79,23 @@ const LeaveApplications = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {leaveInformation.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{row.type}</TableCell>
-                                    <TableCell align="left" style={{ 'width': '4rem' }}>{row.total}</TableCell>
-                                    <TableCell align="left" style={{ 'width': '2rem' }}>{row.taken}</TableCell>
-                                    <TableCell align="left" style={{ 'width': '8rem' }}>{row.remaining}</TableCell>
-                                </TableRow>
-                            ))}
+                            <TableRow
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>Annual Casual Leave</TableCell>
+                                <TableCell align="left" style={{ 'width': '4rem' }}>{leaveInformation.totalCasualLeave}</TableCell>
+                                <TableCell align="left" style={{ 'width': '2rem' }}>{leaveInformation.numberOfCasualLeavesTaken}</TableCell>
+                                <TableCell align="left" style={{ 'width': '8rem' }}>{leaveInformation.remainingCasualLeaves}</TableCell>
+                            </TableRow>
+
+                            <TableRow
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>Sick Leave</TableCell>
+                                <TableCell align="left" style={{ 'width': '4rem' }}>{leaveInformation.totalSickLeave}</TableCell>
+                                <TableCell align="left" style={{ 'width': '2rem' }}>{leaveInformation.numberOfSickLeavesTaken}</TableCell>
+                                <TableCell align="left" style={{ 'width': '8rem' }}>{leaveInformation.remainingSickLeaves}</TableCell>
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -140,7 +160,6 @@ const LeaveApplications = (props) => {
             {applications.length === 0
                 ? <EmptyViewComponent message="No application available" />
                 : leaveApplicationsTable()}
-
         </section>
     )
 }
