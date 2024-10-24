@@ -19,7 +19,7 @@ class LeaveApplicationService {
     }
 
     getAllApplications = (success, failure) => {
-        axiosInstance
+        ErpResourceApiClient
             .get("/api/leave/applications")
             .then((res) => {
                 return res.data
