@@ -58,10 +58,11 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                         icon={<FaEdit />}
                         title="Create Leave Application" />
 
-                    <ListOption
-                        url="/leave/applications"
-                        icon={<FaList />}
-                        title="Leave Applications" />
+                    {loggedInUser?.role == 'ADMIN' &&
+                        <ListOption
+                            url="/leave/applications"
+                            icon={<FaList />}
+                            title="Leave Applications" />}
 
                     <ListOption
                         url={`/leave/applications?userId=${loggedInUser?.id}`}

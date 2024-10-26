@@ -8,18 +8,23 @@ class LeaveApplicationService {
     }
 
     getAllApplications = async () => {
-        const res = await ErpResourceApiClient.get('/api/leave/applications')
+        const res = await ErpResourceApiClient.get('/api/leave/leave-applications')
         return res.data
     }
 
     getAllApplicationsByUserId = async (userId) => {
-        const response = await ErpResourceApiClient.get('/api/leave/applications?userId=' + userId)
+        const response = await ErpResourceApiClient.get('/api/leave/my-leave-applications?userId=' + userId)
         return response.data
     }
 
     getLeaveOverview = async (userId) => {
         const res = await ErpResourceApiClient.get('/api/leave/overview?userId=' + userId)
         return res.data
+    }
+
+    leaveApplicationAction = async (leaveId, approve) => {
+        const res = await ErpResourceApiClient.get(`/api/leave/action?leaveId=${leaveId}&approve=${approve}`)
+        return res
     }
 }
 
