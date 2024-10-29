@@ -17,9 +17,10 @@ import DesignationList from './pages/DesignationList'
 import AddLeaveApplication from './pages/AddLeaveApplication'
 import LeaveApplications from './pages/LeaveApplications'
 import MyLeaveInformation from './pages/MyLeaveInformation'
+import UserProfile from './pages/UserProfile'
 
 function App() {
-  const [pageTitle, setPageTitle] = useState('Dashboard')
+  const [pageTitle, setPageTitle] = useState('')
 
   const onRequestingPage = (title) => {
     setPageTitle(title)
@@ -40,7 +41,7 @@ function App() {
               <Route path='/designations' element={<DesignationList callback={onRequestingPage} />} />
               <Route path='/leave/create-application' element={<AddLeaveApplication callback={onRequestingPage} />} />
               <Route path='/leave/applications' element={<LeaveApplications callback={onRequestingPage} />} />
-              {/* <Route path='/leave/' element={<MyLeaveInformation callback={onRequestingPage} />} /> */}
+              <Route path='/profile' element={<UserProfile callback={onRequestingPage} />} />
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />

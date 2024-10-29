@@ -1,10 +1,13 @@
 import React from "react"
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router"
 
-const DropdownMenu = ({ menuItems, isOpen, hasLastDivider = false }) => {
+const DropdownMenu = ({ menuItems, isOpen, handleAction, hasLastDivider = false }) => {
+    const navigate = useNavigate()
+
     return (
         <motion.div
-            initial={{ 'opacity': 0, height: 0}}
+            initial={{ 'opacity': 0, height: 0 }}
             animate={isOpen
                 ? { opacity: 1, height: 'auto' }
                 : { opacity: 0, height: 0 }}
@@ -13,12 +16,10 @@ const DropdownMenu = ({ menuItems, isOpen, hasLastDivider = false }) => {
 
             {menuItems.map((item, index) => (
                 <React.Fragment key={index}>
-                    <button onClick={(e) => {
-                        console.log("button")
-                        console.log(e.target)
-                    }
-
-                    }
+                    <button
+                        name={item.label}
+                        onClick={handleAction}
+                        style={{width: '100%'}}
                         className="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center">
                         {React.cloneElement(item.icon, { className: "mr-2" })}
                         {item.label}

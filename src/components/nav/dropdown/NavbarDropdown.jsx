@@ -9,7 +9,8 @@ const NavbarDropdown = (
     btnName,
     hasLastDivider,
     hasUserAvatar,
-    isUserName }) => {
+    isUserName,
+    handleAction }) => {
 
   const [open, setOpen] = useState(false)
 
@@ -24,6 +25,10 @@ const NavbarDropdown = (
       {open && <DropdownMenu
         isOpen={open}
         menuItems={items}
+        handleAction = {(e) => {
+          setOpen(false)
+          handleAction(e)
+        }}
         hasLastDivider={hasLastDivider} />}
     </>
   )

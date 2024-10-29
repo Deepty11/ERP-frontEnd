@@ -101,11 +101,11 @@ const LeaveApplications = (props) => {
                             </TableRow>
 
                             <TableRow
-                            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell style={{ 'width': '2rem' }}>Sick Leave</TableCell>
-                                <TableCell align="right" style={{ 'width': '2rem' }}>{leaveInformation.numberOfSickLeavesTaken}</TableCell>
                                 <TableCell align="right" style={{ 'width': '2rem' }}>{leaveInformation.totalSickLeave}</TableCell>
+                                <TableCell align="right" style={{ 'width': '2rem' }}>{leaveInformation.numberOfSickLeavesTaken}</TableCell>
                                 <TableCell align="right" style={{ 'width': '2rem' }}>{leaveInformation.remainingSickLeaves}</TableCell>
                             </TableRow>
                         </TableBody>

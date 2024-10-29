@@ -24,6 +24,12 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
         { icon: <FaSignOutAlt />, label: 'Logout' },
     ];
 
+    const handleAction = (e) => {
+        switch (e.target.name) {
+            case 'Profile': navigate('/profile')
+        }
+    }
+
     const [displayNavbarMenu, setDisplayNavbarMenu] = useState(false)
 
     const onClickNavBarMenuBtn = () => {
@@ -70,9 +76,13 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
                 </a>
             </div>
 
-            {displayNavbarMenu && <NavbarMenu
-                displayNavbarMenu={displayNavbarMenu}
-                items={navbarMenuItems} />}
+            {displayNavbarMenu &&
+                <NavbarMenu
+                    displayNavbarMenu={displayNavbarMenu}
+                    items={navbarMenuItems}
+                    callback={() => {
+                        setDisplayNavbarMenu(false)
+                    }} />}
 
             <div className="navbar-menu" id="navbar-menu">
                 <div className="navbar-end">
@@ -82,7 +92,8 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
                             btnName={loggedInUser?.username}
                             hasUserAvatar={true}
                             isUserName={true}
-                            hasLastDivider={true} />
+                            hasLastDivider={true}
+                            handleAction={handleAction} />
                     </div>
 
                     <NavbarElement

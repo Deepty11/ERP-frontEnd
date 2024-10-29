@@ -3,17 +3,20 @@ import { useAuth } from '../AuthProvider';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 
-const NavbarMenu = ({ items, displayNavbarMenu }) => {
+const NavbarMenu = ({ items, displayNavbarMenu, callback }) => {
     const { logout } = useAuth()
     const navigate = useNavigate()
 
     const handleAction = (e) => {
+        console.log(e.target.name)
+        callback()
         switch (e.target.name) {
             case 'Logout':
                 logout()
                 navigate('/login')
                 break;
-
+            case 'Profile':
+                navigate('/profile')
             default:
                 break;
         }
@@ -32,6 +35,7 @@ const NavbarMenu = ({ items, displayNavbarMenu }) => {
                     {items.map((item, index) => (
                         <React.Fragment key={index}>
                             <button
+                            style={{width: '100%'}}
                                 className="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center"
                                 name={item.label}
                                 onClick={handleAction}>
