@@ -3,7 +3,7 @@ import { useAuth } from '../AuthProvider';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 
-const NavbarMenu = ({ items, displayNavbarMenu, callback }) => {
+const NavbarMenu = ({ items, displayNavbarMenu, loggedInUser, callback }) => {
     const { logout } = useAuth()
     const navigate = useNavigate()
 
@@ -16,7 +16,8 @@ const NavbarMenu = ({ items, displayNavbarMenu, callback }) => {
                 navigate('/login')
                 break;
             case 'Profile':
-                navigate('/profile')
+                const userId = loggedInUser.id
+                navigate('/profile?id=' + userId)
             default:
                 break;
         }

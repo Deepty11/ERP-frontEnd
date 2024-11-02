@@ -2,7 +2,7 @@ import React from 'react'
 import ContactTextField from '../form_components/ContactTextField'
 import TextArea from '../form_components/TextArea'
 
-const ContactInfo = () => {
+const ContactInfo = ({userDetail}) => {
     const handleContactInfo = (e) => {}
 
     return (

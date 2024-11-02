@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Leave = () => {
+const Leave = ({userDetail}) => {
   return (
     <div>Leave</div>
   )

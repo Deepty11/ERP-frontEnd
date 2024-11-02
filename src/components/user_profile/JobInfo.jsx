@@ -5,7 +5,7 @@ import DateComponent from '../form_components/DateComponent'
 import TextFieldWithAddons from '../form_components/TextFieldWithAddons'
 import { employmentTypes, levels } from '../../data/JobProfileData'
 
-const JobInfo = () => {
+const JobInfo = ({userDetail}) => {
     const handleChange = (e) => {
 
     }

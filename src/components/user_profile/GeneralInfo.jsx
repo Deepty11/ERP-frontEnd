@@ -1,41 +1,45 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TextField from '../form_components/TextField'
 import DateComponent from '../form_components/DateComponent'
 import DropdownComponent from '../form_components/DropdownComponent'
 
-const GeneralInfo = () => {
+const GeneralInfo = ({userDetail}) => {
+    useEffect(() => {
+        console.log("UserDetail from GeneralInfo")
+        console.log(userDetail)
+    }, [])
     return (
         <>
             <TextField
                 title='First Name'
-                value=''
-                name=''
+                value={userDetail?.firstName}
+                name='firstName'
                 onChange={(e) => {} } />
             <TextField
                 title='Last Name'
-                value=''
-                name=''
+                value={userDetail?.lastName}
+                name='lastName'
                 onChange={(e) => { }} />
             <TextField
                 title='Username'
-                value=''
-                name=''
+                value={userDetail?.username}
+                name='username'
                 onChange={(e) => { }} />
             <DateComponent
                 title='Date of Birth'
-                value=''
-                name=''
+                value={userDetail?.DateOfBirth}
+                name='dateOfBirth'
                 onChange={(e) => { }} />
             <DropdownComponent
                 title='Gender'
-                name=''
-                value=''
+                name={userDetail?.gender}
+                value='gender'
                 onChange={(e) => { }}
             />
             <DropdownComponent
                 title='Religion'
-                name=''
-                value=''
+                name='religion'
+                value={userDetail?.religion}
                 onChange={(e) => { }}
             />
         </>

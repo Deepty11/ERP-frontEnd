@@ -26,7 +26,10 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
 
     const handleAction = (e) => {
         switch (e.target.name) {
-            case 'Profile': navigate('/profile')
+            case 'Profile':
+                const userId = loggedInUser?.id
+                navigate('/profile?id=' + userId)
+                break
         }
     }
 
@@ -80,6 +83,7 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
                 <NavbarMenu
                     displayNavbarMenu={displayNavbarMenu}
                     items={navbarMenuItems}
+                    loggedInUser = {loggedInUser}
                     callback={() => {
                         setDisplayNavbarMenu(false)
                     }} />}
