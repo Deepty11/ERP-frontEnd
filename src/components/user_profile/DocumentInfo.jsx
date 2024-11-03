@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DocumentInfo = ({userDetail}) => {
+const DocumentInfo = ({userDetails}) => {
   return (
     <div>DocumentInfo</div>
   )

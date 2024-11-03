@@ -1,7 +1,13 @@
 import React from 'react'
 import AddOnField from './AddOnField'
 
-const TextFieldWithAddons = ({ title, placeholder, name, value, onChange}) => {
+const TextFieldWithAddons = ({ 
+    title, 
+    placeholder, 
+    name, 
+    value, 
+    onChange, 
+    readOnly = false}) => {
     return (
         <div className="field">
             <label className="label">{title}</label>
@@ -14,7 +20,8 @@ const TextFieldWithAddons = ({ title, placeholder, name, value, onChange}) => {
                             placeholder={placeholder}
                             name={name}
                             value={value}
-                            onChange={onChange} />
+                            onChange={onChange}
+                            readOnly={readOnly} />
                     </div>
                 </div>
             </div>

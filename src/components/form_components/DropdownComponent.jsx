@@ -9,7 +9,8 @@ const DropdownComponent = ({
     options = [],
     placeholder = "Please Select",
     optionLabel,
-    isRequired }) => {
+    isRequired,
+    disabled= false }) => {
     return (
         <div className='field'>
             <label className={`label ${isRequired ? 'required' : ''}`}>
@@ -23,6 +24,7 @@ const DropdownComponent = ({
                     onChange={onChange}
                     optionLabel={optionLabel}
                     placeholder={placeholder}
+                    disabled={disabled}
                     //className="w-44 md:w-14rem p-dropdown"
                 />
             </div>

@@ -2,45 +2,52 @@ import React, { useEffect } from 'react'
 import TextField from '../form_components/TextField'
 import DateComponent from '../form_components/DateComponent'
 import DropdownComponent from '../form_components/DropdownComponent'
+import { genders, religions } from '../../data/UserData'
 
-const GeneralInfo = ({userDetail}) => {
+const GeneralInfo = ({userDetails, handleChange}) => {
     useEffect(() => {
         console.log("UserDetail from GeneralInfo")
-        console.log(userDetail)
+        console.log(userDetails)
     }, [])
+
     return (
         <>
             <TextField
                 title='First Name'
-                value={userDetail?.firstName}
+                value={userDetails?.firstName}
                 name='firstName'
-                onChange={(e) => {} } />
+                onChange={handleChange} />
             <TextField
                 title='Last Name'
-                value={userDetail?.lastName}
+                value={userDetails?.lastName}
                 name='lastName'
-                onChange={(e) => { }} />
+                onChange={handleChange} />
             <TextField
                 title='Username'
-                value={userDetail?.username}
+                value={userDetails?.username}
                 name='username'
-                onChange={(e) => { }} />
+                onChange={handleChange}
+                readOnly={true} />
             <DateComponent
                 title='Date of Birth'
-                value={userDetail?.DateOfBirth}
-                name='dateOfBirth'
-                onChange={(e) => { }} />
+                value={userDetails?.birthDate}
+                name='birthDate'
+                onChange={handleChange} />
             <DropdownComponent
                 title='Gender'
-                name={userDetail?.gender}
+                options={genders}
+                name={userDetails?.gender}
                 value='gender'
-                onChange={(e) => { }}
+                optionLabel='label'
+                onChange={handleChange}
             />
             <DropdownComponent
                 title='Religion'
+                options={religions}
                 name='religion'
-                value={userDetail?.religion}
-                onChange={(e) => { }}
+                value={userDetails?.religion}
+                optionLabel='label'
+                onChange={handleChange}
             />
         </>
     )

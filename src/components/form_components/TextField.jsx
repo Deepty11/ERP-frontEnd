@@ -6,7 +6,8 @@ const TextField = (
         name = '',
         type = 'text',
         onChange,
-        isRequired }) => {
+        isRequired,
+        readOnly = false }) => {
     return (
         <div className="field">
             <div>
@@ -21,7 +22,8 @@ const TextField = (
                     placeholder={title}
                     name={name}
                     value={value}
-                    onChange={onChange} />
+                    onChange={onChange}
+                    readOnly={readOnly} />
             </div>
         </div>
     )
