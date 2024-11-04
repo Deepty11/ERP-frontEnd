@@ -7,7 +7,8 @@ import { genders, religions } from '../../data/UserData'
 const GeneralInfo = ({userDetails, handleChange}) => {
     useEffect(() => {
         console.log("UserDetail from GeneralInfo")
-        console.log(userDetails)
+        console.log(userDetails?.gender)
+        console.log(userDetails?.religion)
     }, [])
 
     return (
@@ -36,8 +37,8 @@ const GeneralInfo = ({userDetails, handleChange}) => {
             <DropdownComponent
                 title='Gender'
                 options={genders}
-                name={userDetails?.gender}
-                value='gender'
+                name='gender'
+                value={userDetails?.gender}
                 optionLabel='label'
                 onChange={handleChange}
             />

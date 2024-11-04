@@ -6,7 +6,6 @@ import TextFieldWithAddons from '../form_components/TextFieldWithAddons'
 import { employmentTypes, levels } from '../../data/JobProfileData'
 
 const JobInfo = ({ jobProfileDto }) => {
-
     return (
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2 '>
             <div>
@@ -65,7 +64,7 @@ const JobInfo = ({ jobProfileDto }) => {
                     disabled={true}
                 /> */}
                 <TextField
-                    title='Deesignation'
+                    title='Designation'
                     value={jobProfileDto?.designationDto.title}
                     name='designationDto'
                     //onChange={handleChange}
@@ -75,7 +74,7 @@ const JobInfo = ({ jobProfileDto }) => {
             <DateComponent
                 title='Joining Date'
                 name='joiningDate'
-                value={jobProfileDto?.joinningDate}
+                value={jobProfileDto?.joiningDate}
                 // onChange={handleChange}
                 readOnly={true} />
 

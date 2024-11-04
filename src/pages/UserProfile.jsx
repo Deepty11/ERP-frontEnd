@@ -21,7 +21,7 @@ const UserProfile = (props) => {
 
     const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setUser({ ...user, [name]: value })
@@ -77,7 +77,9 @@ const UserProfile = (props) => {
                 setShowFormButtons(true)
                 break
             case 'Contact Info':
-                setInfoView(<ContactInfo userDetail={userDetails} />)
+                setInfoView(
+                    <ContactInfo
+                        contactInfoDto={userDetails?.contactInfoDto} />)
                 setShowFormButtons(true)
                 break
             case 'Job Info':
@@ -111,7 +113,7 @@ const UserProfile = (props) => {
                         </div>
                         <div className='vertical-content'>
                             <label className='label'>{userDetails?.firstName + " " + userDetails?.lastName}</label>
-                            <label style={{ color: 'gray' }}>{userDetails?.jobProfileDto.designationDto.title}</label>
+                            <label style={{ color: 'gray' }}>{userDetails?.jobProfileDto?.designationDto?.title}</label>
                         </div>
                     </div>
                     <HorizontalButtonGroup
