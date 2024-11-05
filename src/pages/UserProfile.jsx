@@ -19,21 +19,41 @@ const UserProfile = (props) => {
     const [newUserDetails, setNewUserDetails] = useState(null)
     const [showFormButtons, setShowFormButtons] = useState(true)
 
+    const [newContactInfoDto, setNewContactInfoDto] = useState()
+
     const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
 
-    const handleChange = (e) => {
+    const handleGeneralInfoChange = (e) => {
         const { name, value } = e.target
-        setUser({ ...user, [name]: value })
+        setNewUserDetails({ ...newUserDetails, [name]: value })
+    }
+
+    const handleContactInfoChange = (e) => {
+        const { name, value } = e.target
+        setNewContactInfoDto({ ...newContactInfoDto, [name]: value })
     }
 
     const getUserDetails = async () => {
         const userDetails = await userService.getUserDetailsById(userId)
         setUserDetails(userDetails)
+        setNewUserDetails(userDetails)
+        setNewContactInfoDto(userDetails?.contactInfoDto)
         setInfoView(
             <GeneralInfo
-                userDetails={userDetails}
+                userDetails={newUserDetails}
                 handleChange={handleChange} />)
+    }
+
+    const getAllDesignations = () => {
+        designationService.getAllDesignations((designationList) => {
+            setDesignations(designationList)
+            console.log(designationList)
+            setLoading(false)
+        }, (error) => {
+            console.log(error)
+            setLoading(false)
+        })
     }
 
     useEffect(() => {
@@ -41,14 +61,7 @@ const UserProfile = (props) => {
         getUserDetails()
 
         if (designations.length === 0) {
-            designationService.getAllDesignations((designationList) => {
-                setDesignations(designationList)
-                console.log(designationList)
-                setLoading(false)
-            }, (error) => {
-                console.log(error)
-                setLoading(false)
-            })
+            getAllDesignations()
         }
 
     }, [designations])
@@ -73,13 +86,14 @@ const UserProfile = (props) => {
                 setInfoView(
                     <GeneralInfo
                         userDetails={userDetails}
-                        handleChange={handleChange} />)
+                        handleChange={handleGeneralInfoChange} />)
                 setShowFormButtons(true)
                 break
             case 'Contact Info':
                 setInfoView(
                     <ContactInfo
-                        contactInfoDto={userDetails?.contactInfoDto} />)
+                        contactInfoDto={newUserDetails?.contactInfoDto}
+                        handleChange={handleContactInfoChange} />)
                 setShowFormButtons(true)
                 break
             case 'Job Info':
@@ -100,6 +114,15 @@ const UserProfile = (props) => {
         }
 
     }
+
+    const handleUpdate = (e) => {
+
+    }
+
+    const handleReset = () => {
+        setNewUserDetails(userDetails)
+    }
+
     return (
         <section className='section main-section'>
             <div className="card">
@@ -119,12 +142,16 @@ const UserProfile = (props) => {
                     <HorizontalButtonGroup
                         items={profileButtons}
                         onClickHandler={infoButtonAction} />
-                    {infoView}
-                    {showFormButtons &&
-                        <FormButtonComponent handleReset={(e) => {
-                            reset()
-                        }} />}
-
+                    <form
+                        onSubmit={handleUpdate}
+                        method='post'>
+                        {infoView}
+                        {showFormButtons &&
+                            <FormButtonComponent
+                                handleReset={(e) => {
+                                    reset()
+                                }} />}
+                    </form>
                 </div>
             </div>
         </section >

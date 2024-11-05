@@ -1,32 +1,14 @@
 import { ErpResourceApiClient } from "../utils/ErpResourceApiClient";
 
 class UserService {
-    createUser = (user, success, failure) => {
-        ErpResourceApiClient
-            .post(
-                "/api/user/add-user",
-                user
-            ).then((res) => {
-                return res.data
-            }).then(() => {
-                success()
-            })
-            .catch(error => {
-                failure(error)
-            })
+    createUser = async (user) => {
+        const res = await ErpResourceApiClient.post("/api/user/add-user",user)
+        return res.data
     }
 
-    getUserList = (success, failure) => {
-        ErpResourceApiClient
-            .get('/api/user/users')
-            .then((res) => {
-                console.log(res.data)
-                success(res.data)
-            }).catch(error => {
-                console.log("Error occured while fetching users " + error)
-                failure(error)
-            })
-
+    getUserList = async () => {
+        const res = await ErpResourceApiClient.get('/api/user/users')
+        return res.data
     }
 
     getUserByUsername = async (username) => {

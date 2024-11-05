@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table, TableContainer, TableHead, TableCell, TableRow, TableBody, Paper } from '@mui/material'
-import UserService from '../services/UserService'
+import userService from '../services/UserService'
 import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
@@ -20,16 +20,22 @@ const UserList = (props) => {
         if (users.length != 0) {
             return
         }
-        UserService.getUserList((users) => {
-            setUsers(users)
-            setFilteredUsers(users)
+
+        getAllUsers()
+    }, [users])
+
+    const getAllUsers = async () => {
+        try {
+            const userList = await userService.getUserList()
+            setUsers(userList)
+            setFilteredUsers(userList)
             setLoading(false)
-        }, (error) => {
+        } catch(error) {
+            console.log(error)
             setError(error)
             setLoading(false)
-        })
-
-    }, [users])
+        }
+    }
 
     const handleChangeInSearchbar = (e) => {
         console.log(e.target.value)

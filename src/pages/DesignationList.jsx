@@ -16,6 +16,7 @@ const DesignationList = (props) => {
     const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [loggedInUser, setLoggedInUser] = useState(null)
 
     useEffect(() => {
         props.callback('Designations')
@@ -31,6 +32,8 @@ const DesignationList = (props) => {
             setError(error)
             setLoading(false)
         })
+
+        setLoggedInUser(localStorage.getItem('loggedInUser'))
     }, [designations])
 
     const tableContent = () => {
@@ -44,7 +47,8 @@ const DesignationList = (props) => {
                         <TableRow>
                             <TableCell align="left">Id</TableCell>
                             <TableCell align="left">Title</TableCell>
-                            <TableCell align="left">Action</TableCell>
+                            {loggedInUser?.role == 'ADMIN'
+                                && <TableCell align="left">Action</TableCell>}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -56,13 +60,14 @@ const DesignationList = (props) => {
                             >
                                 <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{row.id}</TableCell>
                                 <TableCell align="left">{row.title}</TableCell>
-                                <TableCell align="left">
-                                    <button
-                                        type='button'
-                                        className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
-                                        Edit
-                                    </button>
-                                </TableCell>
+                                {loggedInUser?.role == 'ADMIN'
+                                    && <TableCell align="left">
+                                        <button
+                                            type='button'
+                                            className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
+                                            Edit
+                                        </button>
+                                    </TableCell>}
                             </TableRow>
                         ))}
                     </TableBody>

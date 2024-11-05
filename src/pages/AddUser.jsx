@@ -133,6 +133,17 @@ const AddUser = (props) => {
         setFormErrors(initialFormErrors)
     }
 
+    const createUser = async () => {
+        try {
+            const res = await userService.createUser(user)
+            reset()
+            toast.success("Added user successfully!")
+        } catch(error) {
+            console.log(error)
+            toast.error("Soemthing's went wrong!")
+        }
+    }
+
     const submitForm = (e) => {
         e.preventDefault()
 
@@ -144,13 +155,7 @@ const AddUser = (props) => {
         setFormErrors(errors)
 
         if (Object.keys(errors).length === 0) {
-            userService.createUser(user, () => {
-                reset()
-
-                toast.success("Added user successfully!")
-            }, (error) => {
-                console.log(error)
-            })
+            createUser()
             console.log("submitted data: ", user)
         }
     }
