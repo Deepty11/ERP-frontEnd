@@ -9,7 +9,7 @@ const ContactInfo = ({contactInfoDto, handleChange}) => {
                 title='Mobile'
                 value={contactInfoDto?.mobileNumber}
                 name='mobileNumber'
-                onChange={handleContactInfo} />
+                onChange={handleChange} />
 
             <ContactTextField
                 type='email'

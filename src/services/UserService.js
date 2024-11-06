@@ -20,6 +20,11 @@ class UserService {
         const response = await ErpResourceApiClient.get('/api/user/getUserDetails?id=' + userId)
         return response.data
     }
+
+    updateUserDetailsById = async (id, userDto) => {
+        const response =  await ErpResourceApiClient.post('/api/user/update?id='+ id, userDto)
+        return response.data
+    }
 }
 
 export default new UserService()

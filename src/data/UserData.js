@@ -9,20 +9,34 @@ export const religions = [
 ]
 
 export const genders = [
-    {label: "Male", value: "MALE"},
-    {label: "Female", value: "FEMALE"},
-    {label: "Other", value: "OTHER"},
+    { label: "Male", value: "MALE" },
+    { label: "Female", value: "FEMALE" },
+    { label: "Other", value: "OTHER" },
 ]
 
 export const roles = [
-    {label: "Admin", value: "ADMIN"},
-    {label: "User", value: "USER"},
+    { label: "Admin", value: "ADMIN" },
+    { label: "User", value: "USER" },
+]
+
+
+export const relations = [
+    { label: "Parents", value: "PARENTS" },
+    { label: "Spouse", value: "SPOUSE" },
+    { label: "Children", value: "CHILDREN" },
+    { label: "Other", value: "OTHER" }
 ]
 
 export const initialContactInfoData = {
     mobileNumber: '',
     email: '',
-    address:''
+    address: ''
+}
+
+export const initialEmergencyContactInfoData = {
+    name: '',
+    mobileNumber: '',
+    relation: ''
 }
 
 export const initialUserData = {
@@ -36,7 +50,7 @@ export const initialUserData = {
     //document: null, // later
     religion: '',
     contactInfoDto: initialContactInfoData,
-     jobProfileDto: initialJobProfileData,
+    jobProfileDto: initialJobProfileData,
     emergencyContactInfoDto: null, //later
     //leaveInfo: null //later
 }

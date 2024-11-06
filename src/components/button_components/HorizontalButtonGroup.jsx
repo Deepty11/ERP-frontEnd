@@ -8,6 +8,7 @@ const HorizontalButtonGroup = ({ items, onClickHandler }) => {
             <div className='horizontal-content'>
                 {items.map((item) =>
                     <InfoButton
+                        key={item.id}
                         selectedId={selectedId}
                         item={item}
                         handler={(e) => {

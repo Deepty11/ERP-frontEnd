@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import HorizontalButtonGroup from '../components/button_components/HorizontalButtonGroup'
 import GeneralInfo from '../components/user_profile/GeneralInfo'
 import JobInfo from '../components/user_profile/JobInfo'
@@ -8,63 +8,58 @@ import ContactInfo from '../components/user_profile/ContactInfo'
 import DocumentInfo from '../components/user_profile/DocumentInfo'
 import userService from '../services/UserService'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
-import designationService from '../services/DesignationService'
 import SpinnerComponent from '../components/common_components/SpinnerComponent'
+import { initialContactInfoData, initialEmergencyContactInfoData, initialUserData } from '../data/UserData'
+import { ToastContainer, toast } from 'react-toastify'
+import EmergencyContactInfo from '../components/user_profile/EmergencyContactInfo'
 
 const UserProfile = (props) => {
     const [searchParams] = useSearchParams()
     const userId = searchParams.get('id')
-    const [infoView, setInfoView] = useState(null)
-    const [userDetails, setUserDetails] = useState(null)
-    const [newUserDetails, setNewUserDetails] = useState(null)
-    const [showFormButtons, setShowFormButtons] = useState(true)
+    const navigate = useNavigate()
+    const [selectedView, setSelectedView] = useState("General Info")
+    const [userDetails, setUserDetails] = useState(initialUserData) // keeping it for reset
+    const [newUserDetails, setNewUserDetails] = useState(null) // for the updates
 
-    const [newContactInfoDto, setNewContactInfoDto] = useState()
+    const [newContactInfoDto, setNewContactInfoDto] = useState(initialContactInfoData)
+    const [newEmergencyContactInfoDto, setNewEmergencyContactInfoDto] = useState(initialEmergencyContactInfoData)
 
-    const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
-
-    const handleGeneralInfoChange = (e) => {
-        const { name, value } = e.target
-        setNewUserDetails({ ...newUserDetails, [name]: value })
-    }
 
     const handleContactInfoChange = (e) => {
         const { name, value } = e.target
         setNewContactInfoDto({ ...newContactInfoDto, [name]: value })
     }
 
-    const getUserDetails = async () => {
-        const userDetails = await userService.getUserDetailsById(userId)
-        setUserDetails(userDetails)
-        setNewUserDetails(userDetails)
-        setNewContactInfoDto(userDetails?.contactInfoDto)
-        setInfoView(
-            <GeneralInfo
-                userDetails={newUserDetails}
-                handleChange={handleChange} />)
+    const handleEmergencyContactInfoChange = (e) => {
+        const { name, value } = e.target
+        setNewEmergencyContactInfoDto({ ...newEmergencyContactInfoDto, [name]: value })
     }
 
-    const getAllDesignations = () => {
-        designationService.getAllDesignations((designationList) => {
-            setDesignations(designationList)
-            console.log(designationList)
+    const getUserDetails = async () => {
+        try {
+            const userDetails = await userService.getUserDetailsById(userId)
             setLoading(false)
-        }, (error) => {
+            setUserDetails(userDetails)
+            setNewUserDetails(userDetails)
+            setNewContactInfoDto(userDetails?.contactInfoDto)
+            setNewEmergencyContactInfoDto(userDetails?.emergencyContactInfoDto)
+            console.log(userDetails)
+        } catch (error) {
             console.log(error)
-            setLoading(false)
-        })
+        }
+    }
+
+    const handleGeneralInfoChange = (e) => {
+        const { name, value } = e.target
+        setNewUserDetails({ ...newUserDetails, [name]: value })
     }
 
     useEffect(() => {
         props.callback('Profile')
         getUserDetails()
 
-        if (designations.length === 0) {
-            getAllDesignations()
-        }
-
-    }, [designations])
+    }, [])
 
     if (loading) {
         return <SpinnerComponent />
@@ -73,88 +68,120 @@ const UserProfile = (props) => {
     const profileButtons = [
         { label: 'General Info', id: 0 },
         { label: 'Contact Info', id: 1 },
-        { label: 'Job Info', id: 2 },
-        { label: 'Leave', id: 3 },
-        { label: 'Documents', id: 4 },
+        { label: 'Emergency Contact Info', id: 2 },
+        { label: 'Job Info', id: 3 },
+        { label: 'Leave', id: 4 },
+        { label: 'Documents', id: 5 },
     ]
+
+    const infoView = () => {
+        switch (selectedView) {
+            case 'General Info':
+                return <GeneralInfo
+                    userDetails={newUserDetails}
+                    handleChange={handleGeneralInfoChange}
+                />
+
+            case 'Contact Info':
+                return <ContactInfo
+                    contactInfoDto={newContactInfoDto}
+                    handleChange={handleContactInfoChange} />
+
+            case 'Emergency Contact Info':
+                return <EmergencyContactInfo
+                    emergencyContactInfoDto={newEmergencyContactInfoDto}
+                    handleChange={handleEmergencyContactInfoChange} />
+
+            case 'Job Info':
+                return <JobInfo
+                    jobProfileDto={newUserDetails?.jobProfileDto} />
+
+            case 'Leave':
+                return <Leave userDetails={newUserDetails} />
+
+            case 'Documents':
+                return <DocumentInfo userDetails={newUserDetails} />
+        }
+    }
+
+    const showFormButtons = () => {
+        if (selectedView == 'General Info' ||
+            selectedView == 'Contact Info' ||
+            selectedView == 'Emergency Contact Info' ||
+            selectedView == 'Document') {
+            return true
+        } else {
+            return false
+        }
+    }
 
     const infoButtonAction = (e) => {
         const buttonTitle = e.target.title
+        setSelectedView(buttonTitle)
+    }
 
-        switch (buttonTitle) {
-            case 'General Info':
-                setInfoView(
-                    <GeneralInfo
-                        userDetails={userDetails}
-                        handleChange={handleGeneralInfoChange} />)
-                setShowFormButtons(true)
-                break
-            case 'Contact Info':
-                setInfoView(
-                    <ContactInfo
-                        contactInfoDto={newUserDetails?.contactInfoDto}
-                        handleChange={handleContactInfoChange} />)
-                setShowFormButtons(true)
-                break
-            case 'Job Info':
-                setInfoView(
-                    <JobInfo
-                        jobProfileDto={userDetails?.jobProfileDto}
-                        designationList={designations} />)
-                setShowFormButtons(false)
-                break
-            case 'Leave':
-                setInfoView(<Leave userDetails={userDetails} />)
-                setShowFormButtons(false)
-                break
-            case 'Documents':
-                setInfoView(<DocumentInfo userDetails={userDetails} />)
-                setShowFormButtons(true)
-                break
+    const setContactDetailsToUserDetails = () => {
+        const update = newUserDetails
+        update.contactInfoDto = newContactInfoDto
+        update.emergencyContactInfoDto = newEmergencyContactInfoDto
+        setNewUserDetails(update)
+    }
+
+    const handleUpdate = async (e) => {
+        e.preventDefault()
+        setContactDetailsToUserDetails()
+        console.log("Update: ")
+        console.log(newUserDetails)
+        await updateUserDetails()
+
+    }
+
+    const updateUserDetails = async () => {
+        try {
+            const data = await userService.updateUserDetailsById(userId, newUserDetails)
+            toast.success(data?.message)
+        } catch (error) {
+            toast.error(error.message)
         }
-
     }
 
-    const handleUpdate = (e) => {
-
-    }
-
-    const handleReset = () => {
+    const handleReset = (e) => {
         setNewUserDetails(userDetails)
     }
 
     return (
-        <section className='section main-section'>
-            <div className="card">
-                <div className="card-content">
-                    <div className='profile-header'>
-                        <div className="image w-40 h-40">
-                            <img
-                                src="https://avatars.dicebear.com/v2/initials/john-doe.svg"
-                                alt="John Doe"
-                                className="rounded-full" />
+        <div>
+            <ToastContainer hideProgressBar={true} />
+            <section className='section main-section'>
+                <div className="card">
+                    <div className="card-content">
+                        <div className='profile-header'>
+                            <div className="image w-40 h-40">
+                                <img
+                                    src="https://avatars.dicebear.com/v2/initials/john-doe.svg"
+                                    alt="John Doe"
+                                    className="rounded-full" />
+                            </div>
+                            <div className='vertical-content'>
+                                <label className='label'>{userDetails?.firstName + " " + userDetails?.lastName}</label>
+                                <label style={{ color: 'gray' }}>{userDetails?.jobProfileDto?.designationDto?.title}</label>
+                            </div>
                         </div>
-                        <div className='vertical-content'>
-                            <label className='label'>{userDetails?.firstName + " " + userDetails?.lastName}</label>
-                            <label style={{ color: 'gray' }}>{userDetails?.jobProfileDto?.designationDto?.title}</label>
-                        </div>
+                        <HorizontalButtonGroup
+                            items={profileButtons}
+                            onClickHandler={infoButtonAction} />
+                        <form
+                            onSubmit={handleUpdate}
+                            method='post'>
+                            <div key={selectedView}>{infoView()}</div>
+                            {showFormButtons() &&
+                                <FormButtonComponent
+                                    handleReset={handleReset} />}
+                        </form>
                     </div>
-                    <HorizontalButtonGroup
-                        items={profileButtons}
-                        onClickHandler={infoButtonAction} />
-                    <form
-                        onSubmit={handleUpdate}
-                        method='post'>
-                        {infoView}
-                        {showFormButtons &&
-                            <FormButtonComponent
-                                handleReset={(e) => {
-                                    reset()
-                                }} />}
-                    </form>
                 </div>
-            </div>
-        </section >
+            </section >
+        </div>
     )
 }
 
