@@ -1751,13 +1751,13 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    margin-top: 5rem;
 }
 
-@media (min-width: 1024px) {
+/* For small screen with width <= 1024 */
+@media (max-width: 1024px) {
     .login-section {
-        margin-left: 5%;
-        margin-right: 20%;
+        margin-left: 15rem;
     }
 }
 
@@ -1834,4 +1834,15 @@ footer {
     border-radius: 4px;
     border-width: 1.5px;
     padding: 8px 10px 8px 10px
+}
+
+.error-banner {
+    padding: 10px;
+    margin-bottom: 10px ;
+    background-color: #ff7575a3;
+    border: 1px solid red;
+    color: rgb(197, 31, 31);
+    font-weight: bold;
+    font-size: small;
+    height: 20%;
 }

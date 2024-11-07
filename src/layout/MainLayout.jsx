@@ -9,6 +9,8 @@ const MainLayout = ({ pageTitle }) => {
     const [loggedInUser, setLoggedInUser] = useState(null)
 
     useEffect(() => {
+        const root = document.getElementById("root")
+        root.style.marginLeft = "0px"
         const data = localStorage.getItem('loggedInUser')
         const user = JSON.parse(data)
         console.log("user" + user)

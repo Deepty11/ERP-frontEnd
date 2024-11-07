@@ -18,6 +18,8 @@ import AddLeaveApplication from './pages/AddLeaveApplication'
 import LeaveApplications from './pages/LeaveApplications'
 import MyLeaveInformation from './pages/MyLeaveInformation'
 import UserProfile from './pages/UserProfile'
+import { ToastContainer } from 'react-toastify'
+
 
 function App() {
   const [pageTitle, setPageTitle] = useState('')

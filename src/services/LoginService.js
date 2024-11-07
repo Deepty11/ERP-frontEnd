@@ -8,6 +8,9 @@ class LoginService {
     }
 
     login = async (loginData) => {
+        const response = await axios.post(this.base_url + "/login", loginData)
+        return response.data.token
+        
         try {
             const response = await axios.post(this.base_url + "/login", loginData)
             localStorage.setItem('token', response.data.token)
