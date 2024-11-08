@@ -5,6 +5,7 @@ import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import Searchbar from '../components/common_components/Searchbar'
+import { useNavigate } from 'react-router'
 
 const UserList = (props) => {
     const [users, setUsers] = useState([])
@@ -13,6 +14,7 @@ const UserList = (props) => {
     const [error, setError] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [filteredUsers, setFilteredUsers] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         props.callback('Users')
@@ -30,7 +32,7 @@ const UserList = (props) => {
             setUsers(userList)
             setFilteredUsers(userList)
             setLoading(false)
-        } catch(error) {
+        } catch (error) {
             console.log(error)
             setError(error)
             setLoading(false)
@@ -45,13 +47,13 @@ const UserList = (props) => {
     }
 
     const search = (data) => {
-        const result = data.filter((user) => 
+        const result = data.filter((user) =>
             user.username.toLowerCase().includes(searchQuery)
-                || user.firstName.toLowerCase().includes(searchQuery)
-                || user.lastName.toLowerCase().includes(searchQuery)
-                || user.role.toLowerCase().includes(searchQuery)
+            || user.firstName.toLowerCase().includes(searchQuery)
+            || user.lastName.toLowerCase().includes(searchQuery)
+            || user.role.toLowerCase().includes(searchQuery)
         )
-        
+
         return result
     }
 
@@ -75,7 +77,8 @@ const UserList = (props) => {
                                     <TableCell align="left">Username</TableCell>
                                     <TableCell align="left">FullName</TableCell>
                                     <TableCell align="left">Role</TableCell>
-                                    <TableCell className='action-col' align="left">Action</TableCell>
+                                    <TableCell className='action-col'
+                                        align="left">Action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -92,7 +95,10 @@ const UserList = (props) => {
                                             <div className='button-container'>
                                                 <button
                                                     type='button'
-                                                    className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
+                                                    className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400"
+                                                    onClick={(e) => {
+                                                        navigate('/user-details?id=' + row.id)
+                                                    }}>
                                                     View
                                                 </button>
 
