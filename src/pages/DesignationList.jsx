@@ -59,7 +59,7 @@ const DesignationList = (props) => {
                             >
                                 <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{index + 1}</TableCell>
                                 <TableCell align="left">{row.title}</TableCell>
-                                <TableCell align="left"style={{ 'width': '8rem' }}>
+                                <TableCell align="left" style={{ 'width': '8rem' }}>
                                     <div className='button-container'>
                                         <button
                                             type='button'
@@ -72,7 +72,10 @@ const DesignationList = (props) => {
 
                                         <button
                                             type='button'
-                                            className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
+                                            className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400"
+                                            onClick={(e) => {
+                                                navigate('/edit-designation?id=' + row.id)
+                                            }}>
                                             Edit
                                         </button>
 

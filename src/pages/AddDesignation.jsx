@@ -37,7 +37,7 @@ const AddDesignation = (props) => {
 
     const updateSalaryRange = () => {
         const tempDesignation = designation
-        tempDesignation.salaryRange = salaryRange
+        tempDesignation.salaryRangeDto = salaryRange
         setDesignation(tempDesignation)
     }
 
@@ -144,8 +144,6 @@ const AddDesignation = (props) => {
                 </form >
             </section >
         </div>
-
-
     )
 }
 

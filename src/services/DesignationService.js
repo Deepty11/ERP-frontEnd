@@ -28,6 +28,12 @@ class DesignationService {
         const response = await ErpResourceApiClient.get('/api/designation/designation-details?id=' + id)
         return response.data
     }
+
+    updateDesignationDetailsById = async (id, designationDetails) => {
+        const response = await ErpResourceApiClient.post('/api/designation/edit-designation?id=' + id, designationDetails)
+        return response.data
+    }
+
 }
 
 export default new DesignationService()

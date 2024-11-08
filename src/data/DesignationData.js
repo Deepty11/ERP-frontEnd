@@ -6,7 +6,7 @@ export const initialSalaryRange = {
 export const initialDesignation = {
     title: '',
     description: '',
-    salaryRange: initialSalaryRange
+    salaryRangeDto: initialSalaryRange
 }
 
 export const initialFormErrors = {
