@@ -147,6 +147,7 @@ const UserProfile = (props) => {
 
     const handleReset = (e) => {
         setNewUserDetails(userDetails)
+        setNewContactInfoDto(userDetails.contactInfoDto)
     }
 
     return (
