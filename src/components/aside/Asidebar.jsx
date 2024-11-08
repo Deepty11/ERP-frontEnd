@@ -69,7 +69,7 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                         icon={<FaList />}
                         title="My Leave Information" />
 
-                    <li>
+                    {/* <li>
                         <Link className="dropdown">
                             <span className="icon"><i className="mdi mdi-view-list"></i></span>
                             <span className="menu-item-label">Submenus</span>
@@ -87,9 +87,9 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                                 </Link>
                             </li>
                         </ul>
-                    </li>
+                    </li> */}
                 </ul>
-                <p className="menu-label">About</p>
+                {/* <p className="menu-label">About</p>
                 <ul className="menu-list">
                     <li>
                         <Link to="https://justboil.me/tailwind-admin-templates/free-dashboard/" className="has-icon">
@@ -103,7 +103,7 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                             <span className="menu-item-label">GitHub</span>
                         </Link>
                     </li>
-                </ul>
+                </ul> */}
             </div>
         </aside>
     )

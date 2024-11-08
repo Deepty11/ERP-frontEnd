@@ -11,12 +11,13 @@ import {
     Paper
 } from '@mui/material'
 import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
+import { useNavigate } from 'react-router'
 
 const DesignationList = (props) => {
     const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const [loggedInUser, setLoggedInUser] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         props.callback('Designations')
@@ -33,7 +34,6 @@ const DesignationList = (props) => {
             setLoading(false)
         })
 
-        setLoggedInUser(localStorage.getItem('loggedInUser'))
     }, [designations])
 
     const tableContent = () => {
@@ -45,29 +45,39 @@ const DesignationList = (props) => {
                     aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Id</TableCell>
+                            <TableCell align="left">#</TableCell>
                             <TableCell align="left">Title</TableCell>
-                            {loggedInUser?.role == 'ADMIN'
-                                && <TableCell align="left">Action</TableCell>}
+                            <TableCell align="left">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
 
-                        {designations.map((row) => (
+                        {designations.map((row, index) => (
                             <TableRow
                                 key={row.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{row.id}</TableCell>
+                                <TableCell component="th" scope="row" style={{ 'width': '2rem' }}>{index + 1}</TableCell>
                                 <TableCell align="left">{row.title}</TableCell>
-                                {loggedInUser?.role == 'ADMIN'
-                                    && <TableCell align="left">
+                                <TableCell align="left"style={{ 'width': '8rem' }}>
+                                    <div className='button-container'>
+                                        <button
+                                            type='button'
+                                            className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400"
+                                            onClick={(e) => {
+                                                navigate('/designation-details?id=' + row.id)
+                                            }}>
+                                            View
+                                        </button>
+
                                         <button
                                             type='button'
                                             className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
                                             Edit
                                         </button>
-                                    </TableCell>}
+
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

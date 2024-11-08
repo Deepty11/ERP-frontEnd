@@ -20,7 +20,6 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
 
     const navbarMenuItems = [
         ...userMenuItems,
-        { icon: <FaQuestionCircle />, label: 'About' },
         { icon: <FaSignOutAlt />, label: 'Logout' },
     ];
 
@@ -100,9 +99,6 @@ function Navbar({ toggleSidebar, isSidebarExpanded, loggedInUser }) {
                             handleAction={handleAction} />
                     </div>
 
-                    <NavbarElement
-                        icon={circleQuestionIcon}
-                        elementName="About" />
                     <NavbarElement
                         icon={signoutIcon}
                         elementName="Logout"

@@ -23,6 +23,11 @@ class DesignationService {
             failure(error)
         })
     }
+
+    getDesignationDetailsById = async (id) => {
+        const response = await ErpResourceApiClient.get('/api/designation/designation-details?id=' + id)
+        return response.data
+    }
 }
 
 export default new DesignationService()

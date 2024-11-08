@@ -20,6 +20,7 @@ import MyLeaveInformation from './pages/MyLeaveInformation'
 import UserProfile from './pages/UserProfile'
 import { ToastContainer } from 'react-toastify'
 import ViewUserDetails from './pages/ViewUserDetails'
+import ViewDesignationDetails from './pages/ViewDesignationDetails'
 
 
 function App() {
@@ -45,7 +46,8 @@ function App() {
               <Route path='/leave/create-application' element={<AddLeaveApplication callback={onRequestingPage} />} />
               <Route path='/leave/applications' element={<LeaveApplications callback={onRequestingPage} />} />
               <Route path='/profile' element={<UserProfile callback={onRequestingPage} />} />
-              <Route path='/user-details' element={<ViewUserDetails callback={onRequestingPage}/>} />
+              <Route path='/user-details' element={<ViewUserDetails callback={onRequestingPage} />} />
+              <Route path='/designation-details' element={<ViewDesignationDetails callback={onRequestingPage} />} />
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />
