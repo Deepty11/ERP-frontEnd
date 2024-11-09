@@ -22,6 +22,7 @@ import { ToastContainer } from 'react-toastify'
 import ViewUserDetails from './pages/ViewUserDetails'
 import ViewDesignationDetails from './pages/ViewDesignationDetails'
 import EditDesignationDetails from './pages/EditDesignationDetails'
+import EditUserDetails from './pages/EditUserDetails'
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
               <Route path='/user-details' element={<ViewUserDetails callback={onRequestingPage} />} />
               <Route path='/designation-details' element={<ViewDesignationDetails callback={onRequestingPage} />} />
               <Route path='/edit-designation' element={<EditDesignationDetails callback={onRequestingPage} />} />
+              <Route path='/edit-user' element={<EditUserDetails callback={onRequestingPage} />} />
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />

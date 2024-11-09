@@ -104,7 +104,10 @@ const UserList = (props) => {
 
                                                 <button
                                                     type='button'
-                                                    className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400">
+                                                    className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400"
+                                                    onClick={(e) => {
+                                                        navigate('/edit-user?id=' + row.id)
+                                                    }}>
                                                     Edit
                                                 </button>
 

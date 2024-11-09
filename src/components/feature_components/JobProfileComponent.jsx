@@ -12,7 +12,7 @@ const JobProfileComponent = ({
     jobProfileDto,
     designationList,
     handleChange,
-    formErrors }) => {
+    formErrors=null }) => {
 
     return (
         <div className="card mb-6">
@@ -25,12 +25,12 @@ const JobProfileComponent = ({
                     <div>
                         <TextField
                             title='Employee Id'
-                            value={jobProfileDto.employeeId}
+                            value={jobProfileDto?.employeeId ?? 'N/A'}
                             name='employeeId'
                             onChange={handleChange}
                             isRequired={true} />
-                        {formErrors.employeeId
-                            && <p className='error-message'>{formErrors.employeeId}</p>}
+                        {formErrors?.employeeId
+                            && <p className='error-message'>{formErrors?.employeeId}</p>}
 
                     </div>
                     
@@ -39,13 +39,13 @@ const JobProfileComponent = ({
                             title="Employee Type"
                             options={employmentTypes}
                             name="employmentType"
-                            value={jobProfileDto.employmentType}
+                            value={jobProfileDto?.employmentType ?? 'N/A'}
                             onChange={handleChange}
                             optionLabel="name"
                             isRequired={true}
                         />
-                        {formErrors.employmentType
-                            && <p className='error-message'>{formErrors.employmentType}</p>}
+                        {formErrors?.employmentType
+                            && <p className='error-message'>{formErrors?.employmentType}</p>}
                     </div>
 
                     <div>
@@ -53,13 +53,13 @@ const JobProfileComponent = ({
                             title="Level"
                             options={levels}
                             name="level"
-                            value={jobProfileDto.level}
+                            value={jobProfileDto?.level ?? 'N/A'}
                             onChange={handleChange}
                             optionLabel="name"
                             isRequired={true}
                         />
-                        {formErrors.level
-                            && <p className='error-message'>{formErrors.level}</p>}
+                        {formErrors?.level
+                            && <p className='error-message'>{formErrors?.level}</p>}
                     </div>
 
                     <div>
@@ -67,26 +67,26 @@ const JobProfileComponent = ({
                             title="Designation"
                             options={designationList}
                             name="designationDto"
-                            value={jobProfileDto.designationDto}
+                            value={jobProfileDto?.designationDto}
                             onChange={handleChange}
                             optionLabel="title"
                             isRequired={true}
                         />
-                        {formErrors.designationTitle
-                            && <p className='error-message'>{formErrors.designationTitle}</p>}
+                        {formErrors?.designationTitle
+                            && <p className='error-message'>{formErrors?.designationTitle}</p>}
                     </div>
 
                     <DateComponent
                         title='Joining Date'
                         name='joiningDate'
-                        value={jobProfileDto.joiningDate}
+                        value={jobProfileDto?.joiningDate ?? 'N/A'}
                         onChange={handleChange} />
 
                     <TextFieldWithAddons
                         title="Basic Salary"
                         placeholder="Add basic salary"
                         name="basicSalary"
-                        value={jobProfileDto.basicSalary}
+                        value={jobProfileDto?.basicSalary ?? 0.0}
                         onChange={handleChange}
                     />
 
@@ -94,7 +94,7 @@ const JobProfileComponent = ({
                         title="Compensation"
                         placeholder="Add compensation"
                         name="compensation"
-                        value={jobProfileDto.compensation}
+                        value={jobProfileDto?.compensation ?? 0.0}
                         onChange={handleChange}
                     />
                 </div>
