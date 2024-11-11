@@ -13,8 +13,9 @@ import JobProfileComponent from '../components/feature_components/JobProfileComp
 import designationService from '../services/DesignationService'
 import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import { initialJobProfileData } from '../data/JobProfileData'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const AddUser = (props) => {
+const AddUser = () => {
     const [user, setUser] = useState(initialUserData)
     const [contactInfoDto, setContactInfoDto] = useState(initialUserData.contactInfoDto)
     const [jobProfileDto, setJobProfileDto] = useState(initialUserData.jobProfileDto)
@@ -22,12 +23,15 @@ const AddUser = (props) => {
     const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
 
+    const {updateHerobar} = useHerobar()
+
     useEffect(() => {
-        props.callback('Add User')
+        updateHerobar('Add New User')
         if (designations.length === 0) {
             retreiveDesignations()
         }
 
+        return () =>  updateHerobar("","",null)
     }, [designations])
 
     const retreiveDesignations = () => {

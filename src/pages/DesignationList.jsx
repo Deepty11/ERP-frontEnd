@@ -12,19 +12,30 @@ import {
 } from '@mui/material'
 import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
 import { useNavigate } from 'react-router'
+import { useHerobar } from '../components/HerobarProvider.jsx'
+import { toast } from 'react-toastify'
 
-const DesignationList = (props) => {
+const DesignationList = () => {
     const [designations, setDesignations] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
 
+    const {updateHerobar} = useHerobar()
+
     useEffect(() => {
-        props.callback('Designations')
+        updateHerobar('Designations')
         if (designations.length != 0) {
             return
         }
 
+        getAllDesignations()
+
+        return () =>  updateHerobar("","",null)
+
+    }, [designations])
+
+    const getAllDesignations = () => {
         designationService.getAllDesignations((designations) => {
             console.log(designations)
             setDesignations(designations)
@@ -33,8 +44,7 @@ const DesignationList = (props) => {
             setError(error)
             setLoading(false)
         })
-
-    }, [designations])
+    }
 
     const tableContent = () => {
         return <section className="section main-section">
@@ -68,15 +78,6 @@ const DesignationList = (props) => {
                                                 navigate('/designation-details?id=' + row.id)
                                             }}>
                                             View
-                                        </button>
-
-                                        <button
-                                            type='button'
-                                            className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400"
-                                            onClick={(e) => {
-                                                navigate('/edit-designation?id=' + row.id)
-                                            }}>
-                                            Edit
                                         </button>
 
                                     </div>

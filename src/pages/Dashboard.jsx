@@ -5,16 +5,21 @@ import { MdOutlineRefresh } from 'react-icons/md'
 import CardContent from '../components/card/CardContent';
 import CustomLineChart from '../components/chart/CustomLineChart';
 import CardHeaderComponent from '../components/card/CardHeaderComponent';
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const Dashboard = ({ onPageLoad }) => {
+const Dashboard = () => {
     const cardItems = [
         { icon: <FaUsers size={50} />, label: 'Clients', value: '512', iconColor: 'text-green-500' },
         { icon: <FaCartShopping size={50} />, label: 'Sales', value: '$770', iconColor: 'text-red-500' },
         { icon: <FaArrowTrendUp size={50} />, label: 'Performance', value: '256%', iconColor: 'text-red-500' }
     ];
 
+    const { updateHerobar } = useHerobar()
+
     useEffect(() => {
-        onPageLoad('Dashboard')
+        updateHerobar('Dashboard')
+
+        return () =>  updateHerobar("","",null)
     }, [])
 
     return (

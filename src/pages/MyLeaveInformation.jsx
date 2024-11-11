@@ -9,13 +9,17 @@ import {
     Paper
 } from '@mui/material'
 import { initialLeaveData } from '../data/LeaveApplicationData'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const MyLeaveInformation = (props) => {
-    useEffect(() => {
-        props.callback('My Leave Information')
-    }, [])
-
+const MyLeaveInformation = () => {
     const [leaveInformation, setLeaveInformation] = useState(initialLeaveData)
+    const { updateHerobar } = useHerobar()
+
+    useEffect(() => {
+        updateHerobar('My Leave Information')
+
+        return () =>  updateHerobar("","",null)
+    }, [])
 
     return (
         <section className="section main-section">

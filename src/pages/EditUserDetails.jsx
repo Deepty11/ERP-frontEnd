@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import JobProfileComponent from '../components/feature_components/JobProfileComponent'
 import ContactInfo from '../components/user_profile/ContactInfo'
@@ -13,10 +13,9 @@ import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import ProfileHeader from '../components/user_profile/ProfileHeader'
 import { MdContactEmergency } from 'react-icons/md'
 import UserService from '../services/UserService'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-
-
-const EditUserDetails = (props) => {
+const EditUserDetails = () => {
     const [userDetails, setUserDetails] = useState(initialUserData)
     const [newUserDetails, setNewUserDetails] = useState(initialUserData)
     const [newContactDetails, setNewContactDetails] = useState(initialContactInfoData)
@@ -26,6 +25,8 @@ const EditUserDetails = (props) => {
 
     const [searchParams] = useSearchParams()
     const userId = searchParams.get('id')
+
+    const { updateHerobar } = useHerobar()
 
     const updateNewUserDetails = () => {
         const userDetails = newUserDetails
@@ -80,7 +81,6 @@ const EditUserDetails = (props) => {
         } else {
             setNewJobProfileDto({ ...newJobProfileDto, [name]: value })
         }
-        //setNewJobProfileDto({ ...newJobProfileDto, [name]: value })
     }
 
     const handleEmergencyContactChange = (e) => {
@@ -89,8 +89,10 @@ const EditUserDetails = (props) => {
     }
 
     useEffect(() => {
-        props.callback('Edit User Details')
+        updateHerobar('Edit User Details')
         getUserDetails()
+
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const getUserDetails = async () => {

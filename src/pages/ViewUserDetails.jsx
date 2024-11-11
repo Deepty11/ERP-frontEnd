@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { initialUserData } from '../data/UserData'
 import userService from '../services/UserService'
 import JobProfileDetails from '../components/viewUserDetails/JobProfileDetails'
@@ -7,6 +7,7 @@ import ContactDetails from '../components/viewUserDetails/ContactDetails'
 import BasicInformation from '../components/viewUserDetails/BasicInformation'
 import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import EmergencyContactDetails from '../components/viewUserDetails/EmergencyContactDetails'
+import { useHerobar } from '../components/HerobarProvider'
 
 const ViewUserDetails = (props) => {
     const [searchParams] = useSearchParams()
@@ -14,10 +15,14 @@ const ViewUserDetails = (props) => {
     const [loading, setLoading] = useState(true)
     const [userDetails, setUserDetails] = useState(initialUserData)
 
+    const navigate = useNavigate()
+    const { updateHerobar } = useHerobar()
+
     useEffect(() => {
-        props.callback('View User Details')
+        updateHerobar('User Details', 'Edit', () => navigate('/edit-user?id=' + userId))
 
         getUserDetails()
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const getUserDetails = async () => {
@@ -31,7 +36,7 @@ const ViewUserDetails = (props) => {
         }
     }
 
-    if(loading) {
+    if (loading) {
         return <SpinnerComponent />
     }
 

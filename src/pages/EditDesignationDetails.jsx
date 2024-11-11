@@ -7,14 +7,17 @@ import TextFieldWithAddons from '../components/form_components/TextFieldWithAddo
 import DesignationService from '../services/DesignationService'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
 import { toast, ToastContainer } from 'react-toastify'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const EditDesignationDetails = (props) => {
+const EditDesignationDetails = () => {
     const [searchParams] = useSearchParams()
     const designationId = searchParams.get('id')
     const [designationDetails, setDesignationDetails] = useState(initialDesignation)
     const [newDesignationDetails, setNewDesignationDetails] = useState(initialDesignation)
     const [newSalaryRange, setNewSalaryRange] = useState(initialSalaryRange)
     const [loading, setLoading] = useState(true)
+
+    const {updateHerobar} = useHerobar()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -66,9 +69,11 @@ const EditDesignationDetails = (props) => {
     }
 
     useEffect(() => {
-        props.callback('Edit Designation')
+        updateHerobar('Edit Designation')
 
         getDesignationDetails()
+
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const getDesignationDetails = async () => {

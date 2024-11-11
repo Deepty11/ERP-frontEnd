@@ -10,10 +10,15 @@ import DropdownComponent from '../components/form_components/DropdownComponent';
 import FormButtonComponent from '../components/form_components/FormButtonComponent';
 import taskService from '../services/TaskService';
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const AddTask = (props) => {
+const AddTask = () => {
+    const {updateHerobar} = useHerobar()
+
     useEffect(() => {
-        props.callback('Add Task')
+        updateHerobar('Add New Task')
+
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const initialTaskState = {

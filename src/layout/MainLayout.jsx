@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router'
 import Asidebar from '../components/aside/Asidebar'
 import Herobar from '../components/common_components/Herobar'
 
-const MainLayout = ({ pageTitle }) => {
+const MainLayout = ({ pageTitle, handleAction }) => {
     const [expandSidebar, setExpandSidebar] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState(null)
 
@@ -44,7 +44,6 @@ const MainLayout = ({ pageTitle }) => {
             <Asidebar
                 expandSidebar={expandSidebar}
                 loggedInUser={loggedInUser} />
-            <Herobar title={pageTitle} />
             <Outlet />
         </>
     )

@@ -7,21 +7,25 @@ import { useAuth } from '../components/AuthProvider'
 import TextArea from '../components/form_components/TextArea'
 import DateComponent from '../components/form_components/DateComponent'
 import leaveApplicationService from '../services/LeaveApplicationService'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
 const AddLeaveApplication = (props) => {
     const { loggedInUsername } = useAuth()
     const [leaveApplication, setLeaveApplication] = useState(initialLeaveApplication)
     const [formErrors, setFormErrors] = useState(initialLeaveApplicationFormErrors)
     const [userDto, setUserDto] = useState(null)
+    const {updateHerobar} = useHerobar()
 
     useEffect(() => {
-        props.callback('Create Leave Application')
+        updateHerobar('Create New Leave Application')
 
         console.log(loggedInUsername)
         if (userDto != null) return
 
         const user = localStorage.getItem('loggedInUser')
         setUserDto(JSON.parse(user))
+        
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const showSuccessMessage = () => {

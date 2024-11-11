@@ -25,6 +25,11 @@ class UserService {
         const response =  await ErpResourceApiClient.post('/api/user/update?id='+ id, userDto)
         return response.data
     }
+
+    deleteUserById = async (id) => {
+        const response =  await ErpResourceApiClient.delete('/api/user/delete?id='+ id)
+        return response.data
+    }
 }
 
 export default new UserService()

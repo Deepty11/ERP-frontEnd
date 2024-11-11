@@ -34,6 +34,11 @@ class DesignationService {
         return response.data
     }
 
+    deleteDesignationById = async (id) => {
+        const response =  await ErpResourceApiClient.delete('/api/designation/delete?id='+ id)
+        return response.data
+    }
+
 }
 
 export default new DesignationService()

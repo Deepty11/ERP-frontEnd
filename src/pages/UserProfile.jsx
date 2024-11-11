@@ -13,7 +13,7 @@ import { initialContactInfoData, initialEmergencyContactInfoData, initialUserDat
 import { ToastContainer, toast } from 'react-toastify'
 import EmergencyContactInfo from '../components/user_profile/EmergencyContactInfo'
 
-const UserProfile = (props) => {
+const UserProfile = () => {
     const [searchParams] = useSearchParams()
     const userId = searchParams.get('id')
     const navigate = useNavigate()
@@ -56,9 +56,9 @@ const UserProfile = (props) => {
     }
 
     useEffect(() => {
-        props.callback('Profile')
         getUserDetails()
 
+        return () =>  updateHerobar("","",null)
     }, [])
 
     if (loading) {

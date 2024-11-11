@@ -17,8 +17,9 @@ import { initialLeaveData, initialLeaveOverview } from '../data/LeaveApplication
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { useSearchParams } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const LeaveApplications = (props) => {
+const LeaveApplications = () => {
     const [searchParams] = useSearchParams()
     const userId = searchParams.get('userId')
 
@@ -26,14 +27,18 @@ const LeaveApplications = (props) => {
     const [isLoading, setIsLoading] = useState(true)
     const [leaveInformation, setLeaveInformation] = useState(initialLeaveOverview)
 
+    const {updateHerobar} = useHerobar()
+
     useEffect(() => {
-        props.callback('Leave Applications')
+        updateHerobar('Leave Applications')
 
         if (userId) {
             fetchIndividualLeaveInfo(userId)
         } else {
             fetchLeaveApplications()
         }
+
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const fetchLeaveApplications = async () => {

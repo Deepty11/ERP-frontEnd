@@ -5,9 +5,11 @@ import TextField from '../components/form_components/TextField'
 import FormButtonComponent from '../components/form_components/FormButtonComponent'
 import TokenManager from '../managers/TokenManager'
 
-const AddBook = (props) => {
+const AddBook = () => {
+    const {updateHerobar} = useHerobar()
     useEffect(() => {
-        props.callback("Add Book")
+       updateHerobar('Add New Book')
+       return () =>  updateHerobar("","",null)
     }, [])
 
     const initialBookState = {

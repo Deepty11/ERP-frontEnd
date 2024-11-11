@@ -9,10 +9,14 @@ import designationService from '../services/DesignationService'
 import { initialDesignation, initialFormErrors, initialSalaryRange } from '../data/DesignationData.js'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const AddDesignation = (props) => {
+const AddDesignation = () => {
+    const {updateHerobar} = useHerobar()
+    
     useEffect(() => {
-        props.callback('Add New Designation')
+        updateHerobar('Add New Designation')
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const [designation, setDesignation] = useState(initialDesignation)

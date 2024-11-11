@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { initialDesignation } from '../data/DesignationData'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import DesignationService from '../services/DesignationService'
+import { useHerobar } from '../components/HerobarProvider.jsx'
 
-const ViewDesignationDetails = (props) => {
+const ViewDesignationDetails = () => {
     const [searchParams] = useSearchParams()
     const designationId = searchParams.get('id')
     const [designationDetails, setDesignationDetails] = useState(initialDesignation)
     const [loading, setLoading] = useState(true)
 
+    const { updateHerobar } = useHerobar()
+    const navigate = useNavigate()
+
     useEffect(() => {
-        props.callback('Designation Details')
+        updateHerobar('Designation Details', 'Edit', () => navigate('/edit-designation?id=' + designationId) )
         getDesignationDetails()
+
+        return () =>  updateHerobar("","",null)
     }, [])
 
     const getDesignationDetails = async () => {
