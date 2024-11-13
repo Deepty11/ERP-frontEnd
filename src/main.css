@@ -1854,6 +1854,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     height:fit-content;
+    width: 200px;
     border-radius: 10px;
     padding: 10px;
 }
@@ -1865,4 +1866,14 @@ footer {
     padding-left: 4px;
     padding-right: 4px;
     font-size: small;
+}
+
+.task-dashboard {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.task-card {
+    width: 200px;
 }

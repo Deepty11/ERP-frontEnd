@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 
 const StatusHeader = ({statusAttribute}) => {
-    useEffect(()=> {
-        console.log(statusAttribute)
-    },[])
     return (
         <div className='status-header mb-4' style={{backgroundColor: statusAttribute?.backgroundColor}}>
             <label>{statusAttribute?.title}</label>

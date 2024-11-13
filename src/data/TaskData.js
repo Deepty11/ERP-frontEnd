@@ -1,3 +1,5 @@
+import { color } from "framer-motion"
+
 export const statuses = [
     { label: 'To Do', value: 'TO_DO' },
     { label: 'In progress', value: 'IN_PROGRESS'},
@@ -5,9 +7,9 @@ export const statuses = [
 ]
 
 export const priorities = [
-    {label: 'High', value: 'HIGH' },
-    {label: 'Low', value: 'LOW'},
-    {label: 'Medium', value: 'MEDIUM'},
+    {label: 'High', value: 'HIGH', color: '#C70039' },
+    {label: 'Medium', value: 'MEDIUM', color: '#FFC300'},
+    {label: 'Low', value: 'LOW', color: '#1e8449'},
 ]
 
 export const initialTaskState = {
