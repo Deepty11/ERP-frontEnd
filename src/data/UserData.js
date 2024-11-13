@@ -43,6 +43,7 @@ export const initialUserData = {
     username: '',
     firstName: '',
     lastName: '',
+    fullName:'',
     password: '',
     birthDate: '',
     gender: '',

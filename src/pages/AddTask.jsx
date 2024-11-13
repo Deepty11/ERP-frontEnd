@@ -11,73 +11,46 @@ import FormButtonComponent from '../components/form_components/FormButtonCompone
 import taskService from '../services/TaskService';
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { useHerobar } from '../components/HerobarProvider.jsx'
+import { statuses, priorities, initialTaskState } from '../data/TaskData.js'
+import TextFieldWithAddons from '../components/form_components/TextFieldWithAddons.jsx';
+import UserService from '../services/UserService.js';
+import { initialUserData } from '../data/UserData.js';
+import { toast, ToastContainer } from 'react-toastify';
 
 const AddTask = () => {
-    const {updateHerobar} = useHerobar()
+    const { updateHerobar } = useHerobar()
+    const [users, setUsers] = useState([])
+    const [reportedBy, setReportedBy] = useState(initialUserData)
+    const [assignees, setAssignees] = useState([])
 
     useEffect(() => {
-        updateHerobar('Add New Task')
+        updateHerobar('Create New Task')
 
-        return () =>  updateHerobar("","",null)
+        getAllUsers()
+
+        return () => updateHerobar("", "", null)
     }, [])
 
-    const initialTaskState = {
-        title: '',
-        description: '',
-        startDate: '',
-        dueDate: '',
-        reportedBy: '',
-        assignees: [],
-        status: '',
-        priority: '',
-        taskAllowance: 0.0
+    const getAllUsers = async () => {
+        const users = await UserService.getUserList()
+        setUsers(users)
     }
-
-    const assignees = [
-        { name: 'Rehnuma Reza', id: 1 },
-        { name: 'Rimi Reza', id: 2 },
-        { name: 'Alex', id: 3 },
-        { name: 'pop', id: 4 }
-    ]
-
-    // const assignees = [
-    //       'Rehnuma Reza',
-    //       'Rimi Reza',
-    //       'Alex',
-    //       'pop'
-    // ]
-
-    const reporters = [
-        { name: 'Rehnuma Reza', id: 1 },
-        { name: 'Rimi Reza', id: 2 },
-        { name: 'Alex', id: 3 },
-        { name: 'pop', id: 4 }
-    ]
-
-    // const reporters = [
-    //      'Rehnuma Reza',
-    //      'Rimi Reza',
-    //      'Alex',
-    //      'pop'
-    // ]
-
-    const statuses = [
-        { name: 'To Do', id: 1 },
-        { name: 'In progress', id: 2 },
-        { name: 'Completed', id: 3 },
-    ]
-
-    const priorities = [
-        { name: 'High', id: 1 },
-        { name: 'Low', id: 2 },
-        { name: 'Medium', id: 3 },
-    ]
 
     const [task, setTask] = useState(initialTaskState)
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setTask({ ...task, [name]: value })
+
+        if(name == 'taskAllowance') {
+            const doubleValue = parseFloat(value)
+            if(!isNaN(doubleValue)) {
+                setTask({...task, [name]: doubleValue})
+            } else {
+                setTask({...task, [name]: 0 })
+            }
+        } else {
+            setTask({ ...task, [name]: value })
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -86,117 +59,114 @@ const AddTask = () => {
         console.log("Handle Submission")
         console.log("Task: ", task)
 
-        let response = await taskService.createTask(task)
-        console.log(response)
+        try {
+            let data = await taskService.createTask(task)
+            toast.success("Created task successfully")
+        } catch (error) {
+            toast.error("Error in creating new task")
+        }
     }
 
     return (
-        <section className="section main-section">
-            <div className="card mb-6">
-                <CardHeaderComponent
-                    title="Create a New Task"
-                    leftIcon={<FaPen />} />
-                <div className="card-content">
-                    <form
-                        method='post'
-                        onSubmit={handleSubmit}>
-                        <TextField
-                            title='Title'
-                            value={task.title}
-                            name='title'
-                            onChange={handleChange} />
+        <>
+            <ToastContainer hideProgressBar={true} />
+            <section className="section main-section">
+                <div className="card mb-6">
+                    <CardHeaderComponent
+                        title="Create a New Task"
+                        leftIcon={<FaPen />} />
+                    <div className="card-content">
+                        <form
+                            method='post'
+                            onSubmit={handleSubmit}>
+                            <TextField
+                                title='Title'
+                                value={task.title}
+                                name='title'
+                                onChange={handleChange} />
 
-                        <TextArea
-                            title='Description'
-                            name='description'
-                            value={task.description}
-                            onChange={handleChange} />
+                            <TextArea
+                                title='Description'
+                                name='description'
+                                value={task.description}
+                                onChange={handleChange} />
 
-                        <hr />
+                            <hr />
+                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 gap-2 ml-1'>
+                                <DateComponent
+                                    title='Start Date'
+                                    name='startDate'
+                                    value={task.startDate}
+                                    onChange={handleChange} />
 
-                        <DateComponent
-                            title='Start Date'
-                            name='startDate'
-                            value={task.startDate}
-                            onChange={handleChange} />
+                                <DateComponent
+                                    title='Due Date'
+                                    name='dueDate'
+                                    value={task.dueDate}
+                                    onChange={handleChange} />
+                            </div>
 
-                        <DateComponent
-                            title='Due Date'
-                            name='dueDate'
-                            value={task.dueDate}
-                            onChange={handleChange} />
+                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 gap-2 ml-1'>
+                                <DropdownComponent
+                                    title="Reported By"
+                                    options={users}
+                                    name="reportedBy"
+                                    value={task.reportedBy}
+                                    onChange={handleChange}
+                                    optionLabel="fullName"
+                                />
 
-                        <DropdownComponent
-                            title="Reported By"
-                            options={reporters}
-                            name="reportedBy"
-                            value={task.reportedBy}
-                            onChange={handleChange}
-                            optionLabel="name"
-                        />
-
-                        <div className="field">
-                            <label className="label">Assignees</label>
-                            <div className="control">
                                 <div className="field">
-                                    <MultiSelect
-                                        options={assignees}
-                                        value={task.assignees}
-                                        onChange={handleChange}
-                                        optionLabel='name'
-                                        display="chip"
-                                        placeholder='Select assignees'
-                                        className='w-full md:w-20rem p-dropdown'
-                                        name='assignees'
-                                        selected />
-                                </div>
-                            </div>
-                        </div>
-
-                        <DropdownComponent
-                            title="Priority"
-                            options={priorities}
-                            value={task.priority}
-                            name="priority"
-                            onChange={handleChange}
-                            optionLabel="name"
-                        />
-
-                        <DropdownComponent
-                            title="Status"
-                            options={statuses}
-                            value={task.status}
-                            name="status"
-                            onChange={handleChange}
-                            optionLabel="name"
-                        />
-
-                        <div className="field">
-                            <label className="label">Task Allowance</label>
-                            <div className='field'>
-                                <div className="field addons">
+                                    <label className="label">Assignees</label>
                                     <div className="control">
-                                        <input className="input"
-                                            value="BDT"
-                                            size="3"
-                                            readOnly='true' />
-                                    </div>
-                                    <div className="control expanded">
-                                        <input className="input"
-                                            type="text"
-                                            placeholder="Task Allowance"
-                                            name='taskAllowance'
-                                            value={task.taskAllowance}
-                                            onChange={handleChange} />
+                                        <div className="field">
+                                            <MultiSelect
+                                                options={users}
+                                                value={task.assignees}
+                                                onChange={handleChange}
+                                                optionLabel='fullName'
+                                                display="chip"
+                                                placeholder='Select assignees'
+                                                className='p-dropdown'
+                                                name='assignees'
+                                                selected />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <FormButtonComponent />
-                    </form>
+
+                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 gap-2 ml-1'>
+                                <DropdownComponent
+                                    title="Priority"
+                                    options={priorities}
+                                    value={task.priority}
+                                    name="priority"
+                                    onChange={handleChange}
+                                    optionLabel="label"
+                                />
+
+                                <DropdownComponent
+                                    title="Status"
+                                    options={statuses}
+                                    value={task.status}
+                                    name="status"
+                                    onChange={handleChange}
+                                    optionLabel="label"
+                                />
+                            </div>
+                            <TextFieldWithAddons
+                                placeholder='Task Allowance'
+                                title='Task Allowance'
+                                name='taskAllowance'
+                                value={task.taskAllowance ?? 0.0}
+                                onChange={handleChange} />
+
+                            <FormButtonComponent />
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     )
 }
 

@@ -12,6 +12,7 @@ import SpinnerComponent from '../components/common_components/SpinnerComponent'
 import { initialContactInfoData, initialEmergencyContactInfoData, initialUserData } from '../data/UserData'
 import { ToastContainer, toast } from 'react-toastify'
 import EmergencyContactInfo from '../components/user_profile/EmergencyContactInfo'
+import { useHerobar } from '../components/HerobarProvider'
 
 const UserProfile = () => {
     const [searchParams] = useSearchParams()
@@ -25,6 +26,7 @@ const UserProfile = () => {
     const [newEmergencyContactInfoDto, setNewEmergencyContactInfoDto] = useState(initialEmergencyContactInfoData)
 
     const [loading, setLoading] = useState(true)
+    const {updateHerobar} = useHerobar()
 
     const handleContactInfoChange = (e) => {
         const { name, value } = e.target

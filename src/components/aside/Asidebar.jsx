@@ -1,9 +1,20 @@
 import '../../css/aside/asidebar.css'
 import { Link } from 'react-router-dom'
-import { FaEdit, FaGithub, FaList, FaQuestionCircle, FaTv } from 'react-icons/fa'
+import { FaEdit, FaGithub, FaList, FaPlus, FaQuestionCircle, FaTv } from 'react-icons/fa'
 import ListOption from './ListOption'
+import { useState } from 'react'
+import { MdDashboard } from 'react-icons/md'
 
 const Asidebar = ({ expandSidebar, loggedInUser }) => {
+    const [expandList, setExpandList] = useState(false)
+
+    const handleDropdownAction = (e) => {
+        setExpandList(!expandList)
+
+        if (expandList) {
+            e.target.parentNode.classList.toggle('active')
+        }
+    }
 
     return (
         <aside className={`aside ${expandSidebar ? 'expand-sidebar' : ''}`}>
@@ -69,11 +80,16 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                         icon={<FaList />}
                         title="My Leave Information" />
 
-                    {/* <li>
-                        <Link className="dropdown">
-                            <span className="icon"><i className="mdi mdi-view-list"></i></span>
-                            <span className="menu-item-label">Submenus</span>
-                            <span className="icon"><i className="mdi mdi-plus"></i></span>
+                    <ListOption
+                        url={`/task-dashboard`}
+                        icon={<MdDashboard />}
+                        title="Task Board" />
+
+                    <li>
+                        <Link className="dropdown" onClick={handleDropdownAction}>
+                            <span className="icon"><FaList /></span>
+                            <span className="menu-item-label">Task Management</span>
+                            <span className="icon"><FaPlus /></span>
                         </Link>
                         <ul>
                             <li>
@@ -87,7 +103,7 @@ const Asidebar = ({ expandSidebar, loggedInUser }) => {
                                 </Link>
                             </li>
                         </ul>
-                    </li> */}
+                    </li>
                 </ul>
                 {/* <p className="menu-label">About</p>
                 <ul className="menu-list">

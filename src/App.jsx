@@ -25,19 +25,10 @@ import EditDesignationDetails from './pages/EditDesignationDetails'
 import EditUserDetails from './pages/EditUserDetails'
 import HerobarProvider from './components/HerobarProvider'
 import Herobar from './components/common_components/Herobar'
+import TaskDashboard from './pages/TaskDashboard'
 
 
 function App() {
-  const [pageTitle, setPageTitle] = useState('')
-  const [handleAction, setHandleAction] = useState(null)
-
-  const onRequestingPage = (title) => {
-    setPageTitle(title)
-  }
-
-  const setHandler = (handler) => {
-    setHandleAction(handler)
-  }
 
   return (
     <Router>
@@ -46,21 +37,22 @@ function App() {
           <Herobar />
           <Routes>
             <Route element={<PrivateRoutes />}>
-              < Route path='/' element={<MainLayout pageTitle={pageTitle} handleAction={setHandler} />}>
-                <Route path='/dashboard' element={<Dashboard onPageLoad={onRequestingPage} />} />
-                <Route path='/add-task' element={<AddTask callback={onRequestingPage} />} />
-                <Route path='/add-user' element={<AddUser callback={onRequestingPage} />} />
-                <Route path='/addBook' element={<AddBook callback={onRequestingPage} />} />
+              < Route path='/' element={<MainLayout />}>
+                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/add-task' element={<AddTask />} />
+                <Route path='/add-user' element={<AddUser />} />
+                <Route path='/addBook' element={<AddBook />} />
                 <Route path='/users' element={<UserList />} />
-                <Route path='/add-designation' element={<AddDesignation callback={onRequestingPage} />} />
-                <Route path='/designations' element={<DesignationList callback={onRequestingPage} />} />
-                <Route path='/leave/create-application' element={<AddLeaveApplication callback={onRequestingPage} />} />
-                <Route path='/leave/applications' element={<LeaveApplications callback={onRequestingPage} />} />
-                <Route path='/profile' element={<UserProfile callback={onRequestingPage} />} />
-                <Route path='/user-details' element={<ViewUserDetails callback={onRequestingPage} />} />
-                <Route path='/designation-details' element={<ViewDesignationDetails callback={onRequestingPage} />} />
-                <Route path='/edit-designation' element={<EditDesignationDetails callback={onRequestingPage} />} />
-                <Route path='/edit-user' element={<EditUserDetails callback={onRequestingPage} setHandler={setHandleAction} />} />
+                <Route path='/add-designation' element={<AddDesignation />} />
+                <Route path='/designations' element={<DesignationList />} />
+                <Route path='/leave/create-application' element={<AddLeaveApplication />} />
+                <Route path='/leave/applications' element={<LeaveApplications />} />
+                <Route path='/profile' element={<UserProfile />} />
+                <Route path='/user-details' element={<ViewUserDetails />} />
+                <Route path='/designation-details' element={<ViewDesignationDetails />} />
+                <Route path='/edit-designation' element={<EditDesignationDetails />} />
+                <Route path='/edit-user' element={<EditUserDetails />} />
+                <Route path='/task-dashboard' element={<TaskDashboard />} />
               </Route>
             </Route>
             <Route path="/login" element={<LoginPage />} />

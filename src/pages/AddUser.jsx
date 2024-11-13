@@ -63,7 +63,7 @@ const AddUser = () => {
             if (!isNaN(doubleValue)) {
                 setJobProfileDto({ ...jobProfileDto, [name]: doubleValue })
             } else {
-                setJobProfileDto({ ...jobProfileDto, [name]: "" })
+                setJobProfileDto({ ...jobProfileDto, [name]: 0 })
             }
         } else {
             setJobProfileDto({ ...jobProfileDto, [name]: value })

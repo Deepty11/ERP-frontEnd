@@ -9,7 +9,7 @@ const TextFieldWithAddons = ({
     onChange, 
     readOnly = false}) => {
     return (
-        <div className="field">
+        <div className="field w-52">
             <label className="label">{title}</label>
             <div className='field'>
                 <div className="field addons">

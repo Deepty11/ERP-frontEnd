@@ -1729,6 +1729,8 @@ footer {
 }
 
 .p-dropdown {
+    display: flex;
+    flex-wrap: wrap;
     border: 0.75px solid #000000;
     border-radius: 4px;
 }
@@ -1845,4 +1847,22 @@ footer {
     font-weight: bold;
     font-size: small;
     height: 20%;
+}
+
+.status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:fit-content;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.status-count {
+    border-radius: 20%;
+    /* background-color: orange; */
+    color: white;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: small;
 }
