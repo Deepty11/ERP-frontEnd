@@ -1,45 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { FaPen } from 'react-icons/fa'
 import { MultiSelect } from 'primereact/multiselect'
 import "primereact/resources/themes/saga-blue/theme.css"
 import 'primereact/resources/primereact.min.css';
-import DateComponent from '../components/form_components/DateComponent'
-import TextArea from '../components/form_components/TextArea'
-import TextField from '../components/form_components/TextField'
-import DropdownComponent from '../components/form_components/DropdownComponent';
-import FormButtonComponent from '../components/form_components/FormButtonComponent';
-import taskService from '../services/TaskService';
-import CardHeaderComponent from '../components/card/CardHeaderComponent'
+import DateComponent from '../components/form_components/DateComponent.jsx'
+import TextArea from '../components/form_components/TextArea.jsx'
+import TextField from '../components/form_components/TextField.jsx'
+import DropdownComponent from '../components/form_components/DropdownComponent.jsx';
+import FormButtonComponent from '../components/form_components/FormButtonComponent.jsx';
+import taskService from '../services/TaskService.js';
 import { useHerobar } from '../components/HerobarProvider.jsx'
 import { statuses, priorities, initialTaskState } from '../data/TaskData.js'
 import TextFieldWithAddons from '../components/form_components/TextFieldWithAddons.jsx';
 import UserService from '../services/UserService.js';
-import { initialUserData } from '../data/UserData.js';
 import { toast, ToastContainer } from 'react-toastify';
 import { useSearchParams } from 'react-router-dom';
 
-const AddTask = () => {
+const EditTask = () => {
     const [searchParams] = useSearchParams()
     const taskId = searchParams.get('id')
     
     const { updateHerobar } = useHerobar()
     const [users, setUsers] = useState([])
+    const [task, setTask] = useState(initialTaskState)
+    const [newTask, setNewTask] = useState(initialTaskState)
 
     useEffect(() => {
-        updateHerobar(taskId ? 'Update Task' : 'Create New Task')
-
-        if(taskId) {
-            getTaskById(taskId)
-        }
-
+        getTaskById(taskId)
         getAllUsers()
 
         return () => updateHerobar("", "", null)
     }, [])
 
-    const getTaskById =  async () => {
+    const getTaskById = async () => {
         const taskDetails = await taskService.getTaskById(taskId)
         setTask(taskDetails)
+        setNewTask(taskDetails)
+        updateHerobar(taskDetails?.title)
     }
 
     const getAllUsers = async () => {
@@ -47,16 +43,15 @@ const AddTask = () => {
         setUsers(users)
     }
 
-    const [task, setTask] = useState(initialTaskState)
 
     const handleChange = (e) => {
         const { name, value } = e.target
 
         if(name == 'taskAllowance') {
             const doubleValue = parseFloat(value)
-            setTask({...task, [name]: !isNaN(doubleValue) ? doubleValue : 0})
+            setNewTask({...newTask, [name]: !isNaN(doubleValue) ? doubleValue : 0})
         } else {
-            setTask({ ...task, [name]: value })
+            setNewTask({ ...newTask, [name]: value })
         }
     }
 
@@ -64,19 +59,19 @@ const AddTask = () => {
         e.preventDefault()
 
         console.log("Handle Submission")
-        console.log("Task: ", task)
+        console.log("Task: ", newTask)
 
         try {
-            if(taskId) {
-                // upadate
-            } else {
-                let data = await taskService.createTask(task)
-            }
+            let data = await taskService.updateTask(taskId, newTask)
             
-            toast.success("Created task successfully")
+            toast.success(data?.message)
         } catch (error) {
-            toast.error("Error in creating new task")
+            toast.error(error?.message)
         }
+    }
+
+    const handleReset = (e) => {
+        setNewTask(task)
     }
 
     return (
@@ -84,23 +79,20 @@ const AddTask = () => {
             <ToastContainer hideProgressBar={true} />
             <section className="section main-section">
                 <div className="card mb-6">
-                    <CardHeaderComponent
-                        title="Create a New Task"
-                        leftIcon={<FaPen />} />
                     <div className="card-content">
                         <form
                             method='post'
                             onSubmit={handleSubmit}>
                             <TextField
                                 title='Title'
-                                value={task.title}
+                                value={newTask.title}
                                 name='title'
                                 onChange={handleChange} />
 
                             <TextArea
                                 title='Description'
                                 name='description'
-                                value={task.description}
+                                value={newTask.description}
                                 onChange={handleChange} />
 
                             <hr />
@@ -108,7 +100,7 @@ const AddTask = () => {
                                 <DateComponent
                                     title='Start Date'
                                     name='startDate'
-                                    value={task.startDate}
+                                    value={newTask.startDate}
                                     onChange={handleChange} />
 
                                 <DateComponent
@@ -123,7 +115,7 @@ const AddTask = () => {
                                     title="Reported By"
                                     options={users}
                                     name="reportedBy"
-                                    value={task.reportedBy}
+                                    value={newTask.reportedBy}
                                     onChange={handleChange}
                                     optionLabel="fullName"
                                 />
@@ -134,7 +126,7 @@ const AddTask = () => {
                                         <div className="field">
                                             <MultiSelect
                                                 options={users}
-                                                value={task.assignees}
+                                                value={newTask.assignees}
                                                 onChange={handleChange}
                                                 optionLabel='fullName'
                                                 display="chip"
@@ -151,7 +143,7 @@ const AddTask = () => {
                                 <DropdownComponent
                                     title="Priority"
                                     options={priorities}
-                                    value={task.priority}
+                                    value={newTask.priority}
                                     name="priority"
                                     onChange={handleChange}
                                     optionLabel="label"
@@ -160,7 +152,7 @@ const AddTask = () => {
                                 <DropdownComponent
                                     title="Status"
                                     options={statuses}
-                                    value={task.status}
+                                    value={newTask.status}
                                     name="status"
                                     onChange={handleChange}
                                     optionLabel="label"
@@ -170,10 +162,10 @@ const AddTask = () => {
                                 placeholder='Task Allowance'
                                 title='Task Allowance'
                                 name='taskAllowance'
-                                value={task.taskAllowance ?? 0.0}
+                                value={newTask.taskAllowance ?? 0.0}
                                 onChange={handleChange} />
 
-                            <FormButtonComponent />
+                            <FormButtonComponent handleReset={handleReset} />
                         </form>
                     </div>
                 </div>
@@ -182,4 +174,4 @@ const AddTask = () => {
     )
 }
 
-export default AddTask
+export default EditTask

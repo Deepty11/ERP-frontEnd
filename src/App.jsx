@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './App.css'
 import './main.css'
 import '/node_modules/primeflex/primeflex.css'
@@ -16,9 +16,7 @@ import AddDesignation from './pages/AddDesignation'
 import DesignationList from './pages/DesignationList'
 import AddLeaveApplication from './pages/AddLeaveApplication'
 import LeaveApplications from './pages/LeaveApplications'
-import MyLeaveInformation from './pages/MyLeaveInformation'
 import UserProfile from './pages/UserProfile'
-import { ToastContainer } from 'react-toastify'
 import ViewUserDetails from './pages/ViewUserDetails'
 import ViewDesignationDetails from './pages/ViewDesignationDetails'
 import EditDesignationDetails from './pages/EditDesignationDetails'
@@ -26,10 +24,9 @@ import EditUserDetails from './pages/EditUserDetails'
 import HerobarProvider from './components/HerobarProvider'
 import Herobar from './components/common_components/Herobar'
 import TaskDashboard from './pages/TaskDashboard'
-
+import EditTask from './pages/EditTask'
 
 function App() {
-
   return (
     <Router>
       <AuthProvider>
@@ -40,6 +37,7 @@ function App() {
               < Route path='/' element={<MainLayout />}>
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/add-task' element={<AddTask />} />
+                <Route path='/edit-task' element={<EditTask />} />
                 <Route path='/add-user' element={<AddUser />} />
                 <Route path='/addBook' element={<AddBook />} />
                 <Route path='/users' element={<UserList />} />
@@ -57,13 +55,10 @@ function App() {
             </Route>
             <Route path="/login" element={<LoginPage />} />
           </Routes>
-
         </HerobarProvider>
-
       </AuthProvider>
     </Router>
   )
-
 }
 
 export default App

@@ -1,9 +1,9 @@
-import { color } from "framer-motion"
+
 
 export const statuses = [
-    { label: 'To Do', value: 'TO_DO' },
-    { label: 'In progress', value: 'IN_PROGRESS'},
-    { label: 'Completed', value: 'DONE' },
+    { id: 0, label: 'To Do', value: 'TO_DO', count: 10, backgroundColor: '#FAEBD7', countBG: '#FFA500' },
+    { id: 1, label: 'In progress', value: 'IN_PROGRESS', count: 10, backgroundColor: '#cce3fa', countBG: '#6e6eff'},
+    { id: 2, label: 'Done', value: 'DONE', count: 10, backgroundColor: '#d9efd1', countBG: '#5b9243' },
 ]
 
 export const priorities = [
@@ -17,7 +17,7 @@ export const initialTaskState = {
     description: '',
     startDate: '',
     dueDate: '',
-    reportedBy: '',
+    reportedBy: null,
     assignees: [],
     status: '',
     priority: '',

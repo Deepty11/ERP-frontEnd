@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
-const StatusHeader = ({statusAttribute}) => {
+const StatusHeader = ({status}) => {
     return (
-        <div className='status-header mb-4' style={{backgroundColor: statusAttribute?.backgroundColor}}>
-            <label>{statusAttribute?.title}</label>
-            <div className='status-count' style={{backgroundColor: statusAttribute?.countBG}}>
-                <label>{statusAttribute?.count}</label>
+        <div className='status-header mb-4' style={{backgroundColor: status?.backgroundColor}}>
+            <label>{status?.label}</label>
+            <div className='status-count' style={{backgroundColor: status?.countBG}}>
+                <label>{status?.count}</label>
             </div>
         </div>
     )
