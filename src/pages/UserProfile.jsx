@@ -13,6 +13,10 @@ import { initialContactInfoData, initialEmergencyContactInfoData, initialUserDat
 import { ToastContainer, toast } from 'react-toastify'
 import EmergencyContactInfo from '../components/user_profile/EmergencyContactInfo'
 import { useHerobar } from '../components/HerobarProvider'
+import ProfileHeaderComponent from '../components/user_profile/ProfileHeaderComponent'
+import UploadProfilePictureModal from '../components/user_profile/UploadProfilePictureModal'
+import {convertToBase64} from '../utils/FileUtils'
+import UserService from '../services/UserService'
 
 const UserProfile = () => {
     const [searchParams] = useSearchParams()
@@ -24,9 +28,11 @@ const UserProfile = () => {
 
     const [newContactInfoDto, setNewContactInfoDto] = useState(initialContactInfoData)
     const [newEmergencyContactInfoDto, setNewEmergencyContactInfoDto] = useState(initialEmergencyContactInfoData)
+    const [file, setFile] = useState(null)
+    const [showModal, setShowModal] = useState(false)
 
     const [loading, setLoading] = useState(true)
-    const {updateHerobar} = useHerobar()
+    const { updateHerobar } = useHerobar()
 
     const handleContactInfoChange = (e) => {
         const { name, value } = e.target
@@ -57,10 +63,34 @@ const UserProfile = () => {
         setNewUserDetails({ ...newUserDetails, [name]: value })
     }
 
+    const handleFileChange = (e) =>  {
+        setFile(e.target.files[0])
+    }
+
+    const handleUploadProfilePicture = async (e) => {
+        e.preventDefault()
+        try {
+            const base64Data = await convertToBase64(file)
+            const dto = {
+                fileName: file.name,
+                data: base64Data
+            }
+
+            const response = await UserService.uploadProfilePicture(userId, dto)
+            setNewUserDetails(response)
+            setShowModal(false)
+            setLoading(true)
+            getUserDetails()
+        } catch(error) {
+            console.log("Error occured: " + error)
+            alert("Error in uploading file")
+        }
+    }
+
     useEffect(() => {
         getUserDetails()
 
-        return () =>  updateHerobar("","",null)
+        return () => updateHerobar("", "", null)
     }, [])
 
     if (loading) {
@@ -129,6 +159,10 @@ const UserProfile = () => {
         setNewUserDetails(update)
     }
 
+    const openUploadPictureModal = (e) => {
+        setShowModal(true)
+    }
+
     const handleUpdate = async (e) => {
         e.preventDefault()
         setContactDetailsToUserDetails()
@@ -158,21 +192,19 @@ const UserProfile = () => {
             <section className='section main-section'>
                 <div className="card">
                     <div className="card-content">
-                        <div className='profile-header'>
-                            <div className="image w-40 h-40">
-                                <img
-                                    src="https://avatars.dicebear.com/v2/initials/john-doe.svg"
-                                    alt="John Doe"
-                                    className="rounded-full" />
-                            </div>
-                            <div className='vertical-content'>
-                                <label className='label'>{userDetails?.firstName + " " + userDetails?.lastName}</label>
-                                <label style={{ color: 'gray' }}>{userDetails?.jobProfileDto?.designationDto?.title}</label>
-                            </div>
-                        </div>
+                        <ProfileHeaderComponent
+                            userDetails={userDetails}
+                            handleAction={openUploadPictureModal} />
                         <HorizontalButtonGroup
                             items={profileButtons}
                             onClickHandler={infoButtonAction} />
+                        {showModal
+                            && <UploadProfilePictureModal
+                                onCancel={(e) => {
+                                    setShowModal(false)
+                                }}
+                                handleChange={handleFileChange}
+                                handleSubmit={handleUploadProfilePicture} />}
                         <form
                             onSubmit={handleUpdate}
                             method='post'>

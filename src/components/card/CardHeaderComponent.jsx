@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CardHeaderComponent = ({ title, leftIcon, rightIcon }) => {
+const CardHeaderComponent = ({ title, leftIcon, rightIcon, onClickRightIcon }) => {
     const rightIconView = () => {
         return <a href="#" className="card-header-icon">
-            <span className="icon">
+            <span className="icon" onClick={onClickRightIcon}>
                 {rightIcon}
             </span>
         </a>

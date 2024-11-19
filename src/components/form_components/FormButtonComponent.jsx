@@ -1,13 +1,16 @@
 import React from 'react'
 
-const FormButtonComponent = ({ handleReset }) => {
+const FormButtonComponent = ({ 
+    handleReset, 
+    submitButtonTitle = 'Submit', 
+    cancelButtonTitle = 'Reset' }) => {
     return (
         <div className="field grouped">
             <div className="control">
                 <button
                     type="submit"
                     className="button green">
-                    Submit
+                    {submitButtonTitle}
                 </button>
             </div>
             <div className="control">
@@ -15,7 +18,7 @@ const FormButtonComponent = ({ handleReset }) => {
                     type="reset"
                     className="button red"
                     onClick={handleReset}>
-                    Reset
+                    {cancelButtonTitle}
                 </button>
             </div>
         </div>

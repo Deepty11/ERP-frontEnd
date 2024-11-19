@@ -5,9 +5,6 @@ import DropdownComponent from '../form_components/DropdownComponent'
 import ContactTextField from '../form_components/ContactTextField'
 
 const EmergencyContactInfo = ({ emergencyContactInfoDto, handleChange }) => {
-    useEffect(() => {
-        console.log(emergencyContactInfoDto)
-    }, [])
     return (
         <>
             <TextField

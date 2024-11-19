@@ -30,6 +30,11 @@ class UserService {
         const response =  await ErpResourceApiClient.delete('/api/user/delete?id='+ id)
         return response.data
     }
+
+    uploadProfilePicture = async (id, data) => {
+        const response = await ErpResourceApiClient.post('/api/user/upload/profile-picture?id=' + id, data)
+        return response.data
+    }
 }
 
 export default new UserService()

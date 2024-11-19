@@ -79,7 +79,7 @@ const JobProfileComponent = ({
                     <DateComponent
                         title='Joining Date'
                         name='joiningDate'
-                        value={jobProfileDto?.joiningDate ?? 'N/A'}
+                        value={jobProfileDto?.joiningDate ?? ''}
                         onChange={handleChange} />
 
                     <TextFieldWithAddons
