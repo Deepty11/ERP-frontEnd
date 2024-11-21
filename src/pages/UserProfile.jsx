@@ -14,9 +14,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import EmergencyContactInfo from '../components/user_profile/EmergencyContactInfo'
 import { useHerobar } from '../components/HerobarProvider'
 import ProfileHeaderComponent from '../components/user_profile/ProfileHeaderComponent'
-import UploadProfilePictureModal from '../components/user_profile/UploadProfilePictureModal'
-import {convertToBase64} from '../utils/FileUtils'
+import UploadPictureForm from '../components/user_profile/UploadPictureForm'
+import { convertToBase64 } from '../utils/FileUtils'
 import UserService from '../services/UserService'
+import { Dialog } from 'primereact/dialog'
 
 const UserProfile = () => {
     const [searchParams] = useSearchParams()
@@ -30,6 +31,7 @@ const UserProfile = () => {
     const [newEmergencyContactInfoDto, setNewEmergencyContactInfoDto] = useState(initialEmergencyContactInfoData)
     const [file, setFile] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const [isDialogVisible, setDialogVisible] = useState(false)
 
     const [loading, setLoading] = useState(true)
     const { updateHerobar } = useHerobar()
@@ -63,7 +65,7 @@ const UserProfile = () => {
         setNewUserDetails({ ...newUserDetails, [name]: value })
     }
 
-    const handleFileChange = (e) =>  {
+    const handleFileChange = (e) => {
         setFile(e.target.files[0])
     }
 
@@ -78,10 +80,10 @@ const UserProfile = () => {
 
             const response = await UserService.uploadProfilePicture(userId, dto)
             setNewUserDetails(response)
-            setShowModal(false)
+            setDialogVisible(false)
             setLoading(true)
             getUserDetails()
-        } catch(error) {
+        } catch (error) {
             console.log("Error occured: " + error)
             alert("Error in uploading file")
         }
@@ -159,10 +161,6 @@ const UserProfile = () => {
         setNewUserDetails(update)
     }
 
-    const openUploadPictureModal = (e) => {
-        setShowModal(true)
-    }
-
     const handleUpdate = async (e) => {
         e.preventDefault()
         setContactDetailsToUserDetails()
@@ -194,17 +192,19 @@ const UserProfile = () => {
                     <div className="card-content">
                         <ProfileHeaderComponent
                             userDetails={userDetails}
-                            handleAction={openUploadPictureModal} />
+                            handleAction={(e) => setDialogVisible(true)} />
                         <HorizontalButtonGroup
                             items={profileButtons}
                             onClickHandler={infoButtonAction} />
-                        {showModal
-                            && <UploadProfilePictureModal
-                                onCancel={(e) => {
-                                    setShowModal(false)
-                                }}
+                        <Dialog
+                            header="Upload Picture"
+                            visible={isDialogVisible}
+                            onHide={() => setDialogVisible(false)}>
+                            <UploadPictureForm
+                                onCancel={(e) => setDialogVisible(false)}
                                 handleChange={handleFileChange}
-                                handleSubmit={handleUploadProfilePicture} />}
+                                handleSubmit={handleUploadProfilePicture} />
+                        </Dialog>
                         <form
                             onSubmit={handleUpdate}
                             method='post'>

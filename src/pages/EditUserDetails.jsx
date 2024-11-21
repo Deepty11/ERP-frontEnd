@@ -13,10 +13,11 @@ import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { MdContactEmergency } from 'react-icons/md'
 import UserService from '../services/UserService'
 import { useHerobar } from '../components/HerobarProvider.jsx'
-import UploadProfilePictureModal from '../components/user_profile/UploadProfilePictureModal.jsx'
+import UploadPictureForm from '../components/user_profile/UploadPictureForm.jsx'
 import { convertToBase64 } from '../utils/FileUtils.js'
 import ProfileHeaderComponent from '../components/user_profile/ProfileHeaderComponent.jsx'
 import SpinnerComponent from '../components/common_components/SpinnerComponent.jsx'
+import { Dialog } from 'primereact/dialog'
 
 const EditUserDetails = () => {
     const [userDetails, setUserDetails] = useState(initialUserData)
@@ -26,7 +27,7 @@ const EditUserDetails = () => {
     const [newJobProfileDto, setNewJobProfileDto] = useState(initialJobProfileData)
     const [loading, setLoading] = useState(true)
     const [file, setFile] = useState(null)
-    const [showModal, setShowModal] = useState(false)
+    const [isDialogVisible, setDialogVisible] = useState(false)
 
     const [searchParams] = useSearchParams()
     const userId = searchParams.get('id')
@@ -129,7 +130,7 @@ const EditUserDetails = () => {
             }
 
             const response = await UserService.uploadProfilePicture(userId, dto)
-            setShowModal(false)
+            setDialogVisible(false)
             setLoading(true)
             getUserDetails()
         } catch (error) {
@@ -150,16 +151,22 @@ const EditUserDetails = () => {
                     <div className="card-content">
                         <ProfileHeaderComponent
                             userDetails={newUserDetails}
-                            handleAction={(e) => setShowModal(true)} />
+                            handleAction={(e) => setDialogVisible(true)}/>
+
+                        <Dialog
+                            header="Upload Picture"
+                            visible={isDialogVisible}
+                            onHide={() => setDialogVisible(false)}>
+                            <UploadPictureForm
+                                onCancel={(e) => setDialogVisible(false)}
+                                handleChange={handleFileChange}
+                                handleSubmit={handleUploadProfilePicture} />
+                        </Dialog>
                     </div>
                 </div>
 
                 <div>
-                    {showModal
-                        && <UploadProfilePictureModal
-                            onCancel={(e) => setShowModal(false)}
-                            handleChange={handleFileChange}
-                            handleSubmit={handleUploadProfilePicture} />}
+
                     <form
                         onSubmit={handleSubmit}
                         method='post'>
