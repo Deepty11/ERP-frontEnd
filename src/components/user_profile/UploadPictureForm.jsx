@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import FormButtonComponent from '../form_components/FormButtonComponent'
 import { convertToBase64 } from '../../utils/FileUtils'
-import { FaRegUser, FaUser } from 'react-icons/fa6'
 
 const UploadPictureForm = ({ onCancel, handleSubmit, handleChange }) => {
     const [displayFile, setDisplayFile] = useState(null)

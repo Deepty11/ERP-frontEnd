@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import HorizontalButtonGroup from '../components/button_components/HorizontalButtonGroup'
 import GeneralInfo from '../components/user_profile/GeneralInfo'
 import JobInfo from '../components/user_profile/JobInfo'
@@ -22,7 +22,6 @@ import { Dialog } from 'primereact/dialog'
 const UserProfile = () => {
     const [searchParams] = useSearchParams()
     const userId = searchParams.get('id')
-    const navigate = useNavigate()
     const [selectedView, setSelectedView] = useState("General Info")
     const [userDetails, setUserDetails] = useState(initialUserData) // keeping it for reset
     const [newUserDetails, setNewUserDetails] = useState(null) // for the updates
@@ -30,7 +29,6 @@ const UserProfile = () => {
     const [newContactInfoDto, setNewContactInfoDto] = useState(initialContactInfoData)
     const [newEmergencyContactInfoDto, setNewEmergencyContactInfoDto] = useState(initialEmergencyContactInfoData)
     const [file, setFile] = useState(null)
-    const [showModal, setShowModal] = useState(false)
     const [isDialogVisible, setDialogVisible] = useState(false)
 
     const [loading, setLoading] = useState(true)

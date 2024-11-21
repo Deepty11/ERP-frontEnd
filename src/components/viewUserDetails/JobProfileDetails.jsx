@@ -37,12 +37,12 @@ const JobProfileDetails = ({userDetails}) => {
 
                     <div className='form-control'>
                         <label className='label'>Basic Salary</label>
-                        <label>{userDetails?.jobProfileDto?.basicSalary ?? 'N/A'}</label>
+                        <label>{`${userDetails?.jobProfileDto?.basicSalary != null ? 'BDT' + userDetails?.jobProfileDto?.basicSalary : 'N/A'}`}</label>
                     </div>
 
                     <div className='form-control'>
                         <label className='label'>Compensation</label>
-                        <label>{userDetails?.jobProfileDto?.compensation ?? 'N/A'}</label>
+                        <label>{`${userDetails?.jobProfileDto?.compensation != null ? 'BDT ' + userDetails?.jobProfileDto?.compensation : 'N/A'}`}</label>
                     </div>
                 </div>
             </div>

@@ -78,6 +78,7 @@ const EditUserDetails = () => {
         const { name, value } = e.target
 
         if (name == 'basicSalary' || name == 'compensation') {
+            
             const doubleValue = parseFloat(value)
             if (!isNaN(doubleValue)) {
                 setNewJobProfileDto({ ...newJobProfileDto, [name]: doubleValue })
@@ -166,7 +167,6 @@ const EditUserDetails = () => {
                 </div>
 
                 <div>
-
                     <form
                         onSubmit={handleSubmit}
                         method='post'>
