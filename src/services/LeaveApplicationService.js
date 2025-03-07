@@ -1,32 +1,31 @@
-import { ErpResourceApiClient } from "../utils/ErpResourceApiClient"
+import { AxiosInstance } from "../utils/AxiosInstance";
 
 class LeaveApplicationService {
     createLeaveApplication = async (leaveApplication) => {
-        const res = await ErpResourceApiClient.post(
+        const res = await AxiosInstance.post(
             '/api/leave/create-application', leaveApplication)
         return res
     }
 
     getAllApplications = async () => {
-        const res = await ErpResourceApiClient.get('/api/leave/leave-applications')
+        const res = await AxiosInstance.get('/api/leave/leave-applications')
         return res.data
     }
 
     getAllApplicationsByUserId = async (userId) => {
-        const response = await ErpResourceApiClient.get('/api/leave/my-leave-applications?userId=' + userId)
+        const response = await AxiosInstance.get('/api/leave/my-leave-applications?userId=' + userId)
         return response.data
     }
 
     getLeaveOverview = async (userId) => {
-        const res = await ErpResourceApiClient.get('/api/leave/overview?userId=' + userId)
+        const res = await AxiosInstance.get('/api/leave/overview?userId=' + userId)
         return res.data
     }
 
     leaveApplicationAction = async (leaveId, approve) => {
-        const res = await ErpResourceApiClient.get(`/api/leave/action?leaveId=${leaveId}&approve=${approve}`)
+        const res = await AxiosInstance.get(`/api/leave/action?leaveId=${leaveId}&approve=${approve}`)
         return res
     }
 }
 
-const leaveApplicationService = new LeaveApplicationService()
-export default leaveApplicationService
+export default new LeaveApplicationService();

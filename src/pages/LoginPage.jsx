@@ -37,6 +37,7 @@ const LoginPage = () => {
     const signIn = async () => {
         try {
             const token = await loginService.login(loginData)
+            console.log(token)
             login(token)
             const loggedInUser = await UserService.getUserByUsername(loggedInUsername())
             if (loggedInUser) {
@@ -45,8 +46,8 @@ const LoginPage = () => {
 
             navigate("/dashboard")
         } catch (e) {
-            console.log(e.response.data.message)
-            toast.error(e.response.data.message)
+            console.log(e)
+            toast.error(e)
             setLoginData(initialLoginState)
         }
     }
