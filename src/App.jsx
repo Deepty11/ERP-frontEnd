@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import './main.css'
 import '/node_modules/primeflex/primeflex.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import AddTask from './pages/AddTask'
 import MainLayout from './layout/MainLayout'
 import Dashboard from './pages/Dashboard'
@@ -27,8 +27,22 @@ import TaskDashboard from './pages/TaskDashboard'
 import EditTask from './pages/EditTask'
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const root = document.getElementById('root');
+
+    if (root) {
+      if (location.pathname === '/login') {
+        console.log("login class")
+        root.classList.add('login-page');
+      } else {
+        root.classList.remove('login-page');
+      }
+    }
+  }, [location]);
+
   return (
-    <Router>
       <AuthProvider>
         <HerobarProvider>
           <Herobar />
@@ -57,7 +71,6 @@ function App() {
           </Routes>
         </HerobarProvider>
       </AuthProvider>
-    </Router>
   )
 }
 

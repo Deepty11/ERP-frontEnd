@@ -6,7 +6,7 @@ const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
 
     const login = (token) => {
-        localStorage.setItem('token', token)
+        localStorage.setItem('token', token);
     }
 
     const logout = () => {
@@ -41,8 +41,12 @@ const AuthProvider = ({ children }) => {
         return jwtDecode(token).sub
     }
 
+    const authLoggedInUser = (loggedInUser) => {
+        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+    }
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, loggedInUsername }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, loggedInUsername, authLoggedInUser }}>
             {children}
         </AuthContext.Provider>
     )
