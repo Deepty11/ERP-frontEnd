@@ -9,6 +9,7 @@ class LeaveApplicationService {
 
     getAllApplications = async () => {
         const res = await AxiosInstance.get('/api/leave/leave-applications')
+        console.log(res);
         return res.data
     }
 
@@ -22,8 +23,8 @@ class LeaveApplicationService {
         return res.data
     }
 
-    leaveApplicationAction = async (leaveId, approve) => {
-        const res = await AxiosInstance.get(`/api/leave/action?leaveId=${leaveId}&approve=${approve}`)
+    leaveApplicationAction = async (leaveId, action) => {
+        const res = await AxiosInstance.get(`/api/leave/action?leaveId=${leaveId}&action=${action}`)
         return res
     }
 }

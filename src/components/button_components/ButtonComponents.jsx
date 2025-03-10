@@ -24,4 +24,15 @@ const ApproveButton = ({ title,value, action }) => {
     </button>
 }
 
-export {ApproveButton, DeclineButton}
+const DeleteButton = ({title, value, action}) => {
+    return <button
+        type='button'
+        className='focus:outline-none text-black bg-yellow-300 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-200 font-sans rounded-md text-md px-5 py-2 dark:focus:ring-yellow-400'
+        name={title}
+        value={value}
+        onClick={action}>
+            {title}
+        </button>
+}
+
+export {ApproveButton, DeclineButton, DeleteButton}
