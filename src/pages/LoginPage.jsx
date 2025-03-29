@@ -9,20 +9,17 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const LoginPage = () => {
-    const navigate = useNavigate()
-    const { login, loggedInUsername } = useAuth()
 
-    useEffect(() => {
-        const root = document.getElementById("root")
-        root.style.marginLeft = "-15rem"
-    }, [])
+    const navigate = useNavigate();
+    const { login, loggedInUsername, authLoggedInUser } = useAuth();
 
     const initialLoginState = {
         username: '',
         password: ''
     }
 
-    const [loginData, setLoginData] = useState(initialLoginState)
+    const [loginData, setLoginData] = useState(initialLoginState);
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         let { name, value } = e.target
@@ -30,23 +27,36 @@ const LoginPage = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        await signIn()
+        e.preventDefault();
+
+        if (!loginData.username || !loginData.password) {
+            setError('Required!');
+            toast.error('Username & Password Required!');
+            return;
+        } else {
+            setError('');
+        }
+
+        await signIn();
     }
 
     const signIn = async () => {
         try {
-            const token = await loginService.login(loginData)
-            login(token)
-            const loggedInUser = await UserService.getUserByUsername(loggedInUsername())
-            if (loggedInUser) {
-                localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-            }
+            const result = await loginService.login(loginData);
 
-            navigate("/dashboard")
+            if (result?.success) {
+                login(result?.token);
+
+                const loggedInUser = await UserService.getUserByUsername(loggedInUsername());
+                authLoggedInUser(loggedInUser);
+
+                navigate("/dashboard")
+            } else {
+                toast.error(result?.message);
+            }
         } catch (e) {
-            console.log(e.response.data.message)
-            toast.error(e.response.data.message)
+            console.log(e)
+            toast.error(e)
             setLoginData(initialLoginState)
         }
     }
@@ -84,6 +94,7 @@ const LoginPage = () => {
                                 <p className="help">
                                     Please enter your username
                                 </p>
+                                {error && error.includes('Required') && <span className="error">{error}</span>}
                             </div>
 
                             <div className="field spaced">
@@ -100,6 +111,7 @@ const LoginPage = () => {
                                 <p className="help">
                                     Please enter your password
                                 </p>
+                                {error && error.includes('Required') && <span className="error">{error}</span>}
                             </div>
 
                             <hr />

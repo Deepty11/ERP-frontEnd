@@ -1,28 +1,27 @@
-import axios from "axios"
-import { useAuth } from "../components/AuthProvider"
-import userService from "./UserService"
+import { toast } from "react-toastify";
+import AxiosLoginInstance from "../utils/AxiosLoginInstance"
 
 class LoginService {
-    constructor() {
-        this.base_url = "http://localhost:8080"
-    }
 
     login = async (loginData) => {
-        const response = await axios.post(this.base_url + "/login", loginData)
-        return response.data.token
-        
         try {
-            const response = await axios.post(this.base_url + "/login", loginData)
-            localStorage.setItem('token', response.data.token)
-            
-            const loggedInUser =  await userService.getUserByUsername(loginData.username)
-            console.log(loggedInUser)
-            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-            return loggedInUser
-        } catch(error) {
-            throw new Error(error)
+            const response = await AxiosLoginInstance.post("/login", loginData);
+    
+            if (response.data.token) {
+                return { success: true, token: response.data.token };
+            }
+    
+            return { success: false, message: "Token should not be null!" };
+        } catch (error) {
+            if (error.response) {
+                return { success: false, message: error.response.data.message };
+            } else if (error.request) {
+                return { success: false, message: 'An error occured! please try again later'};
+            } else {
+                return { success: false, message: 'Bad request' };
+            }
         }
     }
 }
 
-export default new LoginService()
+export default new LoginService();

@@ -1,44 +1,38 @@
-import { ErpResourceApiClient } from "../utils/ErpResourceApiClient"
+import { AxiosInstance } from "../utils/AxiosInstance";
 
 class DesignationService {
-    saveDesignation = (designationDto, success, failure) => {
-        ErpResourceApiClient.post(
-            '/api/designation/add-designation',
-            designationDto
-        ).then((res) => {
-            return res.data
-        }).then((data) => {
-            success(data)
-        })
-        .catch(error => {
-            failure(error)
-        })
+    saveDesignation = async (designationDto, success, failure) => {
+        try {
+            const response = await AxiosInstance.post('/api/designation/add-designation', designationDto);
+            success(response.data);
+        } catch(error) {
+            failure(error);
+        }
     }
 
-    getAllDesignations = (success, failure) => {
-        ErpResourceApiClient.get('/api/designation/designations')
-        .then((res) => {
-            success(res.data)
-        }, (error) => {
-            failure(error)
-        })
+    getAllDesignations = async (success, failure) => {
+        try {
+            const response = await AxiosInstance.get('/api/designation/designations');
+            success(response.data);
+        } catch(error) {
+            failure(error);
+        }
     }
 
     getDesignationDetailsById = async (id) => {
-        const response = await ErpResourceApiClient.get('/api/designation/designation-details?id=' + id)
-        return response.data
+        const response = await AxiosInstance.get('/api/designation/designation-details?id=' + id);
+        return response.data;
     }
 
     updateDesignationDetailsById = async (id, designationDetails) => {
-        const response = await ErpResourceApiClient.post('/api/designation/edit-designation?id=' + id, designationDetails)
-        return response.data
+        const response = await AxiosInstance.post('/api/designation/edit-designation?id=' + id, designationDetails);
+        return response.data;
     }
 
     deleteDesignationById = async (id) => {
-        const response =  await ErpResourceApiClient.delete('/api/designation/delete?id='+ id)
-        return response.data
+        const response =  await AxiosInstance.delete('/api/designation/delete?id='+ id);
+        return response.data;
     }
-
 }
 
 export default new DesignationService()

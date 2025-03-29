@@ -12,7 +12,7 @@ import {
     Paper
 } from '@mui/material'
 import EmptyViewComponent from '../components/common_components/EmptyViewComponent'
-import { ApproveButton, DeclineButton } from '../components/button_components/ButtonComponents'
+import { ApproveButton, DeclineButton, DeleteButton  } from '../components/button_components/ButtonComponents'
 import { initialLeaveData, initialLeaveOverview } from '../data/LeaveApplicationData'
 import CardHeaderComponent from '../components/card/CardHeaderComponent'
 import { useSearchParams } from 'react-router-dom'
@@ -65,7 +65,7 @@ const LeaveApplications = () => {
     const handleAction = async (e) => {
         const actionName = e.target.name
 
-        const res = await leaveApplicationService.leaveApplicationAction(e.target.value, (actionName == 'Approve' ? true : false))
+        const res = await leaveApplicationService.leaveApplicationAction(e.target.value, actionName)
         console.log(res)
 
         toast.success(`Status is updated for application Id ${e.target.value}`)
@@ -121,14 +121,15 @@ const LeaveApplications = () => {
     }
 
     const actionButtons = (row) => {
-        if (row.status != 'Pending') {
-            return <div>
-                <button> Delete</button>
-            </div>
-        } else {
+        if ( row.status == 'Pending') {
             return <div className='button-container'>
                 <ApproveButton title='Approve' value={row.id} action={handleAction} />
                 <DeclineButton title='Decline' value={row.id} action={handleAction} />
+            </div>
+            
+        } else if(row.status != 'Deleted') {
+            return <div className='button-container'>
+                <DeleteButton title='Delete' value={row.id} action={handleAction}/>
             </div>
         }
 

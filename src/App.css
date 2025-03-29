@@ -29,3 +29,13 @@ body {
 .form-screen .main-section {
   @apply flex h-screen items-center justify-center;
 }
+
+#root.login-page {
+  margin-left: -15rem !important;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
